@@ -1,0 +1,3 @@
+# https://docs.npmjs.com/misc/developers#keeping-files-out-of-your-package
+# When npm publish, without an .npmignore file, npm will use your .gitignore file
+# Should include the lib folder

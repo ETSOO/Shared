@@ -1,0 +1,48 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+# https://docs.github.com/en/actions/language-and-framework-guides/publishing-nodejs-packages
+
+# Description
+name: Node.js Package
+
+# Event to trigger the action
+on: [push]
+  # release:
+  #  types: [created]
+
+jobs:
+  # Publish to NPM
+  publish-npm:
+    # Condition: previous build is successful
+    # needs: Any previous jobs
+
+    # Operation system
+    runs-on: ubuntu-latest
+
+    steps:
+      # https://github.com/actions/checkout, This action checks-out your repository under $GITHUB_WORKSPACE
+      # so your workflow can access it.
+      - uses: actions/checkout@v2
+        
+      # Set up your GitHub Actions workflow with a specific version of node.js
+      # Setup .npmrc file to publish to npm
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      # Named after Continuous Integration, installs dependencies directly from package-lock.json
+      # ci vs install
+      - run: npm install
+
+      # Make sure pass the test without any exception
+      - run: npm test
+
+      # Build the package
+      - run: npm run build
+
+      # Publish to npm
+      # For scoped package, make it public for free service
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.ETSOONpmToken }}

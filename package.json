@@ -1,0 +1,51 @@
+{
+    "name": "@etsoo/notificationbase",
+    "version": "1.0.22",
+    "description": "TypeScript notification component for extending with all features described and partially implemented",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "format": "prettier --write src/**/*.ts",
+        "lint": "eslint --ext .ts src/",
+        "test": "jest",
+        "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand"
+    },
+    "jest": {
+        "automock": false,
+        "testMatch": [
+            "<rootDir>/__tests__/**/*.ts"
+        ],
+        "testEnvironment": "jsdom",
+        "transform": {
+            ".+\\.ts$": "ts-jest"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ETSOO/NotificationBase.git"
+    },
+    "keywords": [
+        "notification",
+        "TypeScript"
+    ],
+    "author": "Garry Xiao",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/ETSOO/NotificationBase/issues"
+    },
+    "homepage": "https://github.com/ETSOO/NotificationBase#readme",
+    "dependencies": {
+        "typescript": "^3.9.7"
+    },
+    "devDependencies": {
+        "@types/jest": "^26.0.9",
+        "@typescript-eslint/eslint-plugin": "^3.9.0",
+        "@typescript-eslint/parser": "^3.9.0",
+        "eslint": "^7.6.0",
+        "eslint-config-airbnb-base": "^14.2.0",
+        "eslint-plugin-import": "^2.22.0",
+        "jest": "^26.3.0",
+        "ts-jest": "^26.2.0"
+    }
+}
