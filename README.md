@@ -1,110 +1,86 @@
-# NotificationBase
-**TypeScript notification component for extending with all features described and partially implemented.**
+# Shared
+**TypeScript shared utilities and functions.**
 
 ## Installing
 
 Using npm:
 
 ```bash
-$ npm install @etsoo/notificationbase
+$ npm install @etsoo/shared
 ```
 
 Using yarn:
 
 ```bash
-$ yarn add @etsoo/notificationbase
+$ yarn add @etsoo/shared
 ```
 
-## Notification
-Notification object to display.
-
-Properties:
+## DataTypes
+Data type definitions and type safe functions
 
 |Name|Description|
 |---:|---|
-|align|Readonly, display align|
-|content|Content to display|
-|id|Unique id|
-|inputProps|Input or additional control properties|
-|modal|Display as modal window or not|
-|onDismiss|Dismiss callback|
-|onReturn|Return value callback|
-|showIcon|Show icon or not|
-|timespan|Seconds to auto dismiss|
-|title|Title|
-|type|Notification type|
+|DisplayType|Frontend display type|
+|DynamicData|String key, any value type dictionary|
+|ReadonlyData|Readonly DynamicData|
+|SimpleBaseType|bigint, boolean, Date, number, string, symbol|
+|SimpleType|SimpleBaseType, SimpleBaseType[], null, undefined|
+|isSimpleType|Check value is SimpleType|
+|SimpleObject|String key, SimpleType value dictionary|
+|isSimpleObject|Check value is SimpleObject|
+|StringDictionary|String key and value dictionary|
+|ReadonlyStringDictionary|Readonly StringDictionary|
+|LanguageDefinition|Language definition|
 
-Methods:
-
-```ts
-    /**
-     * Constructor
-     * @param type Type
-     * @param content Content
-     * @param title Title
-     * @param align Align
-     */
-    constructor(
-        type: NotificationType,
-        content: string | NotificationCreator<UI>,
-        title?: string | NotificationCreator<UI>,
-        align?: NotificationAlign
-    )
-
-    /**
-     * Dismiss it
-     * @param delaySeconds Delay seconds
-     * @returns Is delayed or not
-     */
-    dismiss(delaySeconds: number = 0): boolean
-
-    /**
-     * Dispose it
-     */
-    dispose()
-
-    /**
-     * Render method
-     * @param className Style class name
-     */
-    abstract render(className?: string): UI;
-```
-
-
-## NotificationContainer
-NotificationContainer is a global instance of NotificationContainerClass to provide global access of properties and methods.
-
-Properties:
+## DomUtils
+DOM/window related utilities
 
 |Name|Description|
 |---:|---|
-|notifications|Readonly. Notification collection to display|
-|count|Readonly. Notification count|
+|detectedLanguage|Current detected language|
+|dimensionEqual|Check two rectangles equality|
+|getLanguage|Get the available language definition|
+|getLocationKey|Get an unique key combined with current URL|
+|formDataToObject|Convert FormData to object|
+|headersToObject|Convert headers to object|
+|HorizontalAlign|left, center, right|
+|isJSONContentType|Is JSON content type|
+|mergeClasses|Merge class names|
+|mergeURLSearchParams|Merge URL search parameters|
 
-Methods:
+## ExtendUtils
+Extend current class/object functioning
 
-```ts
-    /**
-     * Add notification
-     * @param notification Notification
-     * @param top Is insert top
-     */
-    add(notification: Notification<any>, top: boolean = false): void
+|Name|Description|
+|---:|---|
+|applyMixins|Apply mixins to current class|
+|promiseHandler|Promise handler to catch error|
 
-    /**
-     * Dispose all notifications
-     */
-    dispose(): void
+## NumberUtils
+Numbers related utilities
 
-    /**
-     * Remove notification
-     * @param notification Notification
-     */
-    remove(notification: Notification<any>): void
+|Name|Description|
+|---:|---|
+|parse|Parse float value|
 
-    /**
-     * Register component action
-     * @param update Update action
-     */
-    register(update: NotificationAction): void
-```
+## StorageUtils
+Storage related utilities
+
+|Name|Description|
+|---:|---|
+|cacheLocalData|Cache local storage data|
+|cacheSessionData|Cache session storage data|
+|getLocalData|Get local storage data|
+|getLocalDataTyped|Get local storage data with specific type|
+|getSessionData|Get session storage data|
+|getSessionDataTyped|Get session storage data with specific type|
+
+## Utils
+String and other related utilities
+
+|Name|Description|
+|---:|---|
+|formatUpperLetter|Format word's first letter to upper case|
+|joinItems|Join items as a string|
+|newGUID|Create a GUID|
+|snakeNameToWord|Snake name to works, 'snake_name' to 'Snake Name'|
