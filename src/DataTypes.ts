@@ -116,6 +116,6 @@ export namespace DataTypes {
         /**
          * Labels
          */
-        labels: object;
+        labels: ReadonlyStringDictionary;
     }>;
 }
