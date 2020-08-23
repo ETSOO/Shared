@@ -114,7 +114,7 @@ export namespace DataTypes {
     }
 
     /**
-     * Enum align to string align
+     * Enum align to string literal align
      * @param align Enum align
      */
     export function hAlignFromEnum(align?: HAlignEnum): HAlign | undefined {

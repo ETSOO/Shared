@@ -25,6 +25,11 @@ Data type definitions and type safe functions
 |ReadonlyData|Readonly DynamicData|
 |SimpleBaseType|bigint, boolean, Date, number, string, symbol|
 |SimpleType|SimpleBaseType, SimpleBaseType[], null, undefined|
+|HAlign|left, center, right|
+|HAlignEnum|Left=1, Center=2, Right=3|
+|hAlignFromEnum|Enum align to string literal align|
+|VAlign|top, center, bottom|
+|VAlignEnum|Top=1, Center=2, Bottom=3|
 |isSimpleType|Check value is SimpleType|
 |SimpleObject|String key, SimpleType value dictionary|
 |isSimpleObject|Check value is SimpleObject|
@@ -43,7 +48,6 @@ DOM/window related utilities
 |getLocationKey|Get an unique key combined with current URL|
 |formDataToObject|Convert FormData to object|
 |headersToObject|Convert headers to object|
-|HorizontalAlign|left, center, right|
 |isJSONContentType|Is JSON content type|
 |mergeClasses|Merge class names|
 |mergeURLSearchParams|Merge URL search parameters|

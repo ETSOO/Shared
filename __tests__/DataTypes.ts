@@ -22,3 +22,9 @@ test('Tests for isSimpleObject', () => {
     data.childen = {};
     expect(DataTypes.isSimpleObject(data)).toBeFalsy();
 });
+
+test('Tests for hAlignFromEnum', () => {
+    expect(DataTypes.hAlignFromEnum(DataTypes.HAlignEnum.Center)).toBe(
+        'center'
+    );
+});
