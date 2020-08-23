@@ -100,6 +100,43 @@ export namespace DataTypes {
     export type ReadonlyStringDictionary = Readonly<StringDictionary>;
 
     /**
+     * Horizontal align
+     */
+    export type HAlign = 'left' | 'center' | 'right';
+
+    /**
+     * Horizontal align enum
+     */
+    export enum HAlignEnum {
+        Left = 1,
+        Center = 2,
+        Right = 3
+    }
+
+    /**
+     * Enum align to string align
+     * @param align Enum align
+     */
+    export function hAlignFromEnum(align?: HAlignEnum): HAlign | undefined {
+        if (align == null) return undefined;
+        return <HAlign>HAlignEnum[align].toLowerCase();
+    }
+
+    /**
+     * Vertical align
+     */
+    export type VAlign = 'top' | 'center' | 'bottom';
+
+    /**
+     * Vertical align enum
+     */
+    export enum VAlignEnum {
+        Top = 1,
+        Center = 2,
+        Bottom = 3
+    }
+
+    /**
      * Language definiton
      */
     export type LanguageDefinition = Readonly<{

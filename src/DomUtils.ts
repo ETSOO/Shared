@@ -105,11 +105,6 @@ export namespace DomUtils {
     }
 
     /**
-     * Horizontal align
-     */
-    export type HorizontalAlign = 'left' | 'center' | 'right';
-
-    /**
      * Is JSON content type
      * @param contentType Content type string
      */
