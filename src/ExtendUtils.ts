@@ -27,4 +27,14 @@ export namespace ExtendUtils {
         promise
             .then((value) => [value, undefined])
             .catch((reason) => Promise.resolve([undefined, reason]));
+
+    /**
+     * Delay promise
+     * @param delay Delay miniseconds
+     */
+    export function sleep(delay = 0) {
+        return new Promise((resolve) => {
+            setTimeout(resolve, delay);
+        });
+    }
 }

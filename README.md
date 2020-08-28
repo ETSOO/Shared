@@ -59,6 +59,7 @@ Extend current class/object functioning
 |---:|---|
 |applyMixins|Apply mixins to current class|
 |promiseHandler|Promise handler to catch error|
+|sleep|Delay promise|
 
 ## NumberUtils
 Numbers related utilities
