@@ -22,6 +22,7 @@ Data type definitions and type safe functions
 |---:|---|
 |DisplayType|Frontend display type|
 |DynamicData|String key, any value type dictionary|
+|IdType|Number and string combination id type|
 |ReadonlyData|Readonly DynamicData|
 |SimpleBaseType|bigint, boolean, Date, number, string, symbol|
 |SimpleType|SimpleBaseType, SimpleBaseType[], null, undefined|

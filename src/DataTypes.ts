@@ -23,6 +23,11 @@ export namespace DataTypes {
     export type DynamicData = Record<string, any>;
 
     /**
+     * Number and string combination id type
+     */
+    export type IdType = number | string;
+
+    /**
      * Readonly data
      * Indexable type
      */
