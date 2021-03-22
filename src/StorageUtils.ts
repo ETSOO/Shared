@@ -51,10 +51,10 @@ export namespace StorageUtils {
     }
 
     /**
-     * Get local storage data with specific type
+     * Get local storage data as specific type
      * @param key Key name
      */
-    export function getLocalDataTyped<T>(key: string) {
+    export function getLocalDataAs<T>(key: string) {
         const data = getLocalData(key);
         if (data) return JSON.parse(data) as T;
         return undefined;
@@ -69,10 +69,10 @@ export namespace StorageUtils {
     }
 
     /**
-     * Get session storage data with specific type
+     * Get session storage data as specific type
      * @param key Key name
      */
-    export function getSessionDataTyped<T>(key: string) {
+    export function getSessionDataAs<T>(key: string) {
         const data = getSessionData(key);
         if (data) return JSON.parse(data) as T;
         return undefined;

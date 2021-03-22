@@ -77,9 +77,9 @@ Storage related utilities
 |cacheLocalData|Cache local storage data|
 |cacheSessionData|Cache session storage data|
 |getLocalData|Get local storage data|
-|getLocalDataTyped|Get local storage data with specific type|
+|getLocalDataAs|Get local storage data as specific type|
 |getSessionData|Get session storage data|
-|getSessionDataTyped|Get session storage data with specific type|
+|getSessionDataAs|Get session storage data as specific type|
 
 ## Utils
 String and other related utilities
