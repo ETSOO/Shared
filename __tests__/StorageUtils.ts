@@ -6,7 +6,7 @@ test('Tests for all', () => {
     StorageUtils.cacheSessionData('test', { id: 123, name: 'test' });
 
     expect(StorageUtils.getSessionData('string')).toBe('test');
-    expect(StorageUtils.getSessionDataTyped<any>('test')).toHaveProperty(
+    expect(StorageUtils.getSessionDataAs<any>('test')).toHaveProperty(
         'id',
         123
     );
