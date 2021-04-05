@@ -6,6 +6,11 @@ import { Utils } from './Utils';
  */
 export namespace DomUtils {
     /**
+     * Language parameter name
+     */
+    export const Lang = 'lang';
+
+    /**
      * Current detected language
      */
     export const detectedLanguage = (() => {
@@ -13,8 +18,8 @@ export namespace DomUtils {
         let language: string | null;
         try {
             language =
-                new URL(window.location.href).searchParams.get('lang') ||
-                localStorage.getItem('lang');
+                new URL(window.location.href).searchParams.get(Lang) ||
+                localStorage.getItem(Lang);
         } catch {
             language = null;
         }
@@ -141,5 +146,13 @@ export namespace DomUtils {
             base.set(key, value.toString());
         });
         return base;
+    }
+
+    /**
+     * Save language name
+     * @param lang Language name
+     */
+    export function saveLanguage(lang: string) {
+        localStorage.setItem(Lang, lang);
     }
 }

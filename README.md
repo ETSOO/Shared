@@ -52,6 +52,7 @@ DOM/window related utilities
 |isJSONContentType|Is JSON content type|
 |mergeClasses|Merge class names|
 |mergeURLSearchParams|Merge URL search parameters|
+|saveLanguage|Save language name|
 
 ## ExtendUtils
 Extend current class/object functioning
