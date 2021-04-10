@@ -95,6 +95,11 @@ export namespace DataTypes {
     }
 
     /**
+     * Readonly simple object
+     */
+    export type ReadonlySimpleObject = Readonly<SimpleObject>;
+
+    /**
      * String dictionary type
      */
     export type StringDictionary = Record<string, string>;
@@ -158,6 +163,6 @@ export namespace DataTypes {
         /**
          * Labels
          */
-        labels: ReadonlyStringDictionary;
+        labels: ReadonlySimpleObject;
     }>;
 }
