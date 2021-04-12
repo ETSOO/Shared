@@ -36,23 +36,23 @@ Data type definitions and type safe functions
 |isSimpleObject|Check value is SimpleObject|
 |StringDictionary|String key and value dictionary|
 |ReadonlyStringDictionary|Readonly StringDictionary|
-|LanguageDefinition|Language definition|
+|CultureDefinition|Culture definition|
 
 ## DomUtils
 DOM/window related utilities
 
 |Name|Description|
 |---:|---|
-|detectedLanguage|Current detected language|
+|detectedCulture|Current detected culture|
 |dimensionEqual|Check two rectangles equality|
-|getLanguage|Get the available language definition|
+|getCulture|Get the available culture definition|
 |getLocationKey|Get an unique key combined with current URL|
 |formDataToObject|Convert FormData to object|
 |headersToObject|Convert headers to object|
 |isJSONContentType|Is JSON content type|
 |mergeClasses|Merge class names|
 |mergeURLSearchParams|Merge URL search parameters|
-|saveLanguage|Save language name|
+|saveCulture|Save culture name|
 
 ## ExtendUtils
 Extend current class/object functioning

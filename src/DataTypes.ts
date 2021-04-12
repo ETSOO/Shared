@@ -147,9 +147,9 @@ export namespace DataTypes {
     }
 
     /**
-     * Language definiton
+     * Culture definiton
      */
-    export type LanguageDefinition = Readonly<{
+    export type CultureDefinition = Readonly<{
         /**
          * Name, like zh-CN
          */
@@ -161,8 +161,8 @@ export namespace DataTypes {
         label: string;
 
         /**
-         * Labels
+         * Resources
          */
-        labels: ReadonlySimpleObject;
+        resources: ReadonlySimpleObject;
     }>;
 }

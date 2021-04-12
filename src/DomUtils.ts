@@ -8,31 +8,31 @@ export namespace DomUtils {
     /**
      * Language parameter name
      */
-    export const Lang = 'lang';
+    export const Culture = 'culture';
 
     /**
-     * Current detected language
+     * Current detected culture
      */
-    export const detectedLanguage = (() => {
+    export const detectedCulture = (() => {
         // URL first, then local storage
-        let language: string | null;
+        let culture: string | null;
         try {
-            language =
-                new URL(window.location.href).searchParams.get(Lang) ||
-                localStorage.getItem(Lang);
+            culture =
+                new URL(window.location.href).searchParams.get(Culture) ||
+                localStorage.getItem(Culture);
         } catch {
-            language = null;
+            culture = null;
         }
 
         // Browser detected
-        if (language == null) {
-            language =
+        if (culture == null) {
+            culture =
                 (navigator.languages && navigator.languages[0]) ||
                 navigator.language;
         }
 
         // Return
-        return language;
+        return culture;
     })();
 
     /**
@@ -69,19 +69,19 @@ export namespace DomUtils {
         Object.fromEntries(formData);
 
     /**
-     * Get the available language definition
-     * @param items Available languages
-     * @param language Detected language
+     * Get the available culture definition
+     * @param items Available cultures
+     * @param culture Detected culture
      */
-    export const getLanguage = (
-        items: DataTypes.LanguageDefinition[],
-        language: string
+    export const getCulture = (
+        items: DataTypes.CultureDefinition[],
+        culture: string
     ) => {
         if (items.length === 0) {
             return undefined;
         }
 
-        return items.find((item) => item.name === language) || items[0];
+        return items.find((item) => item.name === culture) || items[0];
     };
 
     /**
@@ -149,10 +149,10 @@ export namespace DomUtils {
     }
 
     /**
-     * Save language name
-     * @param lang Language name
+     * Save culture name
+     * @param culture Culture name
      */
-    export function saveLanguage(lang: string) {
-        localStorage.setItem(Lang, lang);
+    export function saveCulture(culture: string) {
+        localStorage.setItem(Culture, culture);
     }
 }

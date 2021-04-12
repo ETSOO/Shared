@@ -60,17 +60,17 @@ test('Tests for mergeClasses', () => {
     expect(DomUtils.mergeClasses('a', '', 'b ', undefined, 'c')).toBe('a b c');
 });
 
-test('Tests for detectedLanguage', () => {
-    expect(DomUtils.detectedLanguage).toBe('en-US');
+test('Tests for detectedCulture', () => {
+    expect(DomUtils.detectedCulture).toBe('en-US');
 });
 
-test('Tests for getCurrentLanguage', () => {
-    const languages: DataTypes.LanguageDefinition[] = [
-        { name: 'zh-CN', label: '简体中文', labels: {} },
-        { name: 'en-US', label: 'English', labels: {} }
+test('Tests for getCurrentCulture', () => {
+    const cultures: DataTypes.CultureDefinition[] = [
+        { name: 'zh-CN', label: '简体中文', resources: {} },
+        { name: 'en-US', label: 'English', resources: {} }
     ];
 
-    expect(DomUtils.getLanguage(languages, 'zh-CN')?.name).toBe('zh-CN');
+    expect(DomUtils.getCulture(cultures, 'zh-CN')?.name).toBe('zh-CN');
 });
 
 test('Tests for getLocationKey', () => {
