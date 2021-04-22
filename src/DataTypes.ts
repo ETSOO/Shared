@@ -34,15 +34,19 @@ export namespace DataTypes {
     export type ReadonlyData = Readonly<DynamicData>;
 
     /**
+     * Base types
+     */
+    export type BaseType = boolean | Date | number | string;
+
+    /**
+     * Base and collection types
+     */
+    export type BaseCType = BaseType | BaseType[] | null | undefined;
+
+    /**
      * Simple base types
      */
-    export type SimpleBaseType =
-        | bigint
-        | boolean
-        | Date
-        | number
-        | string
-        | symbol;
+    export type SimpleBaseType = BaseType | bigint | symbol;
 
     /**
      * Simple types
@@ -52,6 +56,24 @@ export namespace DataTypes {
         | SimpleBaseType[]
         | null
         | undefined;
+
+    /**
+     * Is the target a base collection type (Type guard)
+     * @param target Test target
+     * @param includeArray Include array as base type
+     */
+    export function isBaseType(
+        target: any,
+        includeArray: boolean = true
+    ): target is BaseCType {
+        return (
+            target instanceof Date ||
+            (includeArray &&
+                Array.isArray(target) &&
+                (target.length === 0 || isSimpleType(target[0], false))) ||
+            target !== Object(target)
+        );
+    }
 
     /**
      * Is the target a simple type (Type guard)

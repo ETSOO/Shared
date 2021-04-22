@@ -41,6 +41,45 @@ export namespace Utils {
     }
 
     /**
+     * Parse string (JSON) to specific type
+     * @param input Input string
+     * @param defaultValue Default value
+     * @returns Parsed value
+     */
+    export function parseString<T>(
+        input: string | undefined | null,
+        defaultValue: T
+    ): T {
+        // Undefined case, return default value
+        if (input == null) return defaultValue;
+
+        // String
+        if (typeof defaultValue === 'string') return input as any;
+
+        try {
+            // Date
+            if (defaultValue instanceof Date) {
+                return new Date(input) as any;
+            }
+
+            // JSON
+            const json = JSON.parse(input);
+
+            // Return
+            return json as T;
+        } catch (e) {
+            console.log('Utils.parseString error', e);
+            return defaultValue;
+        }
+        /*
+        finally part will still return the boolean value
+        finally {
+            return defaultValue
+        }
+        */
+    }
+
+    /**
      * Snake name to works, 'snake_name' to 'Snake Name'
      * @param name Name text
      * @param firstOnly Only convert the first word to upper case

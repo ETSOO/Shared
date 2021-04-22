@@ -24,6 +24,8 @@ Data type definitions and type safe functions
 |DynamicData|String key, any value type dictionary|
 |IdType|Number and string combination id type|
 |ReadonlyData|Readonly DynamicData|
+|BaseType|Base types|
+|BaseCType|Base and collection types|
 |SimpleBaseType|bigint, boolean, Date, number, string, symbol|
 |SimpleType|SimpleBaseType, SimpleBaseType[], null, undefined|
 |HAlign|left, center, right|
@@ -31,6 +33,7 @@ Data type definitions and type safe functions
 |hAlignFromEnum|Enum align to string literal align|
 |VAlign|top, center, bottom|
 |VAlignEnum|Top=1, Center=2, Bottom=3|
+|isBaseType|Check value is BaseCType|
 |isSimpleType|Check value is SimpleType|
 |SimpleObject|String key, SimpleType value dictionary|
 |isSimpleObject|Check value is SimpleObject|
@@ -75,12 +78,10 @@ Storage related utilities
 
 |Name|Description|
 |---:|---|
-|cacheLocalData|Cache local storage data|
-|cacheSessionData|Cache session storage data|
+|setLocalData|Set local storage data|
+|setSessionData|Set session storage data|
 |getLocalData|Get local storage data|
-|getLocalDataAs|Get local storage data as specific type|
 |getSessionData|Get session storage data|
-|getSessionDataAs|Get session storage data as specific type|
 
 ## Utils
 String and other related utilities
@@ -90,4 +91,5 @@ String and other related utilities
 |formatUpperLetter|Format word's first letter to upper case|
 |joinItems|Join items as a string|
 |newGUID|Create a GUID|
+|parseString|Parse string (JSON) to specific type|
 |snakeNameToWord|Snake name to works, 'snake_name' to 'Snake Name'|

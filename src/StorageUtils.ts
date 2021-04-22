@@ -1,15 +1,18 @@
+import { DataTypes } from './DataTypes';
+import { Utils } from './Utils';
+
 /**
  * Storage utilities
  */
 export namespace StorageUtils {
     /**
-     * Cache local storage data
+     * Set local storage data
      * @param key Key name
      * @param data  Data, null for removal
      */
-    export function cacheLocalData(
+    export function setLocalData(
         key: string,
-        data: string | object | undefined
+        data: DataTypes.BaseCType | object
     ) {
         if (data == null) {
             window.localStorage.removeItem(key);
@@ -23,13 +26,13 @@ export namespace StorageUtils {
     }
 
     /**
-     * Cache session storage data
+     * Set session storage data
      * @param key Key name
      * @param data Data, null for removal
      */
-    export function cacheSessionData(
+    export function setSessionData(
         key: string,
-        data: string | object | undefined
+        data: DataTypes.BaseCType | object
     ) {
         if (data == null) {
             window.sessionStorage.removeItem(key);
@@ -45,36 +48,25 @@ export namespace StorageUtils {
     /**
      * Get local storage data
      * @param key Key name
+     * @param defaultValue Default value
      */
-    export function getLocalData(key: string) {
-        return window.localStorage.getItem(key);
-    }
+    export function getLocalData<T>(key: string, defaultValue: T) {
+        // Get storage
+        const data = window.localStorage.getItem(key);
 
-    /**
-     * Get local storage data as specific type
-     * @param key Key name
-     */
-    export function getLocalDataAs<T>(key: string) {
-        const data = getLocalData(key);
-        if (data) return JSON.parse(data) as T;
-        return undefined;
+        // Return
+        return Utils.parseString(data, defaultValue);
     }
 
     /**
      * Get session storage data
      * @param key Key name
      */
-    export function getSessionData(key: string) {
-        return window.sessionStorage.getItem(key);
-    }
+    export function getSessionData<T>(key: string, defaultValue: T) {
+        // Get storage
+        const data = window.sessionStorage.getItem(key);
 
-    /**
-     * Get session storage data as specific type
-     * @param key Key name
-     */
-    export function getSessionDataAs<T>(key: string) {
-        const data = getSessionData(key);
-        if (data) return JSON.parse(data) as T;
-        return undefined;
+        // Return
+        return Utils.parseString(data, defaultValue);
     }
 }
