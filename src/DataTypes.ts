@@ -218,6 +218,11 @@ export namespace DataTypes {
          * Primary language, zh-CN for China
          */
         language: string;
+
+        /**
+         * Name
+         */
+        name?: string;
     }>;
 
     /**
