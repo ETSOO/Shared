@@ -39,6 +39,7 @@ Data type definitions and type safe functions
 |isSimpleObject|Check value is SimpleObject|
 |StringDictionary|String key and value dictionary|
 |ReadonlyStringDictionary|Readonly StringDictionary|
+|Country|Country definition|
 |CultureDefinition|Culture definition|
 
 ## DomUtils
@@ -46,15 +47,18 @@ DOM/window related utilities
 
 |Name|Description|
 |---:|---|
+|detectedCountry|Current detected country|
 |detectedCulture|Current detected culture|
 |dimensionEqual|Check two rectangles equality|
 |getCulture|Get the available culture definition|
+|getCountry|Get the available country definition|
 |getLocationKey|Get an unique key combined with current URL|
 |formDataToObject|Convert FormData to object|
 |headersToObject|Convert headers to object|
 |isJSONContentType|Is JSON content type|
 |mergeClasses|Merge class names|
 |mergeURLSearchParams|Merge URL search parameters|
+|saveCountry|Save country name|
 |saveCulture|Save culture name|
 
 ## ExtendUtils

@@ -6,9 +6,32 @@ import { Utils } from './Utils';
  */
 export namespace DomUtils {
     /**
-     * Language parameter name
+     * Language cache parameter name
      */
     export const Culture = 'culture';
+
+    /**
+     * Country cache parameter name
+     */
+    export const Country = 'country';
+
+    /**
+     * Current detected country
+     */
+    export const detectedCountry = (() => {
+        // URL first, then local storage
+        let country: string | null;
+        try {
+            country =
+                new URL(window.location.href).searchParams.get(Country) ||
+                localStorage.getItem(Country);
+        } catch {
+            country = null;
+        }
+
+        // Return
+        return country;
+    })();
 
     /**
      * Current detected culture
@@ -67,6 +90,19 @@ export namespace DomUtils {
      */
     export const formDataToObject = (formData: FormData) =>
         Object.fromEntries(formData);
+
+    /**
+     * Get the available country definition
+     * @param items Available countries
+     * @param culture Detected country
+     */
+    export const getCountry = (items: DataTypes.Country[], country: string) => {
+        if (items.length === 0) {
+            return undefined;
+        }
+
+        return items.find((item) => item.id === country) || items[0];
+    };
 
     /**
      * Get the available culture definition
@@ -146,6 +182,14 @@ export namespace DomUtils {
             base.set(key, value.toString());
         });
         return base;
+    }
+
+    /**
+     * Save country name
+     * @param country Country name
+     */
+    export function saveCountry(country: string) {
+        localStorage.setItem(Country, country);
     }
 
     /**

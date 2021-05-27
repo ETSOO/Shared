@@ -171,6 +171,58 @@ export namespace DataTypes {
     /**
      * Culture definiton
      */
+    export type Country = Readonly<{
+        /**
+         * Id, like CN for China
+         */
+        id: string;
+
+        /**
+         * Id3, like CHN for China
+         */
+        id3: string;
+
+        /**
+         * Number id, like 156 for China
+         */
+        nid: string;
+
+        /**
+         * Continent
+         * AF = Africa
+         * AN = Antarctica
+         * AS = Asia
+         * EU = Europe
+         * NA = North America
+         * OC = Oceania
+         * SA = South America
+         */
+        continent: 'AF' | 'AN' | 'AS' | 'EU' | 'NA' | 'OC' | 'SA';
+
+        /**
+         * 00 from China
+         */
+        exitCode: string;
+
+        /**
+         * International digital dialing, 86 for China
+         */
+        idd: string;
+
+        /**
+         * Currency, CNY for China
+         */
+        currency: string;
+
+        /**
+         * Primary language, zh-CN for China
+         */
+        language: string;
+    }>;
+
+    /**
+     * Culture definiton
+     */
     export type CultureDefinition = Readonly<{
         /**
          * Name, like zh-CN
