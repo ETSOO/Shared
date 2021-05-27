@@ -171,59 +171,61 @@ export namespace DataTypes {
     /**
      * Culture definiton
      */
-    export type Country = Readonly<{
-        /**
-         * Id, like CN for China
-         */
-        id: string;
+    export type Country =
+        | Readonly<{
+              /**
+               * Id, like CN for China
+               */
+              id: string;
 
-        /**
-         * Id3, like CHN for China
-         */
-        id3: string;
+              /**
+               * Id3, like CHN for China
+               */
+              id3: string;
 
-        /**
-         * Number id, like 156 for China
-         */
-        nid: string;
+              /**
+               * Number id, like 156 for China
+               */
+              nid: string;
 
-        /**
-         * Continent
-         * AF = Africa
-         * AN = Antarctica
-         * AS = Asia
-         * EU = Europe
-         * NA = North America
-         * OC = Oceania
-         * SA = South America
-         */
-        continent: 'AF' | 'AN' | 'AS' | 'EU' | 'NA' | 'OC' | 'SA';
+              /**
+               * Continent
+               * AF = Africa
+               * AN = Antarctica
+               * AS = Asia
+               * EU = Europe
+               * NA = North America
+               * OC = Oceania
+               * SA = South America
+               */
+              continent: 'AF' | 'AN' | 'AS' | 'EU' | 'NA' | 'OC' | 'SA';
 
-        /**
-         * 00 from China
-         */
-        exitCode: string;
+              /**
+               * 00 from China
+               */
+              exitCode: string;
 
-        /**
-         * International digital dialing, 86 for China
-         */
-        idd: string;
+              /**
+               * International digital dialing, 86 for China
+               */
+              idd: string;
 
-        /**
-         * Currency, CNY for China
-         */
-        currency: string;
+              /**
+               * Currency, CNY for China
+               */
+              currency: string;
 
-        /**
-         * Primary language, zh-CN for China
-         */
-        language: string;
-
-        /**
-         * Name
-         */
-        name?: string;
-    }>;
+              /**
+               * Primary language, zh-CN for China
+               */
+              language: string;
+          }>
+        | {
+              /**
+               * Country name
+               */
+              name?: string;
+          };
 
     /**
      * Culture definiton
