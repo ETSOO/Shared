@@ -128,6 +128,19 @@ export namespace DomUtils {
         `${window.location.href}:${key}`;
 
     /**
+     * Get time zone
+     * @returns Timezone
+     */
+    export const getTimeZone = () => {
+        // If Intl supported
+        if (
+            typeof Intl === 'object' &&
+            typeof Intl.DateTimeFormat === 'function'
+        )
+            return Intl.DateTimeFormat().resolvedOptions().timeZone;
+    };
+
+    /**
      * Convert headers to object
      * @param headers Heaers
      */

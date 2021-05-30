@@ -53,6 +53,7 @@ DOM/window related utilities
 |getCulture|Get the available culture definition|
 |getCountry|Get the available country definition|
 |getLocationKey|Get an unique key combined with current URL|
+|getTimeZone|Get the browser's local time zone|
 |formDataToObject|Convert FormData to object|
 |headersToObject|Convert headers to object|
 |isJSONContentType|Is JSON content type|
