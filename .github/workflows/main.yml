@@ -17,7 +17,8 @@ jobs:
     # needs: Any previous jobs
 
     # Operation system
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       # https://github.com/actions/checkout, This action checks-out your repository under $GITHUB_WORKSPACE
