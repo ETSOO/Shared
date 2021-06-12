@@ -2,7 +2,7 @@ import { DateUtils } from '../src/DateUtils';
 
 test('Tests for parse', () => {
     // Arrange
-    const date = new Date(Date.UTC(2021, 5, 12, 2, 23, 6));
+    const date = new Date('2021-06-12T02:23:06Z');
 
     // Act & assert
     expect(DateUtils.format('zh-CN', date, 'd')).toBe('2021/06/12');
