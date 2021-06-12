@@ -31,11 +31,13 @@ export namespace DateUtils {
      * @param locale Locale
      * @param input Input date time
      * @param options Options
+     * @param timeZone Time zone
      */
     export function format(
         locale: string,
         input?: Date | string,
-        options?: Intl.DateTimeFormatOptions | 'd' | 'dm' | 'ds'
+        options?: Intl.DateTimeFormatOptions | 'd' | 'dm' | 'ds',
+        timeZone?: string
     ) {
         // Null case
         if (input == null) return undefined;
@@ -63,8 +65,11 @@ export namespace DateUtils {
                 opt = options;
         }
 
+        // Clone as new options with time zone
+        const newOpt = { ...opt, ...(timeZone != null && { timeZone }) };
+
         // Return format result
-        return new Intl.DateTimeFormat(locale, opt)
+        return new Intl.DateTimeFormat(locale, newOpt)
             .format(input)
             .replace(/,\s*/g, ' ');
     }
