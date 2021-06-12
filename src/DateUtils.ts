@@ -14,7 +14,7 @@ export namespace DateUtils {
     export const MinuteFormat: Intl.DateTimeFormatOptions = {
         ...DayFormat,
         hour: '2-digit',
-        hour12: false,
+        hourCycle: 'h23',
         minute: '2-digit'
     };
 
