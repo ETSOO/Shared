@@ -42,6 +42,16 @@ Data type definitions and type safe functions
 |Country|Country definition|
 |CultureDefinition|Culture definition|
 
+## DateUtils
+Dates related utilities
+
+|Name|Description|
+|---:|---|
+|DayFormat|YYYY-MM-DD|
+|MinuteFormat|YYYY-MM-DD hh:mm|
+|SecondFormat|YYYY-MM-DD hh:mm:ss|
+|forma|Format dates|
+
 ## DomUtils
 DOM/window related utilities
 

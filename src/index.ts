@@ -1,4 +1,5 @@
 export * from './DataTypes';
+export * from './DateUtils';
 export * from './DomUtils';
 export * from './ExtendUtils';
 export * from './NumberUtils';
