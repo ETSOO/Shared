@@ -27,6 +27,11 @@ export namespace DateUtils {
     };
 
     /**
+     * Date format options
+     */
+    export type FormatOptions = Intl.DateTimeFormatOptions | 'd' | 'dm' | 'ds';
+
+    /**
      * Format
      * @param locale Locale
      * @param input Input date time
@@ -36,7 +41,7 @@ export namespace DateUtils {
     export function format(
         locale: string,
         input?: Date | string,
-        options?: Intl.DateTimeFormatOptions | 'd' | 'dm' | 'ds',
+        options?: FormatOptions,
         timeZone?: string
     ) {
         // Null case
