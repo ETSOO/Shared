@@ -107,4 +107,5 @@ String and other related utilities
 |joinItems|Join items as a string|
 |newGUID|Create a GUID|
 |parseString|Parse string (JSON) to specific type|
+|setLabels|Set source with new labels|
 |snakeNameToWord|Snake name to works, 'snake_name' to 'Snake Name'|

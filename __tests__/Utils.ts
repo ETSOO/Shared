@@ -29,6 +29,18 @@ test('Tests for parseString', () => {
     );
 });
 
+test('Test for setLabels', () => {
+    // Arrange
+    const source = { label: 'Hello' };
+    const newLabel = 'world';
+
+    // Act
+    Utils.setLabels(source, { label: newLabel });
+
+    // Assert
+    expect(source.label).toBe(newLabel);
+});
+
 test('Test for snakeNameToWord', () => {
     expect(Utils.snakeNameToWord('snake_name')).toBe('Snake Name');
     expect(Utils.snakeNameToWord('snake_name', true)).toBe('Snake name');

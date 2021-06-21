@@ -1,3 +1,5 @@
+import { DataTypes } from './DataTypes';
+
 /**
  * Utilities
  */
@@ -78,6 +80,29 @@ export namespace Utils {
         }
         */
     }
+
+    /**
+     * Set source with new labels
+     * @param source Source
+     * @param labels Labels
+     */
+    export const setLabels = (
+        source: {},
+        labels: DataTypes.ReadonlySimpleObject
+    ) => {
+        const newLabels = Object.keys(source).reduce(
+            (newLabels, key, _index, _keys) => {
+                const label = labels[key];
+                if (label != null) {
+                    newLabels[key] = label.toString();
+                }
+
+                return newLabels;
+            },
+            {} as DataTypes.StringDictionary
+        );
+        Object.assign(source, newLabels);
+    };
 
     /**
      * Snake name to works, 'snake_name' to 'Snake Name'
