@@ -85,15 +85,23 @@ export namespace Utils {
      * Set source with new labels
      * @param source Source
      * @param labels Labels
+     * @param reference Key reference dictionary
      */
     export const setLabels = (
         source: {},
-        labels: DataTypes.ReadonlySimpleObject
+        labels: DataTypes.ReadonlySimpleObject,
+        reference: DataTypes.ReadonlyStringDictionary = {}
     ) => {
         const newLabels = Object.keys(source).reduce(
             (newLabels, key, _index, _keys) => {
-                const label = labels[key];
+                // Reference key
+                const labelKey = reference[key] ?? key;
+
+                // Label
+                const label = labels[labelKey];
+
                 if (label != null) {
+                    // If found, update
                     newLabels[key] = label.toString();
                 }
 

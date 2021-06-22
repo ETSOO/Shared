@@ -35,7 +35,7 @@ test('Test for setLabels', () => {
     const newLabel = 'world';
 
     // Act
-    Utils.setLabels(source, { label: newLabel });
+    Utils.setLabels(source, { label1: newLabel }, { label: 'label1' });
 
     // Assert
     expect(source.label).toBe(newLabel);
