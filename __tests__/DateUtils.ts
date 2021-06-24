@@ -25,3 +25,19 @@ test('Tests for UTC date time', () => {
         '06/11/2021 22:23:06'
     );
 });
+
+test('Tests for date parse', () => {
+    const json = `
+    {   
+        "id": 1234, 
+        "logined": false,   
+        "name": "Jimmy Roe",
+        "creation": "2014-01-01T13:13:34.441Z"
+    }
+    `;
+
+    const result = JSON.parse(json, DateUtils.jsonParser);
+    const isDate = result.creation instanceof Date;
+
+    expect(isDate).toBeTruthy();
+});

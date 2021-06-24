@@ -48,7 +48,11 @@ export namespace DateUtils {
         if (input == null) return undefined;
 
         // Type transformation
-        if (typeof input === 'string') input = new Date(input);
+        if (typeof input === 'string') {
+            const parsedDate = parse(input);
+            if (parsedDate == null) return undefined;
+            input = parsedDate;
+        }
 
         // Default options
         options ??= DayFormat;
@@ -77,5 +81,33 @@ export namespace DateUtils {
         return new Intl.DateTimeFormat(locale, newOpt)
             .format(input)
             .replace(/,\s*/g, ' ');
+    }
+
+    /**
+     * JSON parser
+     * @param _key Current key
+     * @param value Current value
+     * @returns Formated value
+     */
+    export function jsonParser(_key: string, value: any) {
+        if (typeof value === 'string' && value != null) {
+            const parsedDate = parse(value);
+            if (parsedDate != null) return parsedDate;
+        }
+        return value;
+    }
+
+    /**
+     * Parse string to date
+     * @param input Input string
+     * @returns Date
+     */
+    export function parse(input: string) {
+        const f = input[0];
+        if (f >= '0' && f <= '9') {
+            const n = Date.parse(input);
+            if (!isNaN(n)) return new Date(n);
+        }
+        return undefined;
     }
 }

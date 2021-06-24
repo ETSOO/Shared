@@ -51,6 +51,8 @@ Dates related utilities
 |MinuteFormat|YYYY-MM-DD hh:mm|
 |SecondFormat|YYYY-MM-DD hh:mm:ss|
 |forma|Format dates|
+|jsonParser|JSON parser|
+|parse|Parse string to date|
 
 ## DomUtils
 DOM/window related utilities
