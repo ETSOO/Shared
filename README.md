@@ -73,6 +73,7 @@ DOM/window related utilities
 |mergeURLSearchParams|Merge URL search parameters|
 |saveCountry|Save country name|
 |saveCulture|Save culture name|
+|setFocus|Set HTML element focus by name|
 
 ## ExtendUtils
 Extend current class/object functioning

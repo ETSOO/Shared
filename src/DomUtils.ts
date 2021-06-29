@@ -212,4 +212,16 @@ export namespace DomUtils {
     export function saveCulture(culture: string) {
         localStorage.setItem(Culture, culture);
     }
+
+    /**
+     * Set HTML element focus by name
+     * @param name Element name or first collection item
+     */
+    export function setFocus(name: string | {}) {
+        const elementName =
+            typeof name === 'object' ? Object.keys(name)[0] : name.toString();
+
+        const element = document.getElementsByName(elementName)[0];
+        if (element != null) element.focus();
+    }
 }
