@@ -5,6 +5,81 @@ import { DataTypes } from './DataTypes';
  */
 export namespace Utils {
     /**
+     * Clear form data
+     * @param data Form data
+     * @param source Source data to match
+     * @param keepFields Fields need to be kept
+     */
+    export function clearFormData(
+        data: FormData,
+        source?: {},
+        keepFields?: string[]
+    ) {
+        // Unique keys
+        const keys = new Set(data.keys());
+
+        // Remove empty key
+        const removeEmpty = (key: string) => {
+            // Need to be kept
+            if (keepFields != null && keepFields.includes(key)) return;
+
+            // Get all values
+            const formValues = data.getAll(key);
+            if (formValues.length == 1 && formValues[0] === '') {
+                // Remove empty field
+                data.delete(key);
+            }
+        };
+
+        if (source == null) {
+            // Remove all empty strings
+            for (var key of keys) {
+                removeEmpty(key);
+            }
+        } else {
+            const sourceKeys = Object.keys(source);
+            for (const key of sourceKeys) {
+                // Need to be kept
+                if (keepFields != null && keepFields.includes(key)) continue;
+
+                // Get all values
+                const formValues = data.getAll(key);
+                if (formValues.length > 0) {
+                    // Matched
+                    // Source value
+                    const sourceValue = (source as any)[key];
+
+                    if (Array.isArray(sourceValue)) {
+                        // Array, types may differ
+                        if (formValues.join('`') === sourceValue.join('`')) {
+                            // Equal value, remove the key
+                            data.delete(key);
+                        }
+                    } else if (formValues.length == 1) {
+                        // Other
+                        if (formValues[0].toString() === `${sourceValue}`) {
+                            // Equal value, remove the key
+                            data.delete(key);
+                        }
+                    }
+                }
+            }
+
+            // Left fields
+            for (const key of keys) {
+                // Already cleared
+                if (sourceKeys.includes(key)) continue;
+
+                // Remove empties
+                removeEmpty(key);
+            }
+        }
+
+        // Return
+        return data;
+    }
+
+    /**
      * Form data to object
      * @param form Form data
      * @returns Object

@@ -1,6 +1,6 @@
 {
     "name": "@etsoo/shared",
-    "version": "1.0.26",
+    "version": "1.0.27",
     "description": "TypeScript shared utilities and functions",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",

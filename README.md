@@ -106,6 +106,7 @@ String and other related utilities
 
 |Name|Description|
 |---:|---|
+|clearFormData|Clear form data|
 |formatUpperLetter|Format word's first letter to upper case|
 |joinItems|Join items as a string|
 |mergeFormData|Merge form data to primary one|

@@ -1,5 +1,39 @@
 import { Utils } from '../src/Utils';
 
+describe('Tests for clearFormData', () => {
+    // Applies only to tests in this describe block
+    // Arrange
+    let form: FormData;
+    beforeEach(() => {
+        form = new FormData();
+        form.append('id', '1');
+        form.append('item', 'a');
+        form.append('item', 'b');
+        form.append('item', 'c');
+        form.append('job', 'good');
+        form.append('empty', '');
+    });
+
+    test('Remove empties only', () => {
+        const result = Utils.clearFormData(form);
+        expect(Array.from(result.keys()).includes('empty')).toBeFalsy();
+    });
+
+    test('Clear with source', () => {
+        const result = Utils.clearFormData(form, { id: 1, job: 'good' });
+        const keys = Array.from(result.keys());
+        expect(expect.arrayContaining(keys)).not.toContainEqual(
+            expect.arrayContaining(['id', 'job', 'empty'])
+        );
+    });
+
+    test('Clear with source and hold fields', () => {
+        const result = Utils.clearFormData(form, {}, ['id']);
+        const keys = Array.from(result.keys());
+        expect(keys.includes('id')).toBeTruthy();
+    });
+});
+
 test('Tests for formDataToObject', () => {
     // Arrange
     const form1 = new FormData();
