@@ -1,5 +1,21 @@
 import { Utils } from '../src/Utils';
 
+test('Tests for formDataToObject', () => {
+    // Arrange
+    const form1 = new FormData();
+    form1.append('item', 'a');
+    form1.append('item', 'b');
+    form1.append('item', 'c');
+    form1.append('job', 'good');
+
+    // Act
+    const result = Utils.formDataToObject(form1);
+
+    // Assert
+    expect(Array.isArray(result['item'])).toBeTruthy();
+    expect(result['item'].length).toBe(3);
+});
+
 test('Tests for formatUpperLetter', () => {
     expect(Utils.formatUpperLetter('hello')).toBe('Hello');
 });
@@ -8,6 +24,26 @@ test('Tests for joinItems', () => {
     expect(Utils.joinItems(['a', undefined, ' b', '', 'c '], ',')).toBe(
         'a,b,c'
     );
+});
+
+test('Tests for mergeFormData', () => {
+    // Arrange
+    const form1 = new FormData();
+    form1.append('item', 'a');
+    form1.append('item', 'b');
+    form1.append('item', 'c');
+    form1.append('job', 'good');
+    form1.append('job', 'bad');
+
+    const form2 = new FormData();
+    form2.append('job', 'x');
+    form2.append('job', 'y');
+
+    // Act
+    const result = Utils.mergeFormData(form1, form2);
+
+    // Assert
+    expect(Array.from(result.values())).toContainEqual('x');
 });
 
 test('Tests for newGUID', () => {

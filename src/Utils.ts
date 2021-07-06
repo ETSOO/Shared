@@ -5,6 +5,20 @@ import { DataTypes } from './DataTypes';
  */
 export namespace Utils {
     /**
+     * Form data to object
+     * @param form Form data
+     * @returns Object
+     */
+    export function formDataToObject(form: FormData) {
+        const dic: Record<string, any> = {};
+        for (var key of new Set(form.keys())) {
+            const values = form.getAll(key);
+            dic[key] = values.length == 1 ? values[0] : values;
+        }
+        return dic;
+    }
+
+    /**
      * Format word's first letter to upper case
      * @param word Word
      */
@@ -30,6 +44,23 @@ export namespace Utils {
                 return items;
             }, [] as string[])
             .join(joinPart);
+
+    /**
+     * Merge form data to primary one
+     * @param form Primary form data
+     * @param forms Other form data
+     * @returns Merged form data
+     */
+    export function mergeFormData(form: FormData, ...forms: FormData[]) {
+        for (var newForm of forms) {
+            for (var key of new Set(newForm.keys())) {
+                form.delete(key);
+                newForm.getAll(key).forEach((value) => form.append(key, value));
+            }
+        }
+
+        return form;
+    }
 
     /**
      * Create a GUID

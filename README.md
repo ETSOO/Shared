@@ -108,6 +108,7 @@ String and other related utilities
 |---:|---|
 |formatUpperLetter|Format word's first letter to upper case|
 |joinItems|Join items as a string|
+|mergeFormData|Merge form data to primary one|
 |newGUID|Create a GUID|
 |parseString|Parse string (JSON) to specific type|
 |setLabels|Set source with new labels|
