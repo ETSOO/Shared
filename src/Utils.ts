@@ -5,101 +5,25 @@ import { DataTypes } from './DataTypes';
  */
 export namespace Utils {
     /**
-     * Clear form data
-     * @param data Form data
-     * @param source Source data to match
-     * @param keepFields Fields need to be kept
-     */
-    export function clearFormData(
-        data: FormData,
-        source?: {},
-        keepFields?: string[]
-    ) {
-        // Unique keys
-        const keys = new Set(data.keys());
-
-        // Remove empty key
-        const removeEmpty = (key: string) => {
-            // Need to be kept
-            if (keepFields != null && keepFields.includes(key)) return;
-
-            // Get all values
-            const formValues = data.getAll(key);
-            if (formValues.length == 1 && formValues[0] === '') {
-                // Remove empty field
-                data.delete(key);
-            }
-        };
-
-        if (source == null) {
-            // Remove all empty strings
-            for (var key of keys) {
-                removeEmpty(key);
-            }
-        } else {
-            const sourceKeys = Object.keys(source);
-            for (const key of sourceKeys) {
-                // Need to be kept
-                if (keepFields != null && keepFields.includes(key)) continue;
-
-                // Get all values
-                const formValues = data.getAll(key);
-                if (formValues.length > 0) {
-                    // Matched
-                    // Source value
-                    const sourceValue = (source as any)[key];
-
-                    if (Array.isArray(sourceValue)) {
-                        // Array, types may differ
-                        if (formValues.join('`') === sourceValue.join('`')) {
-                            // Equal value, remove the key
-                            data.delete(key);
-                        }
-                    } else if (formValues.length == 1) {
-                        // Other
-                        if (formValues[0].toString() === `${sourceValue}`) {
-                            // Equal value, remove the key
-                            data.delete(key);
-                        }
-                    }
-                }
-            }
-
-            // Left fields
-            for (const key of keys) {
-                // Already cleared
-                if (sourceKeys.includes(key)) continue;
-
-                // Remove empties
-                removeEmpty(key);
-            }
-        }
-
-        // Return
-        return data;
-    }
-
-    /**
-     * Form data to object
-     * @param form Form data
-     * @returns Object
-     */
-    export function formDataToObject(form: FormData) {
-        const dic: Record<string, any> = {};
-        for (var key of new Set(form.keys())) {
-            const values = form.getAll(key);
-            dic[key] = values.length == 1 ? values[0] : values;
-        }
-        return dic;
-    }
-
-    /**
      * Format word's first letter to upper case
      * @param word Word
      */
     export function formatUpperLetter(word: string) {
         return word.charAt(0).toUpperCase() + word.slice(1);
     }
+
+    /**
+     * Get time zone
+     * @returns Timezone
+     */
+    export const getTimeZone = () => {
+        // If Intl supported
+        if (
+            typeof Intl === 'object' &&
+            typeof Intl.DateTimeFormat === 'function'
+        )
+            return Intl.DateTimeFormat().resolvedOptions().timeZone;
+    };
 
     /**
      * Join items as a string
@@ -121,21 +45,11 @@ export namespace Utils {
             .join(joinPart);
 
     /**
-     * Merge form data to primary one
-     * @param form Primary form data
-     * @param forms Other form data
-     * @returns Merged form data
+     * Merge class names
+     * @param classNames Class names
      */
-    export function mergeFormData(form: FormData, ...forms: FormData[]) {
-        for (var newForm of forms) {
-            for (var key of new Set(newForm.keys())) {
-                form.delete(key);
-                newForm.getAll(key).forEach((value) => form.append(key, value));
-            }
-        }
-
-        return form;
-    }
+    export const mergeClasses = (...classNames: (string | undefined)[]) =>
+        joinItems(classNames, ' ');
 
     /**
      * Create a GUID

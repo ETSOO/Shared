@@ -1,5 +1,8 @@
 import { DomUtils } from '../src/DomUtils';
 import { DataTypes } from '../src/DataTypes';
+import { FormData } from 'formdata-node';
+
+(globalThis as any).FormData ??= FormData;
 
 // Implement for tests
 class Rect implements DOMRect {
@@ -37,6 +40,76 @@ class Rect implements DOMRect {
     }
 }
 
+describe('Tests for clearFormData', () => {
+    // Applies only to tests in this describe block
+    // Arrange
+    let form: FormData;
+    beforeEach(() => {
+        form = new FormData();
+        form.append('id', '1');
+        form.append('item', 'a');
+        form.append('item', 'b');
+        form.append('item', 'c');
+        form.append('job', 'good');
+        form.append('empty', '');
+    });
+
+    test('Remove empties only', () => {
+        const result = DomUtils.clearFormData(form);
+        expect(Array.from(result.keys()).includes('empty')).toBeFalsy();
+    });
+
+    test('Clear with source', () => {
+        const result = DomUtils.clearFormData(form, { id: 1, job: 'good' });
+        const keys = Array.from(result.keys());
+        expect(expect.arrayContaining(keys)).not.toContainEqual(
+            expect.arrayContaining(['id', 'job', 'empty'])
+        );
+    });
+
+    test('Clear with source and hold fields', () => {
+        const result = DomUtils.clearFormData(form, {}, ['id']);
+        const keys = Array.from(result.keys());
+        expect(keys.includes('id')).toBeTruthy();
+    });
+});
+
+test('Tests for formDataToObject', () => {
+    // Arrange
+    const form1 = new FormData();
+    form1.append('item', 'a');
+    form1.append('item', 'b');
+    form1.append('item', 'c');
+    form1.append('job', 'good');
+
+    // Act
+    const result = DomUtils.formDataToObject(form1);
+
+    // Assert
+    expect(Array.isArray(result['item'])).toBeTruthy();
+    expect(result['item'].length).toBe(3);
+});
+
+test('Tests for mergeFormData', () => {
+    // Arrange
+    const form1 = new FormData();
+    form1.append('item', 'a');
+    form1.append('item', 'b');
+    form1.append('item', 'c');
+    form1.append('job', 'good');
+    form1.append('job', 'bad');
+
+    const form2 = new FormData();
+    form2.append('job', 'x');
+    form2.append('job', 'y');
+
+    // Act
+    const result = DomUtils.mergeFormData(form1, form2);
+
+    // Assert
+    expect(Array.from(result.values())).toContainEqual('x');
+});
+
 test('Tests for dimensionEqual', () => {
     const rect1: DOMRect = new Rect(200, 300);
     const rect2: DOMRect = new Rect(100, 200);
@@ -54,10 +127,6 @@ test('Tests for formDataToObject', () => {
         id: '1234',
         name: 'test'
     });
-});
-
-test('Tests for mergeClasses', () => {
-    expect(DomUtils.mergeClasses('a', '', 'b ', undefined, 'c')).toBe('a b c');
 });
 
 test('Tests for detectedCulture', () => {

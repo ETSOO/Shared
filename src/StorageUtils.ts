@@ -1,8 +1,14 @@
 import { DataTypes } from './DataTypes';
+import { NodeStorage } from './node/Storage';
 import { Utils } from './Utils';
+
+// Mock node
+globalThis.localStorage ??= new NodeStorage();
+globalThis.sessionStorage ??= new NodeStorage();
 
 /**
  * Storage utilities
+ * NodeStorage needs data persistance
  */
 export namespace StorageUtils {
     /**
@@ -15,11 +21,11 @@ export namespace StorageUtils {
         data: DataTypes.BaseCType | object
     ) {
         if (data == null) {
-            window.localStorage.removeItem(key);
+            localStorage.removeItem(key);
             return;
         }
 
-        window.localStorage.setItem(
+        localStorage.setItem(
             key,
             typeof data === 'string' ? data : JSON.stringify(data)
         );
@@ -35,11 +41,11 @@ export namespace StorageUtils {
         data: DataTypes.BaseCType | object
     ) {
         if (data == null) {
-            window.sessionStorage.removeItem(key);
+            sessionStorage.removeItem(key);
             return;
         }
 
-        window.sessionStorage.setItem(
+        sessionStorage.setItem(
             key,
             typeof data === 'string' ? data : JSON.stringify(data)
         );
@@ -52,7 +58,7 @@ export namespace StorageUtils {
      */
     export function getLocalData<T>(key: string, defaultValue: T) {
         // Get storage
-        const data = window.localStorage.getItem(key);
+        const data = localStorage.getItem(key);
 
         // Return
         return Utils.parseString(data, defaultValue);
@@ -64,7 +70,7 @@ export namespace StorageUtils {
      */
     export function getSessionData<T>(key: string, defaultValue: T) {
         // Get storage
-        const data = window.sessionStorage.getItem(key);
+        const data = sessionStorage.getItem(key);
 
         // Return
         return Utils.parseString(data, defaultValue);

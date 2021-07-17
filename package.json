@@ -1,6 +1,6 @@
 {
     "name": "@etsoo/shared",
-    "version": "1.0.29",
+    "version": "1.0.30",
     "description": "TypeScript shared utilities and functions",
     "main": "lib/mjs/index.js",
     "module": "lib/cjs/index.js",
@@ -43,6 +43,8 @@
     },
     "homepage": "https://github.com/ETSOO/NotificationBase#readme",
     "dependencies": {
+        "formdata-node": "^3.5.4",
+        "formdata-polyfill": "^4.0.6",
         "typescript": "^4.3.2"
     },
     "devDependencies": {

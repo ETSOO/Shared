@@ -1,8 +1,17 @@
 import { DataTypes } from './DataTypes';
-import { Utils } from './Utils';
+import { FormData } from 'formdata-node';
+
+(globalThis as any).FormData ??= FormData;
+
+if (typeof navigator === 'undefined') {
+    // Test mock only
+    global.navigator = { language: 'en-US' } as any;
+    global.location = { href: 'http://localhost/' } as any;
+}
 
 /**
  * Dom Utilities
+ * Not all methods support Node
  */
 export namespace DomUtils {
     /**
@@ -16,6 +25,81 @@ export namespace DomUtils {
     export const Country = 'country';
 
     /**
+     * Clear form data
+     * @param data Form data
+     * @param source Source data to match
+     * @param keepFields Fields need to be kept
+     */
+    export function clearFormData(
+        data: FormData,
+        source?: {},
+        keepFields?: string[]
+    ) {
+        // Unique keys
+        const keys = new Set(data.keys());
+
+        // Remove empty key
+        const removeEmpty = (key: string) => {
+            // Need to be kept
+            if (keepFields != null && keepFields.includes(key)) return;
+
+            // Get all values
+            const formValues = data.getAll(key);
+            if (formValues.length == 1 && formValues[0] === '') {
+                // Remove empty field
+                data.delete(key);
+            }
+        };
+
+        if (source == null) {
+            // Remove all empty strings
+            for (var key of keys) {
+                removeEmpty(key);
+            }
+        } else {
+            const sourceKeys = Object.keys(source);
+            for (const key of sourceKeys) {
+                // Need to be kept
+                if (keepFields != null && keepFields.includes(key)) continue;
+
+                // Get all values
+                const formValues = data.getAll(key);
+                if (formValues.length > 0) {
+                    // Matched
+                    // Source value
+                    const sourceValue = (source as any)[key];
+
+                    if (Array.isArray(sourceValue)) {
+                        // Array, types may differ
+                        if (formValues.join('`') === sourceValue.join('`')) {
+                            // Equal value, remove the key
+                            data.delete(key);
+                        }
+                    } else if (formValues.length == 1) {
+                        // Other
+                        if (formValues[0].toString() === `${sourceValue}`) {
+                            // Equal value, remove the key
+                            data.delete(key);
+                        }
+                    }
+                }
+            }
+
+            // Left fields
+            for (const key of keys) {
+                // Already cleared
+                if (sourceKeys.includes(key)) continue;
+
+                // Remove empties
+                removeEmpty(key);
+            }
+        }
+
+        // Return
+        return data;
+    }
+
+    /**
      * Current detected country
      */
     export const detectedCountry = (() => {
@@ -23,7 +107,7 @@ export namespace DomUtils {
         let country: string | null;
         try {
             country =
-                new URL(window.location.href).searchParams.get(Country) ||
+                new URL(location.href).searchParams.get(Country) ||
                 localStorage.getItem(Country);
         } catch {
             country = null;
@@ -41,7 +125,7 @@ export namespace DomUtils {
         let culture: string | null;
         try {
             culture =
-                new URL(window.location.href).searchParams.get(Culture) ||
+                new URL(location.href).searchParams.get(Culture) ||
                 localStorage.getItem(Culture);
         } catch {
             culture = null;
@@ -86,10 +170,17 @@ export namespace DomUtils {
 
     /**
      * Form data to object
-     * @param formData Form data
+     * @param form Form data
+     * @returns Object
      */
-    export const formDataToObject = (formData: FormData) =>
-        Object.fromEntries(formData);
+    export function formDataToObject(form: FormData) {
+        const dic: Record<string, any> = {};
+        for (var key of new Set(form.keys())) {
+            const values = form.getAll(key);
+            dic[key] = values.length == 1 ? values[0] : values;
+        }
+        return dic;
+    }
 
     /**
      * Get the available country definition
@@ -124,21 +215,7 @@ export namespace DomUtils {
      * Get an unique key combined with current URL
      * @param key Key
      */
-    export const getLocationKey = (key: string) =>
-        `${window.location.href}:${key}`;
-
-    /**
-     * Get time zone
-     * @returns Timezone
-     */
-    export const getTimeZone = () => {
-        // If Intl supported
-        if (
-            typeof Intl === 'object' &&
-            typeof Intl.DateTimeFormat === 'function'
-        )
-            return Intl.DateTimeFormat().resolvedOptions().timeZone;
-    };
+    export const getLocationKey = (key: string) => `${location.href}:${key}`;
 
     /**
      * Convert headers to object
@@ -147,12 +224,16 @@ export namespace DomUtils {
     export function headersToObject(
         headers: HeadersInit
     ): Record<string, string> {
-        if (headers instanceof Headers) {
-            return Object.fromEntries(headers.entries());
-        }
-
         if (Array.isArray(headers)) {
             return Object.fromEntries(headers);
+        }
+
+        if (typeof Headers === 'undefined') {
+            return Object.fromEntries(Object.entries(headers));
+        }
+
+        if (headers instanceof Headers) {
+            return Object.fromEntries(headers.entries());
         }
 
         return headers;
@@ -175,11 +256,21 @@ export namespace DomUtils {
     }
 
     /**
-     * Merge class names
-     * @param classNames Class names
+     * Merge form data to primary one
+     * @param form Primary form data
+     * @param forms Other form data
+     * @returns Merged form data
      */
-    export const mergeClasses = (...classNames: (string | undefined)[]) =>
-        Utils.joinItems(classNames, ' ');
+    export function mergeFormData(form: FormData, ...forms: FormData[]) {
+        for (var newForm of forms) {
+            for (var key of new Set(newForm.keys())) {
+                form.delete(key);
+                newForm.getAll(key).forEach((value) => form.append(key, value));
+            }
+        }
+
+        return form;
+    }
 
     /**
      * Merge URL search parameters
