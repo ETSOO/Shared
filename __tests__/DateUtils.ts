@@ -41,3 +41,11 @@ test('Tests for date parse', () => {
 
     expect(isDate).toBeTruthy();
 });
+
+test('Tests for formatForInput', () => {
+    const result1 = DateUtils.formatForInput('2021/7/17');
+    expect(result1).toBe('2021-07-17');
+
+    const result2 = DateUtils.formatForInput(new Date(2021, 5, 6));
+    expect(result2).toBe('2021-06-06');
+});

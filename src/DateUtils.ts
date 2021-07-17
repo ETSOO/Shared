@@ -84,6 +84,28 @@ export namespace DateUtils {
     }
 
     /**
+     * Format to 'yyyy-MM-dd', especially used for date input min/max property
+     * @param date Input date
+     */
+    export function formatForInput(date?: Date | string) {
+        // Parse string as date
+        if (typeof date === 'string') date = new Date(date);
+
+        // Default is now
+        date ??= new Date();
+
+        // Parts
+        const parts = [
+            date.getFullYear(),
+            (date.getMonth() + 1).toString().padStart(2, '0'),
+            date.getDate().toString().padStart(2, '0')
+        ];
+
+        // Return
+        return parts.join('-');
+    }
+
+    /**
      * JSON parser
      * @param _key Current key
      * @param value Current value
