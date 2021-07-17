@@ -217,12 +217,18 @@ export namespace DomUtils {
      */
     export const getLocationKey = (key: string) => `${location.href}:${key}`;
 
+    function isIterable<T>(
+        headers: Record<string, string> | Iterable<T>
+    ): headers is Iterable<T> {
+        return Symbol.iterator in headers;
+    }
+
     /**
      * Convert headers to object
      * @param headers Heaers
      */
     export function headersToObject(
-        headers: HeadersInit
+        headers: HeadersInit | Iterable<[string, string]>
     ): Record<string, string> {
         if (Array.isArray(headers)) {
             return Object.fromEntries(headers);
@@ -234,6 +240,10 @@ export namespace DomUtils {
 
         if (headers instanceof Headers) {
             return Object.fromEntries(headers.entries());
+        }
+
+        if (isIterable(headers)) {
+            return Object.fromEntries(headers);
         }
 
         return headers;
