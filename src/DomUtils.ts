@@ -1,7 +1,5 @@
 import { DataTypes } from './DataTypes';
-import { FormData } from 'formdata-node';
-
-(globalThis as any).FormData ??= FormData;
+import { FormData as NodeFormData } from 'formdata-node';
 
 if (typeof navigator === 'undefined') {
     // Test mock only
@@ -31,7 +29,7 @@ export namespace DomUtils {
      * @param keepFields Fields need to be kept
      */
     export function clearFormData(
-        data: FormData,
+        data: FormData | NodeFormData,
         source?: {},
         keepFields?: string[]
     ) {
@@ -173,7 +171,7 @@ export namespace DomUtils {
      * @param form Form data
      * @returns Object
      */
-    export function formDataToObject(form: FormData) {
+    export function formDataToObject(form: FormData | NodeFormData) {
         const dic: Record<string, any> = {};
         for (var key of new Set(form.keys())) {
             const values = form.getAll(key);
@@ -271,11 +269,16 @@ export namespace DomUtils {
      * @param forms Other form data
      * @returns Merged form data
      */
-    export function mergeFormData(form: FormData, ...forms: FormData[]) {
+    export function mergeFormData(
+        form: FormData | NodeFormData,
+        ...forms: (FormData | NodeFormData)[]
+    ) {
         for (var newForm of forms) {
             for (var key of new Set(newForm.keys())) {
                 form.delete(key);
-                newForm.getAll(key).forEach((value) => form.append(key, value));
+                newForm
+                    .getAll(key)
+                    .forEach((value) => form.append(key, value as any));
             }
         }
 

@@ -1,6 +1,6 @@
 {
     "name": "@etsoo/shared",
-    "version": "1.0.32",
+    "version": "1.0.33",
     "description": "TypeScript shared utilities and functions",
     "main": "lib/mjs/index.js",
     "module": "lib/cjs/index.js",
@@ -23,7 +23,7 @@
         "testMatch": [
             "<rootDir>/__tests__/**/*.ts"
         ],
-        "testEnvironment": "jsdom",
+        "testEnvironment": "node",
         "transform": {
             ".+\\.ts$": "ts-jest"
         }

@@ -105,9 +105,10 @@ test('Tests for mergeFormData', () => {
 
     // Act
     const result = DomUtils.mergeFormData(form1, form2);
+    const values = result.getAll('job');
 
     // Assert
-    expect(Array.from(result.values())).toContainEqual('x');
+    expect(values.includes('x')).toBeTruthy();
 });
 
 test('Tests for dimensionEqual', () => {
