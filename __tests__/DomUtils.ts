@@ -1,8 +1,5 @@
 import { DomUtils } from '../src/DomUtils';
 import { DataTypes } from '../src/DataTypes';
-import { FormData } from 'formdata-node';
-
-(globalThis as any).FormData ??= FormData;
 
 // Implement for tests
 class Rect implements DOMRect {
