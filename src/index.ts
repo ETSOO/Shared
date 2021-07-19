@@ -1,3 +1,4 @@
+export * from './types/FormData';
 export * from './DataTypes';
 export * from './DateUtils';
 export * from './DomUtils';
