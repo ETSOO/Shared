@@ -1,5 +1,28 @@
 import { Utils } from '../src/Utils';
 
+test('Tests for getDataChanges', () => {
+    const input = {
+        id: 1,
+        name: 'Name',
+        gender: 'F',
+        brand: '',
+        price: '6.0',
+        amount: ''
+    };
+    const initData = {
+        id: 1,
+        name: 'Name',
+        gender: 'M',
+        brand: 'ETSOO',
+        price: 6,
+        amount: 0
+    };
+    const fields = Utils.getDataChanges(input, initData);
+    expect(fields).toStrictEqual(['gender', 'brand', 'amount']);
+    expect(input.price).toBeUndefined();
+    expect(input.amount).toBeUndefined();
+});
+
 test('Tests for formatUpperLetter', () => {
     expect(Utils.formatUpperLetter('hello')).toBe('Hello');
 });

@@ -3,6 +3,19 @@
  */
 export namespace DataTypes {
     /**
+     * Data type enum
+     */
+    export enum DataType {
+        String,
+        Int,
+        Money,
+        Number,
+        Date,
+        DateTime,
+        Boolean
+    }
+
+    /**
      * Display type enum
      */
     export enum DisplayType {
@@ -39,9 +52,14 @@ export namespace DataTypes {
     export type BaseType = boolean | Date | number | string;
 
     /**
+     * Nullable base types
+     */
+    export type NullableBaseType = BaseType | null | undefined;
+
+    /**
      * Base and collection types
      */
-    export type BaseCType = BaseType | BaseType[] | null | undefined;
+    export type BaseCType = NullableBaseType | NullableBaseType[];
 
     /**
      * Simple base types
@@ -51,11 +69,60 @@ export namespace DataTypes {
     /**
      * Simple types
      */
-    export type SimpleType =
-        | SimpleBaseType
-        | SimpleBaseType[]
-        | null
-        | undefined;
+    export type SimpleType = SimpleBaseType | SimpleBaseType[];
+
+    /**
+     * Change type
+     * @param input Input
+     * @param targetType Target type
+     */
+    export function changeType(
+        input: NullableBaseType | NullableBaseType[],
+        targetType: DataType
+    ) {
+        // Null or empty return
+        if (input == null || input === '') return null;
+
+        // Aarray
+        if (Array.isArray(input)) {
+            input.forEach((value, index, array) => {
+                const itemValue = changeType(value, targetType);
+                if (!Array.isArray(itemValue)) array[index] = itemValue;
+            });
+            return input;
+        }
+
+        // Boolean
+        if (targetType === DataType.Boolean) {
+            if (typeof input === 'boolean') return input;
+            else return Boolean(input);
+        }
+
+        // Date
+        if (targetType === DataType.Date || targetType === DataType.DateTime) {
+            if (input instanceof Date) return input;
+            else if (typeof input === 'number' || typeof input === 'string')
+                return new Date(input);
+            else return null;
+        }
+
+        // Number
+        if (
+            targetType === DataType.Int ||
+            targetType === DataType.Money ||
+            targetType === DataType.Number
+        ) {
+            const numValue = typeof input === 'number' ? input : Number(input);
+            if (isNaN(numValue)) return null;
+            if (targetType === DataType.Int) return Math.round(numValue);
+            if (targetType === DataType.Money)
+                return Math.round(10000 * numValue) / 10000;
+            return numValue;
+        }
+
+        // String
+        return String(input);
+    }
 
     /**
      * Is the target a base collection type (Type guard)
@@ -66,6 +133,7 @@ export namespace DataTypes {
         target: any,
         includeArray: boolean = true
     ): target is BaseCType {
+        if (target == null) return true;
         return (
             target instanceof Date ||
             (includeArray &&
@@ -84,6 +152,7 @@ export namespace DataTypes {
         target: any,
         includeArray: boolean = true
     ): target is SimpleType {
+        if (target == null) return true;
         return (
             target instanceof Date ||
             (includeArray &&
@@ -91,6 +160,21 @@ export namespace DataTypes {
                 (target.length === 0 || isSimpleType(target[0], false))) ||
             target !== Object(target)
         );
+    }
+
+    /**
+     * Parse input data's type
+     * @param input Input data
+     * @returns Data type
+     */
+    export function parseType(input: NullableBaseType): DataType {
+        if (input instanceof Date) return DataType.DateTime;
+
+        const type = typeof input;
+        if (type === 'boolean') return DataType.Boolean;
+        if (type === 'number') return DataType.Number;
+
+        return DataType.String;
     }
 
     /**

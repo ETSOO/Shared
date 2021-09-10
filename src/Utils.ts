@@ -13,6 +13,47 @@ export namespace Utils {
     }
 
     /**
+     * Get data changed fields with input data updated
+     * @param input Input data
+     * @param initData Initial data
+     * @param ignoreFields Ignore fields
+     * @returns
+     */
+    export function getDataChanges(
+        input: Record<string, any>,
+        initData: Record<string, any>,
+        ignoreFields: string[] = ['id']
+    ): string[] {
+        // Changed fields
+        const changes: string[] = [];
+
+        Object.entries(input).forEach(([key, value]) => {
+            // Ignore fields, no process
+            if (ignoreFields.includes(key)) return;
+
+            const initValue = initData[key];
+            if (initValue != null) {
+                const newValue = DataTypes.changeType(
+                    value,
+                    DataTypes.parseType(initValue)
+                );
+                if (newValue === initValue) {
+                    delete input[key];
+                    return;
+                }
+                input[key] = newValue;
+            }
+
+            // Remove empty property
+            if (value == null || value === '') delete input[key];
+
+            changes.push(key);
+        });
+
+        return changes;
+    }
+
+    /**
      * Get time zone
      * @returns Timezone
      */

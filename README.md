@@ -33,8 +33,10 @@ Data type definitions and type safe functions
 |hAlignFromEnum|Enum align to string literal align|
 |VAlign|top, center, bottom|
 |VAlignEnum|Top=1, Center=2, Bottom=3|
+|changeType|Change data type|
 |isBaseType|Check value is BaseCType|
 |isSimpleType|Check value is SimpleType|
+|parseType|Parse input data's type|
 |SimpleObject|String key, SimpleType value dictionary|
 |isSimpleObject|Check value is SimpleObject|
 |StringDictionary|String key and value dictionary|
@@ -64,6 +66,7 @@ DOM/window related utilities
 |dimensionEqual|Check two rectangles equality|
 |getCulture|Get the available culture definition|
 |getCountry|Get the available country definition|
+|getDataChanges|Get data changed fields with input data updated|
 |getLocationKey|Get an unique key combined with current URL|
 |getTimeZone|Get the browser's local time zone|
 |formDataToObject|Convert FormData to object|
