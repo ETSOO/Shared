@@ -1,6 +1,6 @@
 {
     "name": "@etsoo/shared",
-    "version": "1.0.40",
+    "version": "1.0.41",
     "description": "TypeScript shared utilities and functions",
     "main": "lib/cjs/index.js",
     "module": "lib/mjs/index.js",
@@ -44,14 +44,14 @@
     "homepage": "https://github.com/ETSOO/NotificationBase#readme",
     "dependencies": {},
     "devDependencies": {
-        "@types/jest": "^26.0.23",
-        "@typescript-eslint/eslint-plugin": "^4.26.1",
-        "@typescript-eslint/parser": "^4.26.1",
-        "eslint": "^7.28.0",
+        "@types/jest": "^27.0.1",
+        "@typescript-eslint/eslint-plugin": "^4.31.0",
+        "@typescript-eslint/parser": "^4.31.0",
+        "eslint": "^7.32.0",
         "eslint-config-airbnb-base": "^14.2.1",
-        "eslint-plugin-import": "^2.23.4",
-        "jest": "^27.0.4",
-        "ts-jest": "^27.0.3",
-        "typescript": "^4.3.2"
+        "eslint-plugin-import": "^2.24.2",
+        "jest": "^27.1.1",
+        "ts-jest": "^27.0.5",
+        "typescript": "^4.4.2"
     }
 }
