@@ -111,6 +111,8 @@ String and other related utilities
 |---:|---|
 |clearFormData|Clear form data|
 |formatUpperLetter|Format word's first letter to upper case|
+|getEnumKeys|Get Enum keys|
+|getTimeZone|Get time zone|
 |joinItems|Join items as a string|
 |mergeFormData|Merge form data to primary one|
 |newGUID|Create a GUID|

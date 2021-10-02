@@ -54,6 +54,17 @@ export namespace Utils {
     }
 
     /**
+     * Get Enum keys
+     * @param input Input Enum
+     * @returns Keys
+     */
+    export function getEnumKeys<T extends Record<string, string | number>>(
+        input: T
+    ): string[] {
+        return Object.keys(input).filter((key) => !/^\d+$/.test(key));
+    }
+
+    /**
      * Get time zone
      * @returns Timezone
      */
