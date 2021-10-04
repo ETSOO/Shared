@@ -140,33 +140,6 @@ test('Tests for getCulture', () => {
     expect(DomUtils.getCulture(cultures, 'zh-CN')?.name).toBe('zh-CN');
 });
 
-test('Tests for getCountry', () => {
-    const countries: DataTypes.Country[] = [
-        {
-            id: 'CN',
-            id3: 'CHN',
-            nid: '156',
-            continent: 'AS',
-            exitCode: '00',
-            idd: '86',
-            currency: 'CNY',
-            language: 'zh-CN'
-        },
-        {
-            id: 'NZ',
-            id3: 'NZL',
-            nid: '554',
-            continent: 'OC',
-            exitCode: '00',
-            idd: '64',
-            currency: 'NZD',
-            language: 'en-NZ'
-        }
-    ];
-
-    expect(DomUtils.getCountry(countries, 'CN')?.id).toBe('CN');
-});
-
 test('Tests for getLocationKey', () => {
     expect(DomUtils.getLocationKey('test')).toBe('http://localhost/:test');
 });

@@ -181,19 +181,6 @@ export namespace DomUtils {
     }
 
     /**
-     * Get the available country definition
-     * @param items Available countries
-     * @param culture Detected country
-     */
-    export const getCountry = (items: DataTypes.Country[], country: string) => {
-        if (items.length === 0) {
-            return undefined;
-        }
-
-        return items.find((item) => item.id === country) || items[0];
-    };
-
-    /**
      * Get the available culture definition
      * @param items Available cultures
      * @param culture Detected culture

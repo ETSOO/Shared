@@ -41,7 +41,6 @@ Data type definitions and type safe functions
 |isSimpleObject|Check value is SimpleObject|
 |StringDictionary|String key and value dictionary|
 |ReadonlyStringDictionary|Readonly StringDictionary|
-|Country|Country definition|
 |CultureDefinition|Culture definition|
 
 ## DateUtils
@@ -65,7 +64,6 @@ DOM/window related utilities
 |detectedCulture|Current detected culture|
 |dimensionEqual|Check two rectangles equality|
 |getCulture|Get the available culture definition|
-|getCountry|Get the available country definition|
 |getDataChanges|Get data changed fields with input data updated|
 |getLocationKey|Get an unique key combined with current URL|
 |getTimeZone|Get the browser's local time zone|
