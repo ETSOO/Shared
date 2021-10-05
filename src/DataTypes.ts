@@ -6,27 +6,19 @@ export namespace DataTypes {
      * Data type enum
      */
     export enum DataType {
-        String,
-        Int,
-        Money,
-        Number,
-        Date,
-        DateTime,
-        Boolean
-    }
-
-    /**
-     * Display type enum
-     */
-    export enum DisplayType {
         Unkwown = 0,
-        Default = 1,
-        Number = 2,
-        Money = 3,
-        Bool = 4,
+        Int = 1,
+        Money = 2,
+        IntMoney = 3,
+        Number = 4,
         Date = 5,
-        URL = 8,
-        Logo = 9
+        DateTime = 6,
+        Boolean = 7,
+        String = 10,
+        Email = 11,
+        Phone = 12,
+        URL = 13,
+        Logo = 14
     }
 
     /**

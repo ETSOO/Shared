@@ -20,7 +20,7 @@ Data type definitions and type safe functions
 
 |Name|Description|
 |---:|---|
-|DisplayType|Frontend display type|
+|DataType|Data type enum|
 |DynamicData|String key, any value type dictionary|
 |IdType|Number and string combination id type|
 |ReadonlyData|Readonly DynamicData|
@@ -90,6 +90,8 @@ Numbers related utilities
 
 |Name|Description|
 |---:|---|
+|format|Format number|
+|formatMoney|Format money number|
 |parse|Parse float value|
 
 ## StorageUtils

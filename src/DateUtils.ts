@@ -33,14 +33,14 @@ export namespace DateUtils {
 
     /**
      * Format
-     * @param locale Locale
      * @param input Input date time
+     * @param locale Locale
      * @param options Options
      * @param timeZone Time zone
      */
     export function format(
-        locale: string,
         input?: Date | string,
+        locale?: string | string[],
         options?: FormatOptions,
         timeZone?: string
     ) {
