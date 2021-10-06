@@ -262,5 +262,10 @@ export namespace DataTypes {
          * Resources
          */
         resources: ReadonlySimpleObject;
+
+        /**
+         * Compatible names
+         */
+        compatibleName?: string[];
     }>;
 }

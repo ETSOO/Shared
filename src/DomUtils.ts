@@ -193,7 +193,25 @@ export namespace DomUtils {
             return undefined;
         }
 
-        return items.find((item) => item.name === culture) || items[0];
+        // Exact match
+        const exactMatch = items.find((item) => item.name === culture);
+        if (exactMatch) return exactMatch;
+
+        // Compatible match
+        const compatibleMatch = items.find((item) =>
+            item.compatibleName?.includes(culture)
+        );
+        if (compatibleMatch) return compatibleMatch;
+
+        // Same part, like zh-CN and zh-HK
+        const samePart = culture.split('-')[0];
+        const samePartMatch = items.find((item) =>
+            item.name.startsWith(samePart)
+        );
+        if (samePartMatch) return samePartMatch;
+
+        // Default
+        return items[0];
     };
 
     /**

@@ -133,11 +133,18 @@ test('Tests for detectedCulture', () => {
 
 test('Tests for getCulture', () => {
     const cultures: DataTypes.CultureDefinition[] = [
-        { name: 'zh-CN', label: '简体中文', resources: {} },
+        {
+            name: 'zh-CN',
+            label: '简体中文',
+            resources: {},
+            compatibleName: ['zh-SG']
+        },
         { name: 'en-US', label: 'English', resources: {} }
     ];
 
     expect(DomUtils.getCulture(cultures, 'zh-CN')?.name).toBe('zh-CN');
+    expect(DomUtils.getCulture(cultures, 'zh-SG')?.name).toBe('zh-CN');
+    expect(DomUtils.getCulture(cultures, 'en-GB')?.name).toBe('en-US');
 });
 
 test('Tests for getLocationKey', () => {
