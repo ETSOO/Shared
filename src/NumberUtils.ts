@@ -36,8 +36,10 @@ export namespace NumberUtils {
         options: Intl.NumberFormatOptions = {}
     ) {
         if (currency) {
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat
             options.style = 'currency';
             options.currency = currency;
+            options.currencyDisplay ??= 'narrowSymbol';
         }
 
         if (isInteger) {
