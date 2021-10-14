@@ -1,4 +1,3 @@
-import { DataTypes } from './DataTypes';
 import { NodeStorage } from './node/Storage';
 import { Utils } from './Utils';
 
@@ -16,7 +15,7 @@ export namespace StorageUtils {
      * @param key Key name
      * @param data  Data, null for removal
      */
-    export function setLocalData(key: string, data: DataTypes.Simple | object) {
+    export function setLocalData(key: string, data: unknown) {
         if (data == null) {
             localStorage.removeItem(key);
             return;
@@ -33,10 +32,7 @@ export namespace StorageUtils {
      * @param key Key name
      * @param data Data, null for removal
      */
-    export function setSessionData(
-        key: string,
-        data: DataTypes.Simple | object
-    ) {
+    export function setSessionData(key: string, data: unknown) {
         if (data == null) {
             sessionStorage.removeItem(key);
             return;

@@ -38,6 +38,8 @@ Data type definitions and type safe functions
 |isSimpleType|Check value is SimpleType|
 |parseType|Parse input data's type|
 |SimpleObject|String key, SimpleType value dictionary|
+
+|getEnumKeys|Get Enum keys|
 |isSimpleObject|Check value is SimpleObject|
 |StringDictionary|String key and value dictionary|
 |ReadonlyStringDictionary|Readonly StringDictionary|
@@ -60,6 +62,7 @@ DOM/window related utilities
 
 |Name|Description|
 |---:|---|
+|clearFormData|Clear form data|
 |detectedCountry|Current detected country|
 |detectedCulture|Current detected culture|
 |dimensionEqual|Check two rectangles equality|
@@ -109,12 +112,12 @@ String and other related utilities
 
 |Name|Description|
 |---:|---|
-|clearFormData|Clear form data|
 |formatUpperLetter|Format word's first letter to upper case|
-|getEnumKeys|Get Enum keys|
+|getDataChanges|Get data changed fields with input data updated|
 |getTimeZone|Get time zone|
 |joinItems|Join items as a string|
 |mergeFormData|Merge form data to primary one|
+|mergeClasses|Merge class names|
 |newGUID|Create a GUID|
 |parseString|Parse string (JSON) to specific type|
 |setLabels|Set source with new labels|

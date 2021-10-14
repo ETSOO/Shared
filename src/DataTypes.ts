@@ -315,6 +315,25 @@ export namespace DataTypes {
     }
 
     /**
+     * Is the target a simple object (Type guard)
+     * @param input Test data
+     * @param includeArray Include array as simple type
+     * @returns Result
+     */
+    export function isSimpleObject(
+        input: unknown,
+        includeArray: boolean = true
+    ): input is SimpleObject {
+        return (
+            typeof input === 'object' &&
+            input != null &&
+            Object.values(input).every((value) =>
+                isSimpleType(value, includeArray)
+            )
+        );
+    }
+
+    /**
      * Is the input value simple type, include null and undefined
      * @param input Input value
      * @param includeArray Is array included, first non null element shoud also be basic type
