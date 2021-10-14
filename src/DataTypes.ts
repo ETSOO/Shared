@@ -3,7 +3,7 @@
  */
 export namespace DataTypes {
     /**
-     * Basic types
+     * Basic types, includes number, bigint, Date, boolean, string
      */
     export type Basic = number | bigint | Date | boolean | string;
 
@@ -99,25 +99,19 @@ export namespace DataTypes {
     export type EnumBase = Record<string, EnumValue>;
 
     /**
-     * String key record
+     * String key, unknown value Record
      */
     export type StringRecord = Record<string, unknown>;
 
     /**
-     * String dictionary type
+     * String key, string value Record
      */
     export type StringDictionary = Record<string, string>;
 
     /**
-     * Simple object
+     * Simple object, string key, simple type and null value Record
      */
     export type SimpleObject = Record<string, Simple | null | undefined>;
-
-    /**
-     * Array element type
-     */
-    export type ArrayElement<ArrayType extends readonly unknown[]> =
-        ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
 
     /**
      * Culture definiton
@@ -244,6 +238,12 @@ export namespace DataTypes {
         return inputArray.map((item) => convert(item, elementItem));
     }
 
+    /**
+     * Convert value to target enum type
+     * @param input Input value
+     * @param enumType  Target enum type
+     * @returns Converted type
+     */
     export function convertSimple(
         input: unknown,
         enumType: CombinedEnum
@@ -267,7 +267,7 @@ export namespace DataTypes {
     }
 
     /**
-     * Get simple type from Enum
+     * Get simple type from Enum type
      * @param enumType Enum type
      * @returns Simple type result
      */

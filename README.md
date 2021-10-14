@@ -21,29 +21,33 @@ Data type definitions and type safe functions
 |Name|Description|
 |---:|---|
 |DataType|Data type enum|
-|DynamicData|String key, any value type dictionary|
-|IdType|Number and string combination id type|
-|ReadonlyData|Readonly DynamicData|
-|BaseType|Base types|
-|BaseCType|Base and collection types|
-|SimpleBaseType|bigint, boolean, Date, number, string, symbol|
-|SimpleType|SimpleBaseType, SimpleBaseType[], null, undefined|
-|HAlign|left, center, right|
-|HAlignEnum|Left=1, Center=2, Right=3|
-|hAlignFromEnum|Enum align to string literal align|
-|VAlign|top, center, bottom|
-|VAlignEnum|Top=1, Center=2, Bottom=3|
-|changeType|Change data type|
-|isBaseType|Check value is BaseCType|
-|isSimpleType|Check value is SimpleType|
-|parseType|Parse input data's type|
-|SimpleObject|String key, SimpleType value dictionary|
-
-|getEnumKeys|Get Enum keys|
-|isSimpleObject|Check value is SimpleObject|
-|StringDictionary|String key and value dictionary|
-|ReadonlyStringDictionary|Readonly StringDictionary|
+|Basic|Basic types, includes number, bigint, Date, boolean, string|
+|CombinedEnum|Combined type enum|
 |CultureDefinition|Culture definition|
+|EnumBase|Enum base type|
+|EnumValue|Enum value type|
+|ExtendedEnum|Extended type enum|
+|HAlign|Horizontal align|
+|HAlignEnum|Horizontal align enum|
+|IdType|Number and string combination id type|
+|Simple|Basic or basic array type|
+|SimpleEnum|Simple type enum|
+|SimpleNames|Simple type names|
+|SimpleObject|Simple object, string key, simple type and null value Record|
+|StringDictionary|String key, string value Record|
+|StringRecord|String key, unknown value Record|
+|VAlign|Vertical align|
+|VAlignEnum|Vertical align enum|
+
+|convert|Convert value to target type|
+|convertArray|Convert array to target type|
+|convertSimple|Convert value to target enum type|
+|getSimple|Get simple type from Enum type|
+|getEnumKey|get enum string literal type value|
+|getEnumKeys|Get Enum keys|
+|isSimpleObject|Is the target a simple object, all values are simple type (Type guard)|
+|isSimpleType|Is the input value simple type, include null and undefined|
+
 
 ## DateUtils
 Dates related utilities
@@ -63,17 +67,18 @@ DOM/window related utilities
 |Name|Description|
 |---:|---|
 |clearFormData|Clear form data|
+|dataAs|Cast data to target type|
 |detectedCountry|Current detected country|
 |detectedCulture|Current detected culture|
 |dimensionEqual|Check two rectangles equality|
+|formDataToObject|Form data to object|
 |getCulture|Get the available culture definition|
 |getDataChanges|Get data changed fields with input data updated|
 |getLocationKey|Get an unique key combined with current URL|
-|getTimeZone|Get the browser's local time zone|
-|formDataToObject|Convert FormData to object|
 |headersToObject|Convert headers to object|
+|isFormData|Is IFormData type guard|
 |isJSONContentType|Is JSON content type|
-|mergeClasses|Merge class names|
+|mergeFormData|Merge form data to primary one|
 |mergeURLSearchParams|Merge URL search parameters|
 |saveCountry|Save country name|
 |saveCulture|Save culture name|
