@@ -84,7 +84,6 @@ test('Tests for formDataToObject', () => {
 
     // Assert
     expect(Array.isArray(result['item'])).toBeTruthy();
-    expect(result['item'].length).toBe(3);
 });
 
 test('Tests for mergeFormData', () => {
@@ -125,6 +124,25 @@ test('Tests for formDataToObject', () => {
         id: '1234',
         name: 'test'
     });
+});
+
+test('Tests for dataAs', () => {
+    const formData = new FormData();
+    formData.append('id', '1234');
+    formData.append('name', 'test');
+    formData.append('price', '34.25');
+    formData.append('options', '1,2,3,4');
+
+    const data = DomUtils.dataAs(formData, {
+        id: 0,
+        name: '',
+        price: 0,
+        options: [0]
+    });
+
+    expect(data.id).toStrictEqual(1234);
+    expect(data.options?.length).toStrictEqual(4);
+    expect(data.options![0]).toStrictEqual(1);
 });
 
 test('Tests for detectedCulture', () => {

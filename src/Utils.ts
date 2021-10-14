@@ -20,8 +20,8 @@ export namespace Utils {
      * @returns
      */
     export function getDataChanges(
-        input: Record<string, any>,
-        initData: Record<string, any>,
+        input: {},
+        initData: {},
         ignoreFields: string[] = ['id']
     ): string[] {
         // Changed fields
@@ -31,37 +31,30 @@ export namespace Utils {
             // Ignore fields, no process
             if (ignoreFields.includes(key)) return;
 
-            const initValue = initData[key];
+            // Contract with init value
+            const initValue = Reflect.get(initData, key);
+
             if (initValue != null) {
-                const newValue = DataTypes.changeType(
-                    value,
-                    DataTypes.parseType(initValue)
-                );
+                const newValue = DataTypes.convert(value, initValue);
                 if (newValue === initValue) {
-                    delete input[key];
+                    Reflect.deleteProperty(input, key);
                     return;
                 }
-                input[key] = newValue;
+
+                // Update
+                Reflect.set(input, key, newValue);
             }
 
             // Remove empty property
-            if (value == null || value === '') delete input[key];
+            if (value == null || value === '') {
+                Reflect.deleteProperty(input, key);
+            }
 
+            // Hold the key
             changes.push(key);
         });
 
         return changes;
-    }
-
-    /**
-     * Get Enum keys
-     * @param input Input Enum
-     * @returns Keys
-     */
-    export function getEnumKeys<T extends Record<string, string | number>>(
-        input: T
-    ): string[] {
-        return Object.keys(input).filter((key) => !/^\d+$/.test(key));
     }
 
     /**
@@ -128,19 +121,21 @@ export namespace Utils {
         if (input == null) return defaultValue;
 
         // String
-        if (typeof defaultValue === 'string') return input as any;
+        if (typeof defaultValue === 'string') return <any>input;
 
         try {
             // Date
             if (defaultValue instanceof Date) {
-                return new Date(input) as any;
+                const date = new Date(input);
+                if (date == null) return defaultValue;
+                return <any>date;
             }
 
             // JSON
             const json = JSON.parse(input);
 
             // Return
-            return json as T;
+            return <T>json;
         } catch (e) {
             console.log('Utils.parseString error', e);
             return defaultValue;
@@ -161,8 +156,8 @@ export namespace Utils {
      */
     export const setLabels = (
         source: {},
-        labels: DataTypes.ReadonlySimpleObject,
-        reference: DataTypes.ReadonlyStringDictionary = {}
+        labels: DataTypes.StringRecord,
+        reference: Readonly<DataTypes.StringDictionary> = {}
     ) => {
         const newLabels = Object.keys(source).reduce(
             (newLabels, key, _index, _keys) => {
@@ -174,7 +169,7 @@ export namespace Utils {
 
                 if (label != null) {
                     // If found, update
-                    newLabels[key] = label.toString();
+                    newLabels[key] = String(label);
                 }
 
                 return newLabels;

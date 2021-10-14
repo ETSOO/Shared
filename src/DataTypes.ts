@@ -3,214 +3,57 @@
  */
 export namespace DataTypes {
     /**
-     * Data type enum
+     * Basic types
      */
-    export enum DataType {
+    export type Basic = number | bigint | Date | boolean | string;
+
+    /**
+     * Basic or basic array type
+     */
+    export type Simple = Basic | Array<Basic>;
+
+    /**
+     * Simple type enum
+     */
+    export enum SimpleEnum {
+        Number = 1,
+        Bigint = 2,
+        Date = 3,
+        Boolean = 4,
+        String = 5,
+        Array = 9
+    }
+
+    /**
+     * Simple type names
+     */
+    export type SimpleNames = Lowercase<keyof typeof SimpleEnum>;
+
+    /**
+     * Extended type enum
+     */
+    export enum ExtendedEnum {
         Unkwown = 0,
-        Int = 1,
-        Money = 2,
-        IntMoney = 3,
-        Number = 4,
-        Date = 5,
-        DateTime = 6,
-        Boolean = 7,
-        String = 10,
-        Email = 11,
-        Phone = 12,
-        URL = 13,
-        Logo = 14
+
+        Int = 10,
+        Money = 11,
+        IntMoney = 12,
+        DateTime = 13,
+
+        Email = 21,
+        Phone = 22,
+        URL = 23,
+        Logo = 24
     }
 
     /**
-     * Dynamic data
-     * Indexable type
+     * Combined type enum
      */
-    export type DynamicData = Record<string, any>;
-
-    /**
-     * Number and string combination id type
-     */
-    export type IdType = number | string;
-
-    /**
-     * Readonly data
-     * Indexable type
-     */
-    export type ReadonlyData = Readonly<DynamicData>;
-
-    /**
-     * Base types
-     */
-    export type BaseType = boolean | Date | number | string;
-
-    /**
-     * Nullable base types
-     */
-    export type NullableBaseType = BaseType | null | undefined;
-
-    /**
-     * Base and collection types
-     */
-    export type BaseCType = NullableBaseType | NullableBaseType[];
-
-    /**
-     * Simple base types
-     */
-    export type SimpleBaseType = BaseType | bigint | symbol;
-
-    /**
-     * Simple types
-     */
-    export type SimpleType = SimpleBaseType | SimpleBaseType[];
-
-    /**
-     * Change type
-     * @param input Input
-     * @param targetType Target type
-     */
-    export function changeType(
-        input: NullableBaseType | NullableBaseType[],
-        targetType: DataType
-    ) {
-        // Null or empty return
-        if (input == null || input === '') return null;
-
-        // Aarray
-        if (Array.isArray(input)) {
-            input.forEach((value, index, array) => {
-                const itemValue = changeType(value, targetType);
-                if (!Array.isArray(itemValue)) array[index] = itemValue;
-            });
-            return input;
-        }
-
-        // Boolean
-        if (targetType === DataType.Boolean) {
-            if (typeof input === 'boolean') return input;
-            else return Boolean(input);
-        }
-
-        // Date
-        if (targetType === DataType.Date || targetType === DataType.DateTime) {
-            if (input instanceof Date) return input;
-            else if (typeof input === 'number' || typeof input === 'string')
-                return new Date(input);
-            else return null;
-        }
-
-        // Number
-        if (
-            targetType === DataType.Int ||
-            targetType === DataType.Money ||
-            targetType === DataType.Number
-        ) {
-            const numValue = typeof input === 'number' ? input : Number(input);
-            if (isNaN(numValue)) return null;
-            if (targetType === DataType.Int) return Math.round(numValue);
-            if (targetType === DataType.Money)
-                return Math.round(10000 * numValue) / 10000;
-            return numValue;
-        }
-
-        // String
-        return String(input);
-    }
-
-    /**
-     * Is the target a base collection type (Type guard)
-     * @param target Test target
-     * @param includeArray Include array as base type
-     */
-    export function isBaseType(
-        target: any,
-        includeArray: boolean = true
-    ): target is BaseCType {
-        if (target == null) return true;
-        return (
-            target instanceof Date ||
-            (includeArray &&
-                Array.isArray(target) &&
-                (target.length === 0 || isSimpleType(target[0], false))) ||
-            target !== Object(target)
-        );
-    }
-
-    /**
-     * Is the target a simple type (Type guard)
-     * @param target Test target
-     * @param includeArray Include array as simple type
-     */
-    export function isSimpleType(
-        target: any,
-        includeArray: boolean = true
-    ): target is SimpleType {
-        if (target == null) return true;
-        return (
-            target instanceof Date ||
-            (includeArray &&
-                Array.isArray(target) &&
-                (target.length === 0 || isSimpleType(target[0], false))) ||
-            target !== Object(target)
-        );
-    }
-
-    /**
-     * Parse input data's type
-     * @param input Input data
-     * @returns Data type
-     */
-    export function parseType(input: NullableBaseType): DataType {
-        if (input instanceof Date) return DataType.DateTime;
-
-        const type = typeof input;
-        if (type === 'boolean') return DataType.Boolean;
-        if (type === 'number') return DataType.Number;
-
-        return DataType.String;
-    }
-
-    /**
-     * Simple object
-     */
-    export type SimpleObject = Record<string, SimpleType>;
-
-    /**
-     * Is the target a simple object (Type guard)
-     * @param data Test target
-     * @param includeArray Include array as simple type
-     */
-    export function isSimpleObject(
-        target: any,
-        includeArray: boolean = true
-    ): target is SimpleObject {
-        return (
-            target &&
-            target.constructor === Object &&
-            Object.values(target).findIndex(
-                (value) => !isSimpleType(value, includeArray)
-            ) === -1
-        );
-    }
-
-    /**
-     * Readonly simple object
-     */
-    export type ReadonlySimpleObject = Readonly<SimpleObject>;
-
-    /**
-     * String dictionary type
-     */
-    export type StringDictionary = Record<string, string>;
-
-    /**
-     * Readonly string dictionary type
-     */
-    export type ReadonlyStringDictionary = Readonly<StringDictionary>;
-
-    /**
-     * Horizontal align
-     */
-    export type HAlign = 'left' | 'center' | 'right';
+    export const CombinedEnum = {
+        ...SimpleEnum,
+        ...ExtendedEnum
+    };
+    export type CombinedEnum = SimpleEnum | ExtendedEnum;
 
     /**
      * Horizontal align enum
@@ -222,18 +65,9 @@ export namespace DataTypes {
     }
 
     /**
-     * Enum align to string literal align
-     * @param align Enum align
+     * Horizontal align
      */
-    export function hAlignFromEnum(align?: HAlignEnum): HAlign | undefined {
-        if (align == null) return undefined;
-        return <HAlign>HAlignEnum[align].toLowerCase();
-    }
-
-    /**
-     * Vertical align
-     */
-    export type VAlign = 'top' | 'center' | 'bottom';
+    export type HAlign = Lowercase<keyof typeof HAlignEnum>;
 
     /**
      * Vertical align enum
@@ -245,27 +79,271 @@ export namespace DataTypes {
     }
 
     /**
+     * Vertical align
+     */
+    export type VAlign = Lowercase<keyof typeof VAlignEnum>;
+
+    /**
+     * Number and string combination id type
+     */
+    export type IdType = number | string;
+
+    /**
+     * Enum value type
+     */
+    export type EnumValue = number | string;
+
+    /**
+     * Enum base type
+     */
+    export type EnumBase = Record<string, EnumValue>;
+
+    /**
+     * String key record
+     */
+    export type StringRecord = Record<string, unknown>;
+
+    /**
+     * String dictionary type
+     */
+    export type StringDictionary = Record<string, string>;
+
+    /**
+     * Simple object
+     */
+    export type SimpleObject = Record<string, Simple | null | undefined>;
+
+    /**
+     * Array element type
+     */
+    export type ArrayElement<ArrayType extends readonly unknown[]> =
+        ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
+
+    /**
      * Culture definiton
      */
     export type CultureDefinition = Readonly<{
         /**
          * Name, like zh-CN
          */
-        name: string;
+        readonly name: string;
 
         /**
          * Label for description, like Simplifined Chinese
          */
-        label: string;
+        readonly label: string;
 
         /**
          * Resources
          */
-        resources: ReadonlySimpleObject;
+        readonly resources: Readonly<StringRecord>;
 
         /**
          * Compatible names
          */
-        compatibleName?: string[];
+        readonly compatibleName?: string[];
     }>;
+
+    /**
+     * Convert value to target type
+     * @param input Input value
+     * @param target Target type
+     * @returns Converted value
+     */
+    export function convert<T>(input: unknown, target: T): T | undefined {
+        // null or undefined
+        if (input == null) return undefined;
+
+        // Date
+        if (target instanceof Date) {
+            if (input instanceof Date) return <any>input;
+            if (typeof input === 'string' || typeof input === 'number') {
+                const date = new Date(input);
+                return date == null ? undefined : <any>date;
+            }
+            return undefined;
+        }
+
+        // Array
+        if (Array.isArray(target)) {
+            const array = convertArray(input, target);
+            if (array == null) return undefined;
+            return <any>array;
+        }
+
+        // Target type
+        const targetType = typeof target;
+
+        // Same type
+        if (targetType === typeof input) return <T>input;
+
+        // Bigint
+        if (targetType === 'bigint') {
+            if (
+                typeof input === 'string' ||
+                typeof input === 'number' ||
+                typeof input === 'boolean'
+            )
+                return <any>BigInt(input);
+            return undefined;
+        }
+
+        // Boolean
+        if (targetType === 'boolean') {
+            if (typeof input === 'string' || typeof input === 'number') {
+                // Here are different with official definition
+                // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+                if (input === '0' || input === 'false') return <any>false;
+                return <any>Boolean(input);
+            }
+            return undefined;
+        }
+
+        // Number
+        if (targetType === 'number') {
+            // Avoid empty string converted to zero
+            if (input === '') return undefined;
+            const number = Number(input);
+            return isNaN(number) ? undefined : <any>number;
+        }
+
+        // String
+        if (targetType === 'string') {
+            return <any>String(input);
+        }
+
+        return undefined;
+    }
+
+    /**
+     * Convert array to target type
+     * @param input Input value
+     * @param target Target array
+     * @returns Converted array
+     */
+    export function convertArray<T>(
+        input: unknown,
+        target: T[]
+    ): T[] | undefined {
+        // Input array
+        const inputArray = Array.isArray(input)
+            ? input
+            : typeof input === 'string'
+            ? input.split(/,\s*/g)
+            : [input];
+        if (inputArray.length === 0) return [];
+
+        // Element item
+        const elementItem = Array.isArray(target)
+            ? target.length > 0
+                ? target[0]
+                : inputArray[0]
+            : target;
+
+        // Convert type
+        return inputArray.map((item) => convert(item, elementItem));
+    }
+
+    export function convertSimple(
+        input: unknown,
+        enumType: CombinedEnum
+    ): Simple | undefined {
+        const type = getSimple(enumType);
+        const value = convert(input, type);
+        if (value == null) return undefined;
+
+        if (typeof value === 'number') {
+            if (
+                enumType === CombinedEnum.Int ||
+                enumType === CombinedEnum.IntMoney
+            )
+                return Math.round(value);
+
+            if (enumType === CombinedEnum.Money)
+                return Math.round(10000 * value) / 10000;
+        }
+
+        return value;
+    }
+
+    /**
+     * Get simple type from Enum
+     * @param enumType Enum type
+     * @returns Simple type result
+     */
+    export function getSimple(enumType: CombinedEnum): Simple {
+        switch (enumType) {
+            case CombinedEnum.Array:
+                return [];
+            case CombinedEnum.Bigint:
+                return BigInt(0);
+            case CombinedEnum.Boolean:
+                return false;
+            case CombinedEnum.Date:
+            case CombinedEnum.DateTime:
+                return new Date();
+            case CombinedEnum.Number:
+            case CombinedEnum.Int:
+            case CombinedEnum.IntMoney:
+            case CombinedEnum.Money:
+                return 0;
+            default:
+                return '';
+        }
+    }
+
+    /**
+     * Get enum string literal type value
+     * @param enumItem Enum item
+     * @param value Value
+     * @returns Result
+     */
+    export function getEnumKey<T extends string>(
+        enumItem: EnumBase,
+        value: EnumValue
+    ) {
+        return <T>enumItem[value].toString().toLowerCase();
+    }
+
+    /**
+     * Get Enum keys
+     * @param input Input Enum
+     * @returns Keys
+     */
+    export function getEnumKeys<T extends EnumBase>(input: T): string[] {
+        return Object.keys(input).filter((key) => !/^\d+$/.test(key));
+    }
+
+    /**
+     * Is the input value simple type, include null and undefined
+     * @param input Input value
+     * @param includeArray Is array included, first non null element shoud also be basic type
+     */
+    export function isSimpleType(
+        input: unknown,
+        includeArray: boolean = true
+    ): boolean {
+        // null & undefined
+        if (input == null) return true;
+
+        // Date
+        if (input instanceof Date) return true;
+
+        // Array
+        if (Array.isArray(input)) {
+            if (includeArray) {
+                return isSimpleType(input.find((item) => item != null));
+            } else {
+                // No array needed
+                return false;
+            }
+        }
+
+        // Other cases
+        const type = typeof input;
+        if (type === 'function' || type === 'object' || type === 'symbol')
+            return false;
+
+        return true;
+    }
 }

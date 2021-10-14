@@ -16,10 +16,7 @@ export namespace StorageUtils {
      * @param key Key name
      * @param data  Data, null for removal
      */
-    export function setLocalData(
-        key: string,
-        data: DataTypes.BaseCType | object
-    ) {
+    export function setLocalData(key: string, data: DataTypes.Simple | object) {
         if (data == null) {
             localStorage.removeItem(key);
             return;
@@ -38,7 +35,7 @@ export namespace StorageUtils {
      */
     export function setSessionData(
         key: string,
-        data: DataTypes.BaseCType | object
+        data: DataTypes.Simple | object
     ) {
         if (data == null) {
             sessionStorage.removeItem(key);

@@ -1,5 +1,5 @@
 import { DataTypes } from './DataTypes';
-import { IFormData } from './types/FormData';
+import { FormDataFieldValue, IFormData } from './types/FormData';
 
 if (typeof navigator === 'undefined') {
     // Test mock only
@@ -33,7 +33,7 @@ export namespace DomUtils {
         source?: {},
         keepFields?: string[]
     ) {
-        // Unique keys
+        // Unique keys, FormData may have same name keys
         const keys = new Set(data.keys());
 
         // Remove empty key
@@ -51,7 +51,7 @@ export namespace DomUtils {
 
         if (source == null) {
             // Remove all empty strings
-            for (var key of keys) {
+            for (const key of keys) {
                 removeEmpty(key);
             }
         } else {
@@ -65,7 +65,7 @@ export namespace DomUtils {
                 if (formValues.length > 0) {
                     // Matched
                     // Source value
-                    const sourceValue = (source as any)[key];
+                    const sourceValue = Reflect.get(source, key);
 
                     if (Array.isArray(sourceValue)) {
                         // Array, types may differ
@@ -172,12 +172,58 @@ export namespace DomUtils {
      * @returns Object
      */
     export function formDataToObject(form: IFormData) {
-        const dic: Record<string, any> = {};
-        for (var key of new Set(form.keys())) {
+        const dic: Record<string, FormDataFieldValue | FormDataFieldValue[]> =
+            {};
+        for (const key of new Set(form.keys())) {
             const values = form.getAll(key);
             dic[key] = values.length == 1 ? values[0] : values;
         }
         return dic;
+    }
+
+    /**
+     * Cast data as target type
+     * @param source Source data
+     * @param template Template for generation
+     * @returns Result
+     */
+    export function dataAs<T extends {}>(
+        source: IFormData | {},
+        template: T
+    ): Partial<T> {
+        // Properties
+        const properties = Object.keys(template);
+
+        // New data
+        // Object.create(...)
+        const data = <Partial<T>>{};
+
+        // Entries
+        const entries = isFormData(source)
+            ? source.entries()
+            : Object.entries(source);
+
+        for (const [key, value] of entries) {
+            // Is included
+            const property = properties.find(
+                (p) => p.localeCompare(key, 'en', { sensitivity: 'base' }) === 0
+            );
+            if (property == null) continue;
+
+            // Template value
+            const templateValue = Reflect.get(template, property);
+
+            // Formatted value
+            const propertyValue = DataTypes.convert(value, templateValue);
+
+            // Set value
+            // Object.assign(data, { [property]: propertyValue });
+            // Object.defineProperty(data, property, { value: propertyValue });
+            Reflect.set(data, property, propertyValue);
+        }
+
+        // Return
+        return data;
     }
 
     /**
@@ -253,6 +299,24 @@ export namespace DomUtils {
     }
 
     /**
+     * Is IFormData type guard
+     * @param input Input object
+     * @returns result
+     */
+    export function isFormData(input: unknown): input is IFormData {
+        if (
+            typeof input === 'object' &&
+            input != null &&
+            'entries' in input &&
+            'getAll' in input &&
+            'keys' in input
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Is JSON content type
      * @param contentType Content type string
      */
@@ -275,8 +339,8 @@ export namespace DomUtils {
      * @returns Merged form data
      */
     export function mergeFormData(form: IFormData, ...forms: IFormData[]) {
-        for (var newForm of forms) {
-            for (var key of new Set(newForm.keys())) {
+        for (const newForm of forms) {
+            for (const key of new Set(newForm.keys())) {
                 form.delete(key);
                 newForm
                     .getAll(key)

@@ -111,7 +111,7 @@ export namespace DateUtils {
      * @param value Current value
      * @returns Formated value
      */
-    export function jsonParser(_key: string, value: any) {
+    export function jsonParser(_key: string, value: unknown) {
         if (typeof value === 'string' && value != null) {
             const parsedDate = parse(value);
             if (parsedDate != null) return parsedDate;

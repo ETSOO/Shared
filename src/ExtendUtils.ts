@@ -23,7 +23,7 @@ export namespace ExtendUtils {
      * Promise handler to catch error
      * @param promise Promise
      */
-    export const promiseHandler = (promise: Promise<any>) =>
+    export const promiseHandler = (promise: Promise<unknown>) =>
         promise
             .then((value) => [value, undefined])
             .catch((reason) => Promise.resolve([undefined, reason]));

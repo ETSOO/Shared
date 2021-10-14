@@ -27,14 +27,6 @@ test('Tests for formatUpperLetter', () => {
     expect(Utils.formatUpperLetter('hello')).toBe('Hello');
 });
 
-test('Tests for getEnumKeys', () => {
-    enum ProductUnit {
-        KILOGRAM = 32,
-        GRAM = 'GRAM33'
-    }
-    expect(Utils.getEnumKeys(ProductUnit)).toContainEqual('GRAM');
-});
-
 test('Tests for joinItems', () => {
     expect(Utils.joinItems(['a', undefined, ' b', '', 'c '], ',')).toBe(
         'a,b,c'
