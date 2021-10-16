@@ -434,12 +434,18 @@ export namespace DomUtils {
     /**
      * Set HTML element focus by name
      * @param name Element name or first collection item
+     * @param container Container, limits the element range
      */
-    export function setFocus(name: string | {}) {
+    export function setFocus(name: string | {}, container?: HTMLElement) {
         const elementName =
-            typeof name === 'object' ? Object.keys(name)[0] : name.toString();
+            typeof name === 'string' ? name : Object.keys(name)[0];
 
-        const element = document.getElementsByName(elementName)[0];
+        container ??= document.body;
+
+        const element = container.querySelector<HTMLElement>(
+            `[name="${elementName}"]`
+        );
+
         if (element != null) element.focus();
     }
 }

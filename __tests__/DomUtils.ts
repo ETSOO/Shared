@@ -255,3 +255,24 @@ test('Tests for mergeURLSearchParams', () => {
         'pear,apple'
     );
 });
+
+test('Tests for setFocus', () => {
+    // Arrange
+    const focus = jest.fn();
+
+    const root = document.body;
+    const container = document.createElement('div');
+    root.append(container);
+    const input = document.createElement('input');
+    input.name = 'test';
+    input.onfocus = focus;
+    container.append(input);
+
+    DomUtils.setFocus('test');
+    expect(focus).toBeCalledTimes(1);
+
+    input.blur();
+
+    DomUtils.setFocus({ test: 'No content' }, container);
+    expect(focus).toBeCalledTimes(2);
+});
