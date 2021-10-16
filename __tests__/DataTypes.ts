@@ -13,6 +13,9 @@ test('Tests for convert', () => {
 });
 
 test('Tests for convertByType', () => {
+    expect(DataTypes.convertByType('', 'number')).toBeUndefined();
+    expect(DataTypes.convertByType('', 'string')).toBeUndefined();
+    expect(DataTypes.convertByType('', 'boolean')).toBeUndefined();
     expect(DataTypes.convertByType(['5', 8], 'number[]')).toStrictEqual([5, 8]);
     expect(DataTypes.convertByType(['5', 8], 'string[]')).toStrictEqual([
         '5',

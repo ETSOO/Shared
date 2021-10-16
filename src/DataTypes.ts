@@ -234,7 +234,9 @@ export namespace DataTypes {
         targetType: T
     ): BasicConditional<T> | undefined {
         // null or undefined
-        if (input == null) return undefined;
+        // And avoid empty string to mass up in different type
+        if (input == null || (typeof input === 'string' && input.trim() === ''))
+            return undefined;
 
         // Return type
         type returnType = BasicConditional<T>;
@@ -296,8 +298,6 @@ export namespace DataTypes {
 
         // Number
         if (targetType === 'number') {
-            // Avoid empty string converted to zero
-            if (input === '') return undefined;
             const number = Number(input);
             return isNaN(number) ? undefined : <returnType>number;
         }
