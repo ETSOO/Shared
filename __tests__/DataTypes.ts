@@ -12,11 +12,18 @@ test('Tests for convert', () => {
     expect(DataTypes.convert('1', true)).toBeTruthy();
 });
 
-test('Tests for convertArray', () => {
-    expect(DataTypes.convertArray(['5', 8], [0])).toStrictEqual([5, 8]);
+test('Tests for convertByType', () => {
+    expect(DataTypes.convertByType(['5', 8], 'number[]')).toStrictEqual([5, 8]);
+    expect(DataTypes.convertByType(['5', 8], 'string[]')).toStrictEqual([
+        '5',
+        '8'
+    ]);
+    expect(
+        DataTypes.convertByType('2021/10/13', 'date')?.getDate()
+    ).toStrictEqual(13);
 });
 
-test('Tests for convertArray', () => {
+test('Tests for convertSimple', () => {
     expect(
         DataTypes.convertSimple(5.8, DataTypes.CombinedEnum.Int)
     ).toStrictEqual(6);
@@ -25,10 +32,10 @@ test('Tests for convertArray', () => {
     ).toStrictEqual(5.8829);
 });
 
-test('Tests for getSimple', () => {
-    expect(DataTypes.getSimple(DataTypes.CombinedEnum.DateTime)).toBeInstanceOf(
-        Date
-    );
+test('Tests for getBasicName', () => {
+    expect(
+        DataTypes.getBasicName(DataTypes.CombinedEnum.DateTime)
+    ).toStrictEqual('date');
 });
 
 test('Tests for getEnumKey', () => {

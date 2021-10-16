@@ -1,6 +1,6 @@
 {
     "name": "@etsoo/shared",
-    "version": "1.0.50",
+    "version": "1.0.51",
     "description": "TypeScript shared utilities and functions",
     "main": "lib/cjs/index.js",
     "module": "lib/mjs/index.js",
@@ -33,8 +33,13 @@
         "url": "git+https://github.com/ETSOO/NotificationBase.git"
     },
     "keywords": [
-        "notification",
-        "TypeScript"
+        "Shared utilities",
+        "TypeScript",
+        "ETSOO",
+        "SmartERP",
+        "司友云平台",
+        "青岛亿速思维",
+        "上海亿商"
     ],
     "author": "Garry Xiao",
     "license": "MIT",

@@ -22,6 +22,11 @@ Data type definitions and type safe functions
 |---:|---|
 |DataType|Data type enum|
 |Basic|Basic types, includes number, bigint, Date, boolean, string|
+|BasicArray|Basic type name array|
+|BasicConditional|Conditional type based on BasicNames|
+|BasicNames|Basic type and basic type array names array|
+|BasicTemplate|Basic type template|
+|BasicTemplateType|Basic template type|
 |CombinedEnum|Combined type enum|
 |CultureDefinition|Culture definition|
 |EnumBase|Enum base type|
@@ -40,11 +45,13 @@ Data type definitions and type safe functions
 |VAlignEnum|Vertical align enum|
 
 |convert|Convert value to target type|
-|convertArray|Convert array to target type|
+|convertByType|Convert by type name like 'string'|
 |convertSimple|Convert value to target enum type|
-|getSimple|Get simple type from Enum type|
+|getBasicName|Get basic type name from Enum type|
+|getBasicNameByValue|Get value's basic type name|
 |getEnumKey|get enum string literal type value|
 |getEnumKeys|Get Enum keys|
+|isBasicName|Check the type is a basic type or not (type guard)|
 |isSimpleObject|Is the target a simple object, all values are simple type (Type guard)|
 |isSimpleType|Is the input value simple type, include null and undefined|
 

@@ -8,6 +8,65 @@ export namespace DataTypes {
     export type Basic = number | bigint | Date | boolean | string;
 
     /**
+     * Basic type and basic type array names array
+     */
+    export const BasicArray = [
+        'number',
+        'number[]',
+        'bigint',
+        'bigint[]',
+        'date',
+        'date[]',
+        'boolean',
+        'boolean[]',
+        'string',
+        'string[]',
+        'unknown[]'
+    ] as const;
+
+    /**
+     * Basic type names
+     */
+    export type BasicNames = typeof BasicArray[number];
+
+    /**
+     * Basic type template
+     */
+    export type BasicTemplate = { [key: string]: BasicNames };
+
+    /**
+     * Basic template type
+     */
+    export type BasicTemplateType<T extends BasicTemplate> = {
+        [P in keyof T]?: BasicConditional<T[P]>;
+    };
+
+    /**
+     * Basic conditinal type
+     */
+    export type BasicConditional<T extends BasicNames> = T extends 'string'
+        ? string
+        : T extends 'string[]'
+        ? string[]
+        : T extends 'date'
+        ? Date
+        : T extends 'date[]'
+        ? Date[]
+        : T extends 'boolean'
+        ? boolean
+        : T extends 'boolean[]'
+        ? boolean[]
+        : T extends 'number'
+        ? number
+        : T extends 'number[]'
+        ? number[]
+        : T extends 'bigint'
+        ? bigint
+        : T extends 'bigint[]'
+        ? bigint[]
+        : unknown[];
+
+    /**
      * Basic or basic array type
      */
     export type Simple = Basic | Array<Basic>;
@@ -148,28 +207,69 @@ export namespace DataTypes {
         // null or undefined
         if (input == null) return undefined;
 
-        // Date
-        if (target instanceof Date) {
-            if (input instanceof Date) return <any>input;
-            if (typeof input === 'string' || typeof input === 'number') {
-                const date = new Date(input);
-                return date == null ? undefined : <any>date;
-            }
-            return undefined;
-        }
-
         // Array
         if (Array.isArray(target)) {
-            const array = convertArray(input, target);
-            if (array == null) return undefined;
-            return <any>array;
+            // Element item
+            const elementItem = target.length > 0 ? target[0] : input;
+            const elementType =
+                getBasicNameByValue(elementItem, true) ?? 'unknown[]';
+
+            return <any>convertByType(input, elementType);
         }
 
         // Target type
-        const targetType = typeof target;
+        const targetType = getBasicNameByValue(target, false);
+        if (targetType == null) return undefined;
+        return <any>convertByType(input, targetType);
+    }
 
-        // Same type
-        if (targetType === typeof input) return <T>input;
+    /**
+     * Convert by type name like 'string'
+     * @param input Input value
+     * @param targetType Target type
+     * @returns Converted value
+     */
+    export function convertByType<T extends BasicNames>(
+        input: unknown,
+        targetType: T
+    ): BasicConditional<T> | undefined {
+        // null or undefined
+        if (input == null) return undefined;
+
+        // Return type
+        type returnType = BasicConditional<T>;
+
+        // Array
+        if (targetType.endsWith('[]')) {
+            // Input array
+            const inputArray = Array.isArray(input)
+                ? input
+                : typeof input === 'string'
+                ? input.split(/,\s*/g) // Support comma separated array
+                : [input];
+
+            // Element type
+            const elementType = <BasicNames>(
+                targetType.substr(0, targetType.length - 2)
+            );
+
+            // Convert type
+            return <returnType>(
+                inputArray
+                    .map((item) => convertByType(item, elementType))
+                    .filter((item) => item != null) // Remove undefined item
+            );
+        }
+
+        // Date
+        if (targetType === 'date') {
+            if (input instanceof Date) return <returnType>input;
+            if (typeof input === 'string' || typeof input === 'number') {
+                const date = new Date(input);
+                return date == null ? undefined : <returnType>date;
+            }
+            return undefined;
+        }
 
         // Bigint
         if (targetType === 'bigint') {
@@ -178,7 +278,7 @@ export namespace DataTypes {
                 typeof input === 'number' ||
                 typeof input === 'boolean'
             )
-                return <any>BigInt(input);
+                return <returnType>BigInt(input);
             return undefined;
         }
 
@@ -187,8 +287,9 @@ export namespace DataTypes {
             if (typeof input === 'string' || typeof input === 'number') {
                 // Here are different with official definition
                 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-                if (input === '0' || input === 'false') return <any>false;
-                return <any>Boolean(input);
+                if (input === '0' || input === 'false')
+                    return <returnType>false;
+                return <returnType>Boolean(input);
             }
             return undefined;
         }
@@ -198,44 +299,16 @@ export namespace DataTypes {
             // Avoid empty string converted to zero
             if (input === '') return undefined;
             const number = Number(input);
-            return isNaN(number) ? undefined : <any>number;
+            return isNaN(number) ? undefined : <returnType>number;
         }
 
         // String
         if (targetType === 'string') {
-            return <any>String(input);
+            return <returnType>String(input);
         }
 
+        // Default
         return undefined;
-    }
-
-    /**
-     * Convert array to target type
-     * @param input Input value
-     * @param target Target array
-     * @returns Converted array
-     */
-    export function convertArray<T>(
-        input: unknown,
-        target: T[]
-    ): T[] | undefined {
-        // Input array
-        const inputArray = Array.isArray(input)
-            ? input
-            : typeof input === 'string'
-            ? input.split(/,\s*/g)
-            : [input];
-        if (inputArray.length === 0) return [];
-
-        // Element item
-        const elementItem = Array.isArray(target)
-            ? target.length > 0
-                ? target[0]
-                : inputArray[0]
-            : target;
-
-        // Convert type
-        return inputArray.map((item) => convert(item, elementItem));
     }
 
     /**
@@ -247,9 +320,9 @@ export namespace DataTypes {
     export function convertSimple(
         input: unknown,
         enumType: CombinedEnum
-    ): Simple | undefined {
-        const type = getSimple(enumType);
-        const value = convert(input, type);
+    ): Simple | unknown[] | undefined {
+        const type = getBasicName(enumType);
+        const value = convertByType(input, type);
         if (value == null) return undefined;
 
         if (typeof value === 'number') {
@@ -267,29 +340,57 @@ export namespace DataTypes {
     }
 
     /**
-     * Get simple type from Enum type
+     * Get basic type name from Enum type
      * @param enumType Enum type
-     * @returns Simple type result
+     * @returns Basic type name result
      */
-    export function getSimple(enumType: CombinedEnum): Simple {
+    export function getBasicName(enumType: CombinedEnum): BasicNames {
         switch (enumType) {
             case CombinedEnum.Array:
-                return [];
+                return 'unknown[]';
             case CombinedEnum.Bigint:
-                return BigInt(0);
+                return 'bigint';
             case CombinedEnum.Boolean:
-                return false;
+                return 'boolean';
             case CombinedEnum.Date:
             case CombinedEnum.DateTime:
-                return new Date();
+                return 'date';
             case CombinedEnum.Number:
             case CombinedEnum.Int:
             case CombinedEnum.IntMoney:
             case CombinedEnum.Money:
-                return 0;
+                return 'number';
             default:
-                return '';
+                return 'string';
         }
+    }
+
+    /**
+     * Get value's basic type name
+     * @param value Input value
+     * @param isArray Is array
+     * @returns Value's basic type name
+     */
+    export function getBasicNameByValue(
+        value: unknown,
+        isArray: boolean = false
+    ): BasicNames | undefined {
+        // null or undefined
+        if (value == null) return undefined;
+
+        // Date
+        if (value instanceof Date) {
+            return isArray ? 'date[]' : 'date';
+        }
+
+        // No array
+
+        // Other cases
+        const valueType = typeof value;
+        const typeName = isArray ? valueType + '[]' : valueType;
+        if (!isBasicName(typeName)) return undefined;
+
+        return typeName;
     }
 
     /**
@@ -312,6 +413,15 @@ export namespace DataTypes {
      */
     export function getEnumKeys<T extends EnumBase>(input: T): string[] {
         return Object.keys(input).filter((key) => !/^\d+$/.test(key));
+    }
+
+    /**
+     * Check the type is a basic type or not (type guard)
+     * @param name Type name
+     * @returns Is basic type
+     */
+    export function isBasicName(name: string): name is BasicNames {
+        return BasicArray.includes(<BasicNames>name);
     }
 
     /**

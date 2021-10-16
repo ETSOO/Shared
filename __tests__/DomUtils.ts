@@ -132,8 +132,67 @@ test('Tests for dataAs', () => {
     formData.append('name', 'test');
     formData.append('price', '34.25');
     formData.append('options', '1,2,3,4');
+    formData.append('memo', 'Memo');
 
     const data = DomUtils.dataAs(formData, {
+        id: 'number',
+        name: 'string',
+        price: 'number',
+        options: 'number[]'
+    });
+
+    expect(data.id).toStrictEqual(1234);
+    expect(data.options?.length).toStrictEqual(4);
+    expect(data.options![0]).toStrictEqual(1);
+    expect(data).not.toHaveProperty('memo', 'Memo');
+
+    const keepSourceData = DomUtils.dataAs(
+        formData,
+        {
+            id: 'number',
+            name: 'string',
+            price: 'number',
+            options: 'number[]'
+        },
+        true
+    );
+    expect(keepSourceData).toHaveProperty('memo', 'Memo');
+});
+
+test('Tests for dataValueAs', () => {
+    const formData = new FormData();
+    formData.append('id', '1234');
+    formData.append('name', 'test');
+    formData.append('price', '34.25');
+    formData.append('options', '1,2,3,4');
+    formData.append('memo', 'Memo');
+
+    const templateValue = {
+        id: 0,
+        name: '',
+        price: 0,
+        options: [0]
+    };
+
+    const data = DomUtils.dataValueAs(formData, templateValue);
+
+    expect(data.id).toStrictEqual(1234);
+    expect(data.options?.length).toStrictEqual(4);
+    expect(data.options![0]).toStrictEqual(1);
+    expect(data).not.toHaveProperty('memo', 'Memo');
+
+    const keepSourceData = DomUtils.dataValueAs(formData, templateValue, true);
+    expect(keepSourceData).toHaveProperty('memo', 'Memo');
+});
+
+test('Tests for dataValueAs', () => {
+    const formData = new FormData();
+    formData.append('id', '1234');
+    formData.append('name', 'test');
+    formData.append('price', '34.25');
+    formData.append('options', '1,2,3,4');
+
+    const data = DomUtils.dataValueAs(formData, {
         id: 0,
         name: '',
         price: 0,

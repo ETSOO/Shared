@@ -97,22 +97,15 @@ export namespace DomUtils {
         return data;
     }
 
-    /**
-     * Cast data to target type
-     * @param source Source data
-     * @param template Template for generation
-     * @returns Result
-     */
-    export function dataAs<T extends {}>(
+    function dataAsTraveller(
         source: IFormData | {},
-        template: T
-    ): Partial<T> {
+        data: {},
+        template: {},
+        keepSource: boolean,
+        isValue: boolean
+    ) {
         // Properties
         const properties = Object.keys(template);
-
-        // New data
-        // Object.create(...)
-        const data = <Partial<T>>{};
 
         // Entries
         const entries = isFormData(source)
@@ -120,23 +113,78 @@ export namespace DomUtils {
             : Object.entries(source);
 
         for (const [key, value] of entries) {
-            // Is included
-            const property = properties.find(
-                (p) => p.localeCompare(key, 'en', { sensitivity: 'base' }) === 0
-            );
+            // Is included or keepSource
+            const property =
+                properties.find(
+                    (p) =>
+                        p.localeCompare(key, 'en', { sensitivity: 'base' }) ===
+                        0
+                ) ?? (keepSource ? key : undefined);
             if (property == null) continue;
 
             // Template value
             const templateValue = Reflect.get(template, property);
 
             // Formatted value
-            const propertyValue = DataTypes.convert(value, templateValue);
+            let propertyValue: any;
+
+            if (templateValue == null) {
+                // Just read the source value
+                propertyValue = value;
+            } else {
+                if (isValue) {
+                    // With template value
+                    propertyValue = DataTypes.convert(value, templateValue);
+                } else {
+                    // With template type
+                    propertyValue = DataTypes.convertByType(
+                        value,
+                        templateValue
+                    );
+                }
+            }
 
             // Set value
             // Object.assign(data, { [property]: propertyValue });
             // Object.defineProperty(data, property, { value: propertyValue });
             Reflect.set(data, property, propertyValue);
         }
+    }
+
+    export function dataAs<T extends DataTypes.BasicTemplate>(
+        source: IFormData | {},
+        template: T,
+        keepSource: boolean = false
+    ): DataTypes.BasicTemplateType<T> {
+        // New data
+        // Object.create(...)
+        const data = <DataTypes.BasicTemplateType<T>>{};
+
+        // Travel all properties
+        dataAsTraveller(source, data, template, keepSource, false);
+
+        // Return
+        return data;
+    }
+
+    /**
+     * Cast data to target type
+     * @param source Source data
+     * @param template Template for generation
+     * @param keepSource Means even the template does not include the definition, still keep the item
+     * @returns Result
+     */
+    export function dataValueAs<T extends {}>(
+        source: IFormData | {},
+        templateValue: T,
+        keepSource: boolean = false
+    ): Partial<T> {
+        // New data
+        // Object.create(...)
+        const data = <Partial<T>>{};
+
+        // Travel all properties
+        dataAsTraveller(source, data, templateValue, keepSource, true);
 
         // Return
         return data;
