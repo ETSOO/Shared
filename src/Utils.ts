@@ -5,6 +5,14 @@ import { DataTypes } from './DataTypes';
  */
 export namespace Utils {
     /**
+     * Format word's first letter to lower case
+     * @param word Word
+     */
+    export function formatLowerLetter(word: string) {
+        return word.charAt(0).toLowerCase() + word.slice(1);
+    }
+
+    /**
      * Format word's first letter to upper case
      * @param word Word
      */

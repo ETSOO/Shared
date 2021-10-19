@@ -124,6 +124,7 @@ String and other related utilities
 
 |Name|Description|
 |---:|---|
+|formatLowerLetter|Format word's first letter to lower case|
 |formatUpperLetter|Format word's first letter to upper case|
 |getDataChanges|Get data changed fields with input data updated|
 |getTimeZone|Get time zone|

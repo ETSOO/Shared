@@ -23,6 +23,10 @@ test('Tests for getDataChanges', () => {
     expect(input.amount).toBeUndefined();
 });
 
+test('Tests for formatLowerLetter', () => {
+    expect(Utils.formatLowerLetter('HelloWorld')).toBe('helloWorld');
+});
+
 test('Tests for formatUpperLetter', () => {
     expect(Utils.formatUpperLetter('hello')).toBe('Hello');
 });
