@@ -1,6 +1,6 @@
 {
     "name": "@etsoo/shared",
-    "version": "1.0.53",
+    "version": "1.0.54",
     "description": "TypeScript shared utilities and functions",
     "main": "lib/cjs/index.js",
     "module": "lib/mjs/index.js",
@@ -30,7 +30,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/ETSOO/NotificationBase.git"
+        "url": "git+https://github.com/ETSOO/Shared.git"
     },
     "keywords": [
         "Shared utilities",
@@ -44,9 +44,9 @@
     "author": "Garry Xiao",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/ETSOO/NotificationBase/issues"
+        "url": "https://github.com/ETSOO/Shared/issues"
     },
-    "homepage": "https://github.com/ETSOO/NotificationBase#readme",
+    "homepage": "https://github.com/ETSOO/Shared#readme",
     "dependencies": {},
     "devDependencies": {
         "@types/jest": "^27.0.2",
