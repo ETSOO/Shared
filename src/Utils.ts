@@ -157,6 +157,16 @@ export namespace Utils {
     }
 
     /**
+     * Remove non letters
+     * @param input Input string
+     * @returns Result
+     */
+    export const removeNonLetters = (input?: string) => {
+        if (input == null || input === '') return input;
+        return input.replace(/[^a-zA-Z0-9]/g, '');
+    };
+
+    /**
      * Set source with new labels
      * @param source Source
      * @param labels Labels

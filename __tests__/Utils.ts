@@ -47,6 +47,10 @@ test('Tests for newGUID', () => {
     expect(id1.length).toBe(id2.length);
 });
 
+test('Tests for removeNonLetters', () => {
+    expect(Utils.removeNonLetters('1234-5678@abc.')).toBe('12345678abc');
+});
+
 test('Tests for parseString', () => {
     expect(Utils.parseString('test', '')).toBe('test');
     expect(Utils.parseString('true', false)).toBe(true);
