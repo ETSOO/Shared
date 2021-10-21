@@ -51,6 +51,15 @@ test('Tests for removeNonLetters', () => {
     expect(Utils.removeNonLetters('1234-5678@abc.')).toBe('12345678abc');
 });
 
+test('Tests for objectEqual', () => {
+    const obj1 = { a: 1, b: 'abc', c: true, d: null };
+    const obj2 = { a: '1', b: 'abc', c: true };
+    expect(Utils.objectEqual(obj1, obj2)).toBeFalsy();
+    expect(Utils.objectEqual(obj1, obj2, [], 0)).toBeTruthy();
+    expect(Utils.objectEqual(obj1, obj2, ['a'])).toBeTruthy();
+    expect(Utils.objectEqual(obj1, obj2, ['a'], 2)).toBeFalsy();
+});
+
 test('Tests for parseString', () => {
     expect(Utils.parseString('test', '')).toBe('test');
     expect(Utils.parseString('true', false)).toBe(true);

@@ -132,6 +132,7 @@ String and other related utilities
 |mergeFormData|Merge form data to primary one|
 |mergeClasses|Merge class names|
 |newGUID|Create a GUID|
+|objectEqual|Test two objects are equal or not|
 |parseString|Parse string (JSON) to specific type|
 |setLabels|Set source with new labels|
 |snakeNameToWord|Snake name to works, 'snake_name' to 'Snake Name'|

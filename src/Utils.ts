@@ -116,6 +116,44 @@ export namespace Utils {
     }
 
     /**
+     * Test two objects are equal or not
+     * @param obj1 Object 1
+     * @param obj2 Object 2
+     * @param ignoreFields Ignored fields
+     * @param strict Strict level, 0 with ==, 1 === but null equal undefined, 2 ===
+     * @returns Result
+     */
+    export function objectEqual(
+        obj1: {},
+        obj2: {},
+        ignoreFields: string[] = [],
+        strict = 1
+    ) {
+        // Keys
+        const keys = new Set([
+            ...Object.keys(obj1).filter((item) => !ignoreFields.includes(item)),
+            ...Object.keys(obj2).filter((item) => !ignoreFields.includes(item))
+        ]);
+
+        for (const key of keys) {
+            // Values
+            const v1 = Reflect.get(obj1, key);
+            const v2 = Reflect.get(obj2, key);
+
+            // Null and undefined case
+            if (v1 == null && v2 == null && strict <= 1) continue;
+
+            // 1 and '1' case
+            if (strict === 0 && v1 == v2) continue;
+
+            // Strict equal
+            if (v1 !== v2) return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Parse string (JSON) to specific type
      * @param input Input string
      * @param defaultValue Default value
