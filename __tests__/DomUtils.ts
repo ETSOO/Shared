@@ -133,17 +133,27 @@ test('Tests for dataAs', () => {
     formData.append('price', '34.25');
     formData.append('options', '1,2,3,4');
     formData.append('memo', 'Memo');
+    formData.append('email', 'a@b');
+    formData.append('email', 'c@d');
+    formData.append('code', '123');
+    formData.append('code', '456');
 
     const data = DomUtils.dataAs(formData, {
         id: 'number',
         name: 'string',
         price: 'number',
-        options: 'number[]'
+        options: 'number[]',
+        email: 'string[]',
+        code: 'number[]'
     });
 
     expect(data.id).toStrictEqual(1234);
     expect(data.options?.length).toStrictEqual(4);
     expect(data.options![0]).toStrictEqual(1);
+
+    expect(data.email).toEqual(['a@b', 'c@d']);
+    expect(data.code?.length).toStrictEqual(2);
+    expect(data.code).toEqual([123, 456]);
     expect(data).not.toHaveProperty('memo', 'Memo');
 
     const keepSourceData = DomUtils.dataAs(

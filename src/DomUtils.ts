@@ -108,9 +108,9 @@ export namespace DomUtils {
         const properties = Object.keys(template);
 
         // Entries
-        const entries = isFormData(source)
-            ? source.entries()
-            : Object.entries(source);
+        const entries = Object.entries(
+            isFormData(source) ? formDataToObject(source) : source
+        );
 
         for (const [key, value] of entries) {
             // Is included or keepSource
