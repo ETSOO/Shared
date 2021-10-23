@@ -1,6 +1,4 @@
 import { Utils } from '../src/Utils';
-import '../src/String';
-import '../src/StringExtensions';
 
 test('Tests for getDataChanges', () => {
     const input = {

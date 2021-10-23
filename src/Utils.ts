@@ -1,5 +1,28 @@
 import { DataTypes } from './DataTypes';
 
+declare global {
+    interface String {
+        /**
+         * Format string
+         * @param this Template
+         * @param parameters Parameters to fill the template
+         * @returns Result
+         */
+        format(this: string, ...parameters: string[]): string;
+    }
+}
+
+String.prototype.format = function (
+    this: string,
+    ...parameters: string[]
+): string {
+    let template = this;
+    parameters.forEach((value, index) => {
+        template = template.replace(new RegExp(`\\{${index}\\}`, 'g'), value);
+    });
+    return template;
+};
+
 /**
  * Utilities
  */
