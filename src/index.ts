@@ -5,4 +5,5 @@ export * from './DomUtils';
 export * from './ExtendUtils';
 export * from './NumberUtils';
 export * from './StorageUtils';
+export * from './StringExtensions';
 export * from './Utils';

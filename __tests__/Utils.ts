@@ -1,4 +1,6 @@
 import { Utils } from '../src/Utils';
+import '../src/String';
+import '../src/StringExtensions';
 
 test('Tests for getDataChanges', () => {
     const input = {
@@ -21,6 +23,13 @@ test('Tests for getDataChanges', () => {
     expect(fields).toStrictEqual(['gender', 'brand', 'amount']);
     expect(input.price).toBeUndefined();
     expect(input.amount).toBeUndefined();
+});
+
+test('Tests for formatString', () => {
+    const template = '{0} is first item, {1} is second item, {0} repeat';
+    const result = 'aa is first item, bb is second item, aa repeat';
+    expect(Utils.formatString(template, 'aa', 'bb')).toBe(result);
+    expect(template.format('aa', 'bb')).toBe(result);
 });
 
 test('Tests for formatLowerLetter', () => {

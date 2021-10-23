@@ -13,6 +13,16 @@ export namespace Utils {
     }
 
     /**
+     * Format string
+     * @param template Template with {0}, {1}, ...
+     * @param parameters Parameters to fill the template
+     * @returns Result
+     */
+    export function formatString(template: string, ...parameters: string[]) {
+        return template.format(...parameters);
+    }
+
+    /**
      * Format word's first letter to upper case
      * @param word Word
      */
