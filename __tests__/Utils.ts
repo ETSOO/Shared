@@ -23,19 +23,17 @@ test('Tests for getDataChanges', () => {
     expect(input.amount).toBeUndefined();
 });
 
+test('Tests for formatInitial', () => {
+    expect(Utils.formatInitial('HelloWorld')).toBe('helloWorld');
+    expect('HelloWorld'.formatInitial(false)).toBe('helloWorld');
+    expect('hello'.formatInitial(true)).toBe('Hello');
+});
+
 test('Tests for formatString', () => {
     const template = '{0} is first item, {1} is second item, {0} repeat';
     const result = 'aa is first item, bb is second item, aa repeat';
     expect(Utils.formatString(template, 'aa', 'bb')).toBe(result);
     expect(template.format('aa', 'bb')).toBe(result);
-});
-
-test('Tests for formatLowerLetter', () => {
-    expect(Utils.formatLowerLetter('HelloWorld')).toBe('helloWorld');
-});
-
-test('Tests for formatUpperLetter', () => {
-    expect(Utils.formatUpperLetter('hello')).toBe('Hello');
 });
 
 test('Tests for joinItems', () => {
@@ -55,7 +53,10 @@ test('Tests for newGUID', () => {
 });
 
 test('Tests for removeNonLetters', () => {
-    expect(Utils.removeNonLetters('1234-5678@abc.')).toBe('12345678abc');
+    const input = '1234-5678@abc.';
+    const result = '12345678abc';
+    expect(Utils.removeNonLetters(input)).toBe(result);
+    expect(input.removeNonLetters()).toBe(result);
 });
 
 test('Tests for objectEqual', () => {

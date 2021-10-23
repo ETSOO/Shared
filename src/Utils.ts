@@ -6,9 +6,21 @@ declare global {
          * Format string
          * @param this Template
          * @param parameters Parameters to fill the template
-         * @returns Result
          */
         format(this: string, ...parameters: string[]): string;
+
+        /**
+         * Forat inital character
+         * @param this Input string
+         * @param upperCase To upper case or lower case
+         */
+        formatInitial(this: string, upperCase: boolean): string;
+
+        /**
+         * Remove non letters (0-9, a-z, A-Z)
+         * @param this Input string
+         */
+        removeNonLetters(this: string): string;
     }
 }
 
@@ -23,34 +35,42 @@ String.prototype.format = function (
     return template;
 };
 
+String.prototype.formatInitial = function (
+    this: string,
+    upperCase: boolean = false
+) {
+    const initial = this.charAt(0);
+    return (
+        (upperCase ? initial.toUpperCase() : initial.toLowerCase()) +
+        this.slice(1)
+    );
+};
+
+String.prototype.removeNonLetters = function (this: string) {
+    return this.replace(/[^a-zA-Z0-9]/g, '');
+};
+
 /**
  * Utilities
  */
 export namespace Utils {
     /**
-     * Format word's first letter to lower case
-     * @param word Word
+     * Format inital character to lower case or upper case
+     * @param input Input string
+     * @param upperCase To upper case or lower case
      */
-    export function formatLowerLetter(word: string) {
-        return word.charAt(0).toLowerCase() + word.slice(1);
+    export function formatInitial(input: string, upperCase: boolean = false) {
+        return input.formatInitial(upperCase);
     }
 
     /**
-     * Format string
+     * Format string with parameters
      * @param template Template with {0}, {1}, ...
      * @param parameters Parameters to fill the template
      * @returns Result
      */
     export function formatString(template: string, ...parameters: string[]) {
         return template.format(...parameters);
-    }
-
-    /**
-     * Format word's first letter to upper case
-     * @param word Word
-     */
-    export function formatUpperLetter(word: string) {
-        return word.charAt(0).toUpperCase() + word.slice(1);
     }
 
     /**
@@ -233,8 +253,7 @@ export namespace Utils {
      * @returns Result
      */
     export const removeNonLetters = (input?: string) => {
-        if (input == null || input === '') return input;
-        return input.replace(/[^a-zA-Z0-9]/g, '');
+        return input?.removeNonLetters();
     };
 
     /**
@@ -279,10 +298,10 @@ export namespace Utils {
     ) => {
         const items = name.split('_');
         if (firstOnly) {
-            items[0] = formatUpperLetter(items[0]);
+            items[0] = items[0].formatInitial(true);
             return items.join(' ');
         }
 
-        return items.map((part) => formatUpperLetter(part)).join(' ');
+        return items.map((part) => part.formatInitial(true)).join(' ');
     };
 }

@@ -124,8 +124,8 @@ String and other related utilities
 
 |Name|Description|
 |---:|---|
-|formatLowerLetter|Format word's first letter to lower case|
-|formatUpperLetter|Format word's first letter to upper case|
+|formatInitial|Format inital character to lower case or upper case|
+|formatString|Format string with parameters|
 |getDataChanges|Get data changed fields with input data updated|
 |getTimeZone|Get time zone|
 |joinItems|Join items as a string|
