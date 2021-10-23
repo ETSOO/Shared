@@ -3,14 +3,14 @@ import { DataTypes } from './DataTypes';
 declare global {
     interface String {
         /**
-         * Format string
+         * Format string with parameters
          * @param this Template
          * @param parameters Parameters to fill the template
          */
         format(this: string, ...parameters: string[]): string;
 
         /**
-         * Forat inital character
+         * Format inital character to lower case or upper case
          * @param this Input string
          * @param upperCase To upper case or lower case
          */
