@@ -36,6 +36,18 @@ test('Tests for formatString', () => {
     expect(template.format('aa', 'bb')).toBe(result);
 });
 
+test('Tests for isDigits', () => {
+    expect(Utils.isDigits('1')).toBeTruthy();
+    expect(Utils.isDigits('12', 3)).toBeFalsy();
+    expect(Utils.isDigits('123', 3)).toBeTruthy();
+});
+
+test('Tests for isEmail', () => {
+    expect(Utils.isEmail('abc')).toBeFalsy();
+    expect(Utils.isEmail('a@')).toBeFalsy();
+    expect(Utils.isEmail('xz@etsoo.com')).toBeTruthy();
+});
+
 test('Tests for joinItems', () => {
     expect(Utils.joinItems(['a', undefined, ' b', '', 'c '], ',')).toBe(
         'a,b,c'

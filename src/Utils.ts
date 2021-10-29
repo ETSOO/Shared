@@ -17,6 +17,19 @@ declare global {
         formatInitial(this: string, upperCase: boolean): string;
 
         /**
+         * Is digits string
+         * @param this Input string
+         * @param minLength Minimum length
+         */
+        isDigits(this: string, minLength?: number): boolean;
+
+        /**
+         * Is email string
+         * @param this Input string
+         */
+        isEmail(this: string): boolean;
+
+        /**
          * Remove non letters (0-9, a-z, A-Z)
          * @param this Input string
          */
@@ -44,6 +57,19 @@ String.prototype.formatInitial = function (
         (upperCase ? initial.toUpperCase() : initial.toLowerCase()) +
         this.slice(1)
     );
+};
+
+String.prototype.isDigits = function (this: string, minLength?: number) {
+    const re = new RegExp(
+        `/^\\d{${minLength == null || minLength < 1 ? 1 : minLength},}$/`
+    );
+    return re.test(this);
+};
+
+String.prototype.isEmail = function (this: string) {
+    const re =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(this.toLowerCase());
 };
 
 String.prototype.removeNonLetters = function (this: string) {
@@ -129,6 +155,27 @@ export namespace Utils {
             typeof Intl.DateTimeFormat === 'function'
         )
             return Intl.DateTimeFormat().resolvedOptions().timeZone;
+    };
+
+    /**
+     * Is digits string
+     * @param input Input string
+     * @param minLength Minimum length
+     * @returns Result
+     */
+    export const isDigits = (input?: string, minLength?: number) => {
+        if (input == null) return false;
+        return input.isDigits(minLength);
+    };
+
+    /**
+     * Is email string
+     * @param input Input string
+     * @returns Result
+     */
+    export const isEmail = (input?: string) => {
+        if (input == null) return false;
+        return input.isEmail();
     };
 
     /**
