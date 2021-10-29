@@ -60,10 +60,7 @@ String.prototype.formatInitial = function (
 };
 
 String.prototype.isDigits = function (this: string, minLength?: number) {
-    const re = new RegExp(
-        `/^\\d{${minLength == null || minLength < 1 ? 1 : minLength},}$/`
-    );
-    return re.test(this);
+    return this.length >= (minLength ?? 0) && /^\d+$/.test(this);
 };
 
 String.prototype.isEmail = function (this: string) {
