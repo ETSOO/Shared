@@ -10,6 +10,7 @@ test('Tests for convert', () => {
     expect(DataTypes.convert('', 0)).toBeUndefined();
     expect(DataTypes.convert('false', true)).toBeFalsy();
     expect(DataTypes.convert('1', true)).toBeTruthy();
+    expect(DataTypes.convert(true, true)).toBeTruthy();
 });
 
 test('Tests for convertByType', () => {

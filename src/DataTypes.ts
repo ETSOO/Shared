@@ -241,6 +241,9 @@ export namespace DataTypes {
         // Return type
         type returnType = BasicConditional<T>;
 
+        // Same type
+        if (typeof input === targetType) return <returnType>input;
+
         // Array
         if (targetType.endsWith('[]')) {
             // Input array

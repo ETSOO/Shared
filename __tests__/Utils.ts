@@ -7,7 +7,8 @@ test('Tests for getDataChanges', () => {
         gender: 'F',
         brand: '',
         price: '6.0',
-        amount: ''
+        amount: '',
+        enabled: true
     };
     const initData = {
         id: 1,
@@ -15,7 +16,8 @@ test('Tests for getDataChanges', () => {
         gender: 'M',
         brand: 'ETSOO',
         price: 6,
-        amount: 0
+        amount: 0,
+        enabled: true
     };
     const fields = Utils.getDataChanges(input, initData);
     expect(fields).toStrictEqual(['gender', 'brand', 'amount']);
