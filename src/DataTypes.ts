@@ -397,6 +397,33 @@ export namespace DataTypes {
     }
 
     /**
+     * Get enum item from key
+     * @param enumItem Enum
+     * @param key Key
+     * @returns Enum item
+     */
+    export function getEnumByKey<T extends EnumBase, K extends keyof T>(
+        enumItem: T,
+        key: K
+    ) {
+        return enumItem[key];
+    }
+
+    /**
+     * Get enum item from value
+     * @param enumItem Enum
+     * @param value Key
+     * @returns Enum item or undefined
+     */
+    export function getEnumByValue<T extends EnumBase, K extends keyof T>(
+        enumItem: T,
+        value: EnumValue
+    ): T[K] | undefined {
+        if (value in enumItem) return <T[K]>value;
+        return undefined;
+    }
+
+    /**
      * Get enum string literal type value
      * @param enumItem Enum item
      * @param value Value

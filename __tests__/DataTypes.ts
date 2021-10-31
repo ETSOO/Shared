@@ -42,6 +42,20 @@ test('Tests for getBasicName', () => {
     ).toStrictEqual('date');
 });
 
+test('Tests for getEnumByKey', () => {
+    expect(
+        DataTypes.getEnumByKey(DataTypes.HAlignEnum, 'Center')
+    ).toStrictEqual(DataTypes.HAlignEnum.Center);
+});
+
+test('Tests for getEnumByValue', () => {
+    expect(DataTypes.getEnumByValue(DataTypes.HAlignEnum, 2)).toStrictEqual(
+        DataTypes.HAlignEnum.Center
+    );
+
+    expect(DataTypes.getEnumByValue(DataTypes.HAlignEnum, 4)).toBeUndefined();
+});
+
 test('Tests for getEnumKey', () => {
     expect(
         DataTypes.getEnumKey(DataTypes.HAlignEnum, DataTypes.HAlignEnum.Center)

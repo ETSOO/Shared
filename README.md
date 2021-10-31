@@ -49,7 +49,9 @@ Data type definitions and type safe functions
 |convertSimple|Convert value to target enum type|
 |getBasicName|Get basic type name from Enum type|
 |getBasicNameByValue|Get value's basic type name|
-|getEnumKey|get enum string literal type value|
+|getEnumByKey|Get enum item from key|
+|getEnumByValue|Get enum item from value|
+|getEnumKey|Get enum string literal type value|
 |getEnumKeys|Get Enum keys|
 |isBasicName|Check the type is a basic type or not (type guard)|
 |isSimpleObject|Is the target a simple object, all values are simple type (Type guard)|
