@@ -32,13 +32,16 @@ test('Tests for date parse', () => {
         "id": 1234, 
         "logined": false,   
         "name": "Jimmy Roe",
+        "externalId": "1234",
         "creation": "2014-01-01T13:13:34.441Z"
     }
     `;
 
-    const result = JSON.parse(json, DateUtils.jsonParser);
+    const result = JSON.parse(json, DateUtils.buildJsonParser(['creation']));
     const isDate = result.creation instanceof Date;
+    const isIdDate = result.externalId instanceof Date;
 
+    expect(isIdDate).toBeFalsy();
     expect(isDate).toBeTruthy();
 });
 

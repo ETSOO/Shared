@@ -106,27 +106,34 @@ export namespace DateUtils {
     }
 
     /**
-     * JSON parser
-     * @param _key Current key
-     * @param value Current value
-     * @returns Formated value
+     * Build JSON parser
+     * @param keys Date field names
+     * @returns JSON parser
      */
-    export function jsonParser(_key: string, value: unknown) {
-        if (typeof value === 'string' && value != null) {
-            const parsedDate = parse(value);
-            if (parsedDate != null) return parsedDate;
-        }
-        return value;
-    }
+    export const jsonParser = (keys: string[]) => {
+        return function (key: string, value: unknown) {
+            if (
+                typeof value === 'string' &&
+                value != null &&
+                value !== '' &&
+                keys.includes(key)
+            ) {
+                const parsedDate = parse(value);
+                if (parsedDate != null) return parsedDate;
+            }
+            return value;
+        };
+    };
 
     /**
      * Parse string to date
+     * 2021/10/31 or 2021-10-31
      * @param input Input string
      * @returns Date
      */
     export function parse(input: string) {
         const f = input[0];
-        if (f >= '0' && f <= '9') {
+        if (f >= '0' && f <= '9' && /[-\/\s]/g.test(input)) {
             const n = Date.parse(input);
             if (!isNaN(n)) return new Date(n);
         }

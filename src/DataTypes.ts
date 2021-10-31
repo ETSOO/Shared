@@ -241,9 +241,6 @@ export namespace DataTypes {
         // Return type
         type returnType = BasicConditional<T>;
 
-        // Same type
-        if (typeof input === targetType) return <returnType>input;
-
         // Array
         if (targetType.endsWith('[]')) {
             // Input array
@@ -265,6 +262,9 @@ export namespace DataTypes {
                     .filter((item) => item != null) // Remove undefined item
             );
         }
+
+        // Same type
+        if (typeof input === targetType) return <returnType>input;
 
         // Date
         if (targetType === 'date') {
