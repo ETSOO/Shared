@@ -404,9 +404,10 @@ export namespace DataTypes {
      */
     export function getEnumByKey<T extends EnumBase, K extends keyof T>(
         enumItem: T,
-        key: K
-    ) {
-        return enumItem[key];
+        key: string
+    ): T[K] | undefined {
+        if (key in enumItem) return <T[K]>enumItem[key];
+        return undefined;
     }
 
     /**
@@ -441,8 +442,12 @@ export namespace DataTypes {
      * @param input Input Enum
      * @returns Keys
      */
-    export function getEnumKeys<T extends EnumBase>(input: T): string[] {
-        return Object.keys(input).filter((key) => !/^\d+$/.test(key));
+    export function getEnumKeys<T extends EnumBase, K extends keyof T>(
+        input: T
+    ): K[] {
+        return Object.keys(input)
+            .filter((key) => !/^\d+$/.test(key))
+            .map((item) => <K>item);
     }
 
     /**

@@ -46,6 +46,10 @@ test('Tests for getEnumByKey', () => {
     expect(
         DataTypes.getEnumByKey(DataTypes.HAlignEnum, 'Center')
     ).toStrictEqual(DataTypes.HAlignEnum.Center);
+
+    expect(
+        DataTypes.getEnumByKey(DataTypes.HAlignEnum, 'Unknown')
+    ).toBeUndefined();
 });
 
 test('Tests for getEnumByValue', () => {
