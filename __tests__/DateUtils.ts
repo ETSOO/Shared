@@ -37,7 +37,7 @@ test('Tests for date parse', () => {
     }
     `;
 
-    const result = JSON.parse(json, DateUtils.buildJsonParser(['creation']));
+    const result = JSON.parse(json, DateUtils.jsonParser(['creation']));
     const isDate = result.creation instanceof Date;
     const isIdDate = result.externalId instanceof Date;
 
