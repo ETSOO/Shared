@@ -67,4 +67,18 @@ export namespace NumberUtils {
 
         return parseFloat(rawData.toString());
     };
+
+    /**
+     * Parse float value and unit
+     * @param input Input string
+     * @returns Result, like [number, string]
+     */
+    export const parseWithUnit = (
+        input: string
+    ): [number, string] | undefined => {
+        if (/^(\d+)(\D*)$/g.test(input)) {
+            return [Number(RegExp.$1), RegExp.$2.trim()];
+        }
+        return undefined;
+    };
 }

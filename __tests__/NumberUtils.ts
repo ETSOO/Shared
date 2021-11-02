@@ -17,3 +17,9 @@ test('Tests for parse', () => {
     expect(NumberUtils.parse(Object(123))).toBe(123);
     expect(isNaN(NumberUtils.parse('a'))).toBeTruthy();
 });
+
+test('Tests for parseWithUnit', () => {
+    expect(NumberUtils.parseWithUnit('8px')).toStrictEqual([8, 'px']);
+    expect(NumberUtils.parseWithUnit('16')).toStrictEqual([16, '']);
+    expect(NumberUtils.parseWithUnit('a16')).toBeUndefined();
+});
