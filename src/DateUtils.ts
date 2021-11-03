@@ -109,15 +109,11 @@ export namespace DateUtils {
         options?: FormatOptions,
         timeZone?: string
     ) {
-        // Null case
-        if (input == null) return undefined;
+        // Parse
+        const parsed = parse(input);
 
-        // Type transformation
-        if (typeof input === 'string') {
-            const parsedDate = parse(input);
-            if (parsedDate == null) return undefined;
-            input = parsedDate;
-        }
+        // Null case
+        if (parsed == null) return undefined;
 
         // Default options
         options ??= DayFormat;
@@ -144,7 +140,7 @@ export namespace DateUtils {
 
         // Return format result
         return new Intl.DateTimeFormat(locale, newOpt)
-            .format(input)
+            .format(parsed)
             .replace(/,\s*/g, ' ');
     }
 
@@ -205,12 +201,16 @@ export namespace DateUtils {
      * @param input Input string
      * @returns Date
      */
-    export function parse(input: string) {
-        const f = input[0];
-        if (f >= '0' && f <= '9' && /[-\/\s]/g.test(input)) {
-            const n = Date.parse(input);
-            if (!isNaN(n)) return new Date(n);
+    export function parse(input?: Date | string | null) {
+        if (input == null) return undefined;
+        if (typeof input === 'string') {
+            const f = input[0];
+            if (f >= '0' && f <= '9' && /[-\/\s]/g.test(input)) {
+                const n = Date.parse(input);
+                if (!isNaN(n)) return new Date(n);
+            }
+            return undefined;
         }
-        return undefined;
+        return input;
     }
 }
