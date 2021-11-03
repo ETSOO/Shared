@@ -66,9 +66,12 @@ Dates related utilities
 |DayFormat|YYYY-MM-DD|
 |MinuteFormat|YYYY-MM-DD hh:mm|
 |SecondFormat|YYYY-MM-DD hh:mm:ss|
+
+|getDays|Get month's days|
 |forma|Format dates|
 |jsonParser|JSON parser|
 |parse|Parse string to date|
+|substract|Date extended method, substract a date|
 
 ## DomUtils
 DOM/window related utilities

@@ -1,3 +1,65 @@
+declare global {
+    interface Date {
+        /**
+         * Substract date
+         * @param input Input date
+         */
+        substract(input: Date): TimeSpan;
+    }
+}
+
+Date.prototype.substract = function (this: Date, input: Date): TimeSpan {
+    // Calculate from miniseconds
+    const totalMiniseconds = this.valueOf() - input.valueOf();
+    const totalSeconds = totalMiniseconds / 1000.0;
+    const totalHours = totalSeconds / 60.0;
+    const totalDays = totalHours / 24.0;
+
+    // Calcuate days
+    const thisYear = this.getFullYear();
+    const thisMonth = this.getMonth();
+    const inputCopy = new Date(input);
+    inputCopy.setFullYear(thisYear);
+    inputCopy.setMonth(thisMonth);
+
+    const diffDays =
+        (new Date(this).valueOf() - inputCopy.valueOf()) / 86400000.0;
+    const diffMonths =
+        diffDays > 0
+            ? diffDays / DateUtils.getDays(thisYear, thisMonth)
+            : diffDays / DateUtils.getDays(thisYear, thisMonth - 1);
+
+    // Total months
+    const totalMonths =
+        12 * (thisYear - input.getFullYear()) +
+        (thisMonth - input.getMonth()) +
+        diffMonths;
+
+    // Total years
+    const totalYears = totalMonths / 12.0;
+
+    return {
+        totalMiniseconds,
+        totalSeconds,
+        totalHours,
+        totalDays,
+        totalMonths,
+        totalYears
+    };
+};
+
+/**
+ * TimeSpan
+ */
+export interface TimeSpan {
+    totalMiniseconds: number;
+    totalSeconds: number;
+    totalHours: number;
+    totalDays: number;
+    totalMonths: number;
+    totalYears: number;
+}
+
 export namespace DateUtils {
     /**
      * Day format, YYYY-MM-DD
@@ -104,6 +166,15 @@ export namespace DateUtils {
         // Return
         return parts.join('-');
     }
+
+    /**
+     * Get month's days
+     * @param year Year
+     * @param month Month, starts from 0
+     * @returns Days
+     */
+    export const getDays = (year: number, month: number) =>
+        new Date(year, month + 1, 0).getDate();
 
     /**
      * Build JSON parser

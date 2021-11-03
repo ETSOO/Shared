@@ -26,6 +26,13 @@ test('Tests for UTC date time', () => {
     );
 });
 
+test('Tests for getDays', () => {
+    expect(DateUtils.getDays(2021, 1)).toBe(28);
+    expect(DateUtils.getDays(2009, 1)).toBe(28);
+    expect(DateUtils.getDays(2008, 1)).toBe(29);
+    expect(DateUtils.getDays(2000, 1)).toBe(29);
+});
+
 test('Tests for date parse', () => {
     const json = `
     {   
@@ -51,4 +58,12 @@ test('Tests for formatForInput', () => {
 
     const result2 = DateUtils.formatForInput(new Date(2021, 5, 6));
     expect(result2).toBe('2021-06-06');
+});
+
+test('Tests for substract', () => {
+    const d1 = new Date('2021/1/13 12:00:00');
+    const d2 = new Date('2022/1/13 12:00:01');
+    const d3 = new Date('2023/1/12 12:00:00');
+    expect(d2.substract(d1).totalYears > 1).toBeTruthy();
+    expect(d3.substract(d1).totalYears < 2).toBeTruthy();
 });
