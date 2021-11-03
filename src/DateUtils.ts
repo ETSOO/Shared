@@ -12,7 +12,8 @@ Date.prototype.substract = function (this: Date, input: Date): TimeSpan {
     // Calculate from miniseconds
     const totalMiniseconds = this.valueOf() - input.valueOf();
     const totalSeconds = totalMiniseconds / 1000.0;
-    const totalHours = totalSeconds / 60.0;
+    const totalMinutes = totalSeconds / 60.0;
+    const totalHours = totalMinutes / 60.0;
     const totalDays = totalHours / 24.0;
 
     // Calcuate days
@@ -41,6 +42,7 @@ Date.prototype.substract = function (this: Date, input: Date): TimeSpan {
     return {
         totalMiniseconds,
         totalSeconds,
+        totalMinutes,
         totalHours,
         totalDays,
         totalMonths,
@@ -54,6 +56,7 @@ Date.prototype.substract = function (this: Date, input: Date): TimeSpan {
 export interface TimeSpan {
     totalMiniseconds: number;
     totalSeconds: number;
+    totalMinutes: number;
     totalHours: number;
     totalDays: number;
     totalMonths: number;

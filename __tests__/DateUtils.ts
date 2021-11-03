@@ -62,8 +62,10 @@ test('Tests for formatForInput', () => {
 
 test('Tests for substract', () => {
     const d1 = new Date('2021/1/13 12:00:00');
-    const d2 = new Date('2022/1/13 12:00:01');
-    const d3 = new Date('2023/1/12 12:00:00');
-    expect(d2.substract(d1).totalYears > 1).toBeTruthy();
-    expect(d3.substract(d1).totalYears < 2).toBeTruthy();
+    const d2 = new Date('2022/1/13 12:00:00');
+    const d3 = new Date('2022/1/13 12:10:01');
+    const d4 = new Date('2023/1/12 12:00:00');
+    expect(d3.substract(d1).totalYears > 1).toBeTruthy();
+    expect(d4.substract(d1).totalYears < 2).toBeTruthy();
+    expect(d2.substract(d1).totalMinutes > 10).toBeTruthy();
 });
