@@ -8,7 +8,8 @@ test('Tests for getDataChanges', () => {
         brand: '',
         price: '6.0',
         amount: '',
-        enabled: true
+        enabled: true,
+        value: undefined
     };
     const initData = {
         id: 1,

@@ -115,8 +115,14 @@ export namespace Utils {
             // Ignore fields, no process
             if (ignoreFields.includes(key)) return;
 
-            // Contract with init value
+            // Compare with init value
             const initValue = Reflect.get(initData, key);
+
+            if (value == null && initValue == null) {
+                // Both are null, it's equal
+                Reflect.deleteProperty(input, key);
+                return;
+            }
 
             if (initValue != null) {
                 const newValue = DataTypes.convert(value, initValue);
