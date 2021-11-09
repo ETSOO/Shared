@@ -315,26 +315,20 @@ export namespace Utils {
     export const setLabels = (
         source: {},
         labels: DataTypes.StringRecord,
-        reference: Readonly<DataTypes.StringDictionary> = {}
+        reference?: Readonly<DataTypes.StringDictionary>
     ) => {
-        const newLabels = Object.keys(source).reduce(
-            (newLabels, key, _index, _keys) => {
-                // Reference key
-                const labelKey = reference[key] ?? key;
+        Object.keys(source).forEach((key) => {
+            // Reference key
+            const labelKey = reference == null ? key : reference[key] ?? key;
 
-                // Label
-                const label = labels[labelKey];
+            // Label
+            const label = labels[labelKey];
 
-                if (label != null) {
-                    // If found, update
-                    newLabels[key] = String(label);
-                }
-
-                return newLabels;
-            },
-            {} as DataTypes.StringDictionary
-        );
-        Object.assign(source, newLabels);
+            if (label != null) {
+                // If found, update
+                Reflect.set(source, key, label);
+            }
+        });
     };
 
     /**

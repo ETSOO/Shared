@@ -245,6 +245,12 @@ test('Tests for headersToObject', () => {
     );
 });
 
+test('Tests for isFormData', () => {
+    const formData = new FormData();
+    expect(DomUtils.isFormData(formData)).toBeTruthy();
+    expect(DomUtils.isFormData({})).toBeFalsy();
+});
+
 test('Tests for isJSONContentType', () => {
     expect(DomUtils.isJSONContentType('application/problem+json')).toBeTruthy();
     expect(DomUtils.isJSONContentType('application/javascript')).toBeTruthy();
