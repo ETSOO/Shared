@@ -122,7 +122,9 @@ Storage related utilities
 |setLocalData|Set local storage data|
 |setSessionData|Set session storage data|
 |getLocalData|Get local storage data|
+|getLocalObject|Get local storage object data|
 |getSessionData|Get session storage data|
+|getSessionObject|Get session storage object data|
 
 ## Utils
 String and other related utilities

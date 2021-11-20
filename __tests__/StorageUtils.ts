@@ -12,3 +12,17 @@ test('Tests for all', () => {
     expect(StorageUtils.getSessionData('number', 0)).toBe(3.14);
     expect(StorageUtils.getSessionData('test', {})).toHaveProperty('id', 123);
 });
+
+test('Tests for getLocalObject', () => {
+    StorageUtils.setLocalData('test', { id: 123, name: 'test' });
+    const data = StorageUtils.getLocalObject<{ id: number }>('test');
+    expect(data?.id).toBe(123);
+    expect(data).toHaveProperty('name', 'test');
+});
+
+test('Tests for getSessionObject', () => {
+    StorageUtils.setSessionData('test', { id: 123, name: 'test' });
+    const data = StorageUtils.getSessionObject<{ id: number }>('test');
+    expect(data?.id).toBe(123);
+    expect(data).toHaveProperty('name', 'test');
+});

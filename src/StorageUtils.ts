@@ -58,6 +58,17 @@ export namespace StorageUtils {
     }
 
     /**
+     * Get local storage object data
+     * @param key Key name
+     */
+    export function getLocalObject<T extends {}>(key: string) {
+        // Get storage
+        const data = localStorage.getItem(key);
+        if (data == null) return undefined;
+        return <T>JSON.parse(data);
+    }
+
+    /**
      * Get session storage data
      * @param key Key name
      */
@@ -67,5 +78,16 @@ export namespace StorageUtils {
 
         // Return
         return Utils.parseString(data, defaultValue);
+    }
+
+    /**
+     * Get session storage object data
+     * @param key Key name
+     */
+    export function getSessionObject<T extends {}>(key: string) {
+        // Get storage
+        const data = sessionStorage.getItem(key);
+        if (data == null) return undefined;
+        return <T>JSON.parse(data);
     }
 }
