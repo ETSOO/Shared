@@ -131,6 +131,7 @@ String and other related utilities
 
 |Name|Description|
 |---:|---|
+|charsToNumber|Base64 chars to number|
 |formatInitial|Format inital character to lower case or upper case|
 |formatString|Format string with parameters|
 |getDataChanges|Get data changed fields with input data updated|
@@ -139,6 +140,7 @@ String and other related utilities
 |mergeFormData|Merge form data to primary one|
 |mergeClasses|Merge class names|
 |newGUID|Create a GUID|
+|numberToChars|Number to base64 chars|
 |objectEqual|Test two objects are equal or not|
 |parseString|Parse string (JSON) to specific type|
 |setLabels|Set source with new labels|

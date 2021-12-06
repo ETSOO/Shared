@@ -67,6 +67,13 @@ test('Tests for newGUID', () => {
     expect(id1.length).toBe(id2.length);
 });
 
+test('Tests for numberToChars and charsToNumber', () => {
+    const num = 1638777042242;
+    const chars = Utils.numberToChars(num);
+    expect(chars).toEqual('QmpkdVgv');
+    expect(Utils.charsToNumber(chars)).toEqual(num);
+});
+
 test('Tests for removeNonLetters', () => {
     const input = '1234-5678@abc.';
     const result = '12345678abc';

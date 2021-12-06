@@ -78,6 +78,22 @@ String.prototype.removeNonLetters = function (this: string) {
  */
 export namespace Utils {
     /**
+     * Base64 chars to number
+     * @param base64Chars Base64 chars
+     * @returns Number
+     */
+    export function charsToNumber(base64Chars: string) {
+        const chars =
+            typeof Buffer === 'undefined'
+                ? [...atob(base64Chars)].map((char) => char.charCodeAt(0))
+                : [...Buffer.from(base64Chars, 'base64')];
+
+        return chars.reduce((previousValue, currentValue, currentIndex) => {
+            return previousValue + currentValue * Math.pow(128, currentIndex);
+        }, 0);
+    }
+
+    /**
      * Format inital character to lower case or upper case
      * @param input Input string
      * @param upperCase To upper case or lower case
@@ -216,6 +232,27 @@ export namespace Utils {
                 v = c === 'x' ? r : (r & 0x3) | 0x8;
             return v.toString(16);
         });
+    }
+
+    /**
+     * Number to base64 chars
+     * @param num Input number
+     * @returns Result
+     */
+    export function numberToChars(num: number) {
+        const codes = [];
+        while (num > 0) {
+            const code = num % 128;
+            codes.push(code);
+            num = (num - code) / 128;
+        }
+
+        if (typeof Buffer === 'undefined') {
+            return btoa(String.fromCharCode(...codes));
+        } else {
+            const buffer = Buffer.from(codes);
+            return buffer.toString('base64');
+        }
     }
 
     /**
