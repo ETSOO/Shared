@@ -143,6 +143,8 @@ String and other related utilities
 |newGUID|Create a GUID|
 |numberToChars|Number to base64 chars|
 |objectEqual|Test two objects are equal or not|
+|objectKeys|Get two object's unqiue properties|
+|objectUpdated|Get the new object's updated fields contrast to the previous object|
 |parseString|Parse string (JSON) to specific type|
 |setLabels|Set source with new labels|
 |snakeNameToWord|Snake name to works, 'snake_name' to 'Snake Name'|

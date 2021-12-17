@@ -92,6 +92,13 @@ test('Tests for objectEqual', () => {
     expect(Utils.objectEqual(obj1, obj2, ['a'], 2)).toBeFalsy();
 });
 
+test('Tests for objectUpdated', () => {
+    const objPrev = { a: 1, b: 'abc', c: true, d: null, f: [1, 2] };
+    const objNew = { a: 2, b: 'abc', d: new Date(), f: [1, 2, 3] };
+    const fields = Utils.objectUpdated(objNew, objPrev, ['d']);
+    expect(fields.sort()).toStrictEqual(['a', 'c', 'f']);
+});
+
 test('Tests for parseString', () => {
     expect(Utils.parseString('test', '')).toBe('test');
     expect(Utils.parseString('true', false)).toBe(true);

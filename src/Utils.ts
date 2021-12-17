@@ -293,11 +293,8 @@ export namespace Utils {
         ignoreFields: string[] = [],
         strict = 1
     ) {
-        // Keys
-        const keys = new Set([
-            ...Object.keys(obj1).filter((item) => !ignoreFields.includes(item)),
-            ...Object.keys(obj2).filter((item) => !ignoreFields.includes(item))
-        ]);
+        // Unique keys
+        const keys = Utils.objectKeys(obj1, obj2, ignoreFields);
 
         for (const key of keys) {
             // Values
@@ -308,6 +305,60 @@ export namespace Utils {
         }
 
         return true;
+    }
+
+    /**
+     * Get two object's unqiue properties
+     * @param obj1 Object 1
+     * @param obj2 Object 2
+     * @param ignoreFields Ignored fields
+     * @returns Unique properties
+     */
+    export function objectKeys(
+        obj1: {},
+        obj2: {},
+        ignoreFields: string[] = []
+    ) {
+        // All keys
+        const allKeys = [...Object.keys(obj1), ...Object.keys(obj2)].filter(
+            (item) => !ignoreFields.includes(item)
+        );
+
+        // Unique keys
+        return new Set(allKeys);
+    }
+
+    /**
+     * Get the new object's updated fields contrast to the previous object
+     * @param objNew New object
+     * @param objPre Previous object
+     * @param ignoreFields Ignored fields
+     * @param strict Strict level, 0 with ==, 1 === but null equal undefined, 2 ===
+     * @returns Updated fields
+     */
+    export function objectUpdated(
+        objNew: {},
+        objPrev: {},
+        ignoreFields: string[] = [],
+        strict = 1
+    ) {
+        // Fields
+        const fields: string[] = [];
+
+        // Unique keys
+        const keys = Utils.objectKeys(objNew, objPrev, ignoreFields);
+
+        for (const key of keys) {
+            // Values
+            const vNew = Reflect.get(objNew, key);
+            const vPrev = Reflect.get(objPrev, key);
+
+            if (!Utils.equals(vNew, vPrev, strict)) {
+                fields.push(key);
+            }
+        }
+
+        return fields;
     }
 
     /**
