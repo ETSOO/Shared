@@ -9,7 +9,8 @@ test('Tests for getDataChanges', () => {
         price: '6.0',
         amount: '',
         enabled: true,
-        value: undefined
+        value: undefined,
+        ids: [1, 2]
     };
     const initData = {
         id: 1,
@@ -18,7 +19,8 @@ test('Tests for getDataChanges', () => {
         brand: 'ETSOO',
         price: 6,
         amount: 0,
-        enabled: true
+        enabled: true,
+        ids: [1, 2]
     };
     const fields = Utils.getDataChanges(input, initData);
     expect(fields).toStrictEqual(['gender', 'brand', 'amount']);
@@ -82,8 +84,8 @@ test('Tests for removeNonLetters', () => {
 });
 
 test('Tests for objectEqual', () => {
-    const obj1 = { a: 1, b: 'abc', c: true, d: null };
-    const obj2 = { a: '1', b: 'abc', c: true };
+    const obj1 = { a: 1, b: 'abc', c: true, d: null, f: [1, 2] };
+    const obj2 = { a: '1', b: 'abc', c: true, f: [1, 2] };
     expect(Utils.objectEqual(obj1, obj2)).toBeFalsy();
     expect(Utils.objectEqual(obj1, obj2, [], 0)).toBeTruthy();
     expect(Utils.objectEqual(obj1, obj2, ['a'])).toBeTruthy();

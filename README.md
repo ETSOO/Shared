@@ -132,6 +132,7 @@ String and other related utilities
 |Name|Description|
 |---:|---|
 |charsToNumber|Base64 chars to number|
+|equals|Two values equal|
 |formatInitial|Format inital character to lower case or upper case|
 |formatString|Format string with parameters|
 |getDataChanges|Get data changed fields with input data updated|

@@ -94,6 +94,30 @@ export namespace Utils {
     }
 
     /**
+     * Two values equal
+     * @param v1 Value 1
+     * @param v2 Value 2
+     * @param strict Strict level, 0 with ==, 1 === but null equal undefined, 2 ===
+     */
+    export function equals(v1: unknown, v2: unknown, strict = 1) {
+        // Null and undefined case
+        if (v1 == null || v2 == null) {
+            if (strict <= 1 && v1 == v2) return true;
+            return v1 === v2;
+        }
+
+        // For array and object
+        if (typeof v1 === 'object')
+            return JSON.stringify(v1) === JSON.stringify(v2);
+
+        // 1 and '1' case
+        if (strict === 0) return v1 == v2;
+
+        // Strict equal
+        return v1 === v2;
+    }
+
+    /**
      * Format inital character to lower case or upper case
      * @param input Input string
      * @param upperCase To upper case or lower case
@@ -142,7 +166,7 @@ export namespace Utils {
 
             if (initValue != null) {
                 const newValue = DataTypes.convert(value, initValue);
-                if (newValue === initValue) {
+                if (Utils.equals(newValue, initValue)) {
                     Reflect.deleteProperty(input, key);
                     return;
                 }
@@ -280,14 +304,7 @@ export namespace Utils {
             const v1 = Reflect.get(obj1, key);
             const v2 = Reflect.get(obj2, key);
 
-            // Null and undefined case
-            if (v1 == null && v2 == null && strict <= 1) continue;
-
-            // 1 and '1' case
-            if (strict === 0 && v1 == v2) continue;
-
-            // Strict equal
-            if (v1 !== v2) return false;
+            if (!Utils.equals(v1, v2, strict)) return false;
         }
 
         return true;
