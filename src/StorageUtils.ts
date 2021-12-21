@@ -49,7 +49,7 @@ export namespace StorageUtils {
      * @param key Key name
      * @param defaultValue Default value
      */
-    export function getLocalData<T>(key: string, defaultValue: T) {
+    export function getLocalData<T>(key: string, defaultValue?: T) {
         // Get storage
         const data = localStorage.getItem(key);
 
@@ -72,7 +72,7 @@ export namespace StorageUtils {
      * Get session storage data
      * @param key Key name
      */
-    export function getSessionData<T>(key: string, defaultValue: T) {
+    export function getSessionData<T>(key: string, defaultValue?: T) {
         // Get storage
         const data = sessionStorage.getItem(key);
 

@@ -362,17 +362,18 @@ export namespace Utils {
     }
 
     /**
-     * Parse string (JSON) to specific type
+     * Parse string (JSON) to specific type, no type conversion
+     * For type conversion, please use DataTypes.convert
      * @param input Input string
      * @param defaultValue Default value
      * @returns Parsed value
      */
     export function parseString<T>(
         input: string | undefined | null,
-        defaultValue: T
-    ): T {
-        // Undefined case, return default value
-        if (input == null) return defaultValue;
+        defaultValue?: T
+    ): T | undefined {
+        // Undefined and empty case, return default value
+        if (input == null || input === '') return defaultValue;
 
         // String
         if (typeof defaultValue === 'string') return <any>input;
@@ -390,16 +391,10 @@ export namespace Utils {
 
             // Return
             return <T>json;
-        } catch (e) {
-            console.log('Utils.parseString error', e);
+        } catch {
+            if (defaultValue == null) return <any>input;
             return defaultValue;
         }
-        /*
-        finally part will still return the boolean value
-        finally {
-            return defaultValue
-        }
-        */
     }
 
     /**
