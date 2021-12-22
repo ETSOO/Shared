@@ -368,12 +368,12 @@ export namespace Utils {
      * @param defaultValue Default value
      * @returns Parsed value
      */
-    export function parseString<T>(
+    export function parseString<T, M = T | undefined>(
         input: string | undefined | null,
-        defaultValue?: T
-    ): T | undefined {
+        defaultValue?: M
+    ): M extends T ? M : undefined {
         // Undefined and empty case, return default value
-        if (input == null || input === '') return defaultValue;
+        if (input == null || input === '') return <any>defaultValue;
 
         // String
         if (typeof defaultValue === 'string') return <any>input;
@@ -382,7 +382,7 @@ export namespace Utils {
             // Date
             if (defaultValue instanceof Date) {
                 const date = new Date(input);
-                if (date == null) return defaultValue;
+                if (date == null) return <any>defaultValue;
                 return <any>date;
             }
 
@@ -390,10 +390,10 @@ export namespace Utils {
             const json = JSON.parse(input);
 
             // Return
-            return <T>json;
+            return json;
         } catch {
             if (defaultValue == null) return <any>input;
-            return defaultValue;
+            return <any>defaultValue;
         }
     }
 

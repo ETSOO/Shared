@@ -103,6 +103,7 @@ test('Tests for parseString', () => {
     expect(Utils.parseString<string>('test')).toBe('test');
     expect(Utils.parseString('true', false)).toBe(true);
     expect(Utils.parseString('', false)).toBeFalsy();
+    expect(Utils.parseString<boolean>('')).toBeUndefined();
     expect(Utils.parseString<number>(undefined)).toBeUndefined();
     expect(Utils.parseString('3.14', 0)).toBe(3.14);
     expect(Utils.parseString('2021/4/13', new Date())).toStrictEqual(
