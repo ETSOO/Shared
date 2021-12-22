@@ -101,6 +101,7 @@ test('Tests for objectUpdated', () => {
 
 test('Tests for parseString', () => {
     expect(Utils.parseString<string>('test')).toBe('test');
+    expect(Utils.parseString('test', '')).toBe('test');
     expect(Utils.parseString('true', false)).toBe(true);
     expect(Utils.parseString('', false)).toBeFalsy();
     expect(Utils.parseString<boolean>('')).toBeUndefined();

@@ -57,7 +57,7 @@ export namespace StorageUtils {
         const data = localStorage.getItem(key);
 
         // Return
-        return Utils.parseString(data, defaultValue);
+        return Utils.parseString<T, M>(data, defaultValue);
     }
 
     /**
@@ -83,7 +83,7 @@ export namespace StorageUtils {
         const data = sessionStorage.getItem(key);
 
         // Return
-        return Utils.parseString(data, defaultValue);
+        return Utils.parseString<T, M>(data, defaultValue);
     }
 
     /**
