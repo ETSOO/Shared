@@ -47,17 +47,33 @@ export namespace StorageUtils {
     /**
      * Get local storage data
      * @param key Key name
+     */
+    export function getLocalData<T>(key: string): T | undefined;
+
+    /**
+     * Get local storage data
+     * @param key Key name
      * @param defaultValue Default value
      */
-    export function getLocalData<T, M = T | undefined>(
+    export function getLocalData<T>(key: string, defaultValue: T): T;
+
+    /**
+     * Get local storage data
+     * @param key Key name
+     * @param defaultValue Default value
+     */
+    export function getLocalData<T>(
         key: string,
-        defaultValue?: M
-    ): M extends T ? M : undefined {
+        defaultValue?: T
+    ): T | undefined {
         // Get storage
         const data = localStorage.getItem(key);
 
+        // No default value
+        if (defaultValue == null) return Utils.parseString<T>(data);
+
         // Return
-        return Utils.parseString<T, M>(data, defaultValue);
+        return Utils.parseString<T>(data, defaultValue);
     }
 
     /**
@@ -75,15 +91,31 @@ export namespace StorageUtils {
      * Get session storage data
      * @param key Key name
      */
-    export function getSessionData<T, M = T | undefined>(
+    export function getSessionData<T>(key: string): T | undefined;
+
+    /**
+     * Get session storage data
+     * @param key Key name
+     * @param defaultValue Default value
+     */
+    export function getSessionData<T>(key: string, defaultValue: T): T;
+
+    /**
+     * Get session storage data
+     * @param key Key name
+     */
+    export function getSessionData<T>(
         key: string,
-        defaultValue?: M
-    ): M extends T ? M : undefined {
+        defaultValue?: T
+    ): T | undefined {
         // Get storage
         const data = sessionStorage.getItem(key);
 
+        // No default value
+        if (defaultValue == null) return Utils.parseString<T>(data);
+
         // Return
-        return Utils.parseString<T, M>(data, defaultValue);
+        return Utils.parseString<T>(data, defaultValue);
     }
 
     /**

@@ -365,15 +365,38 @@ export namespace Utils {
      * Parse string (JSON) to specific type, no type conversion
      * For type conversion, please use DataTypes.convert
      * @param input Input string
+     * @returns Parsed value
+     */
+    export function parseString<T>(
+        input: string | undefined | null
+    ): T | undefined;
+
+    /**
+     * Parse string (JSON) to specific type, no type conversion
+     * For type conversion, please use DataTypes.convert
+     * @param input Input string
      * @param defaultValue Default value
      * @returns Parsed value
      */
-    export function parseString<T, M = T | undefined>(
+    export function parseString<T>(
         input: string | undefined | null,
-        defaultValue?: M
-    ): M extends T ? M : undefined {
+        defaultValue: T
+    ): T;
+
+    /**
+     * Parse string (JSON) to specific type, no type conversion
+     * When return type depends on parameter value, uses function overloading, otherwise uses conditional type
+     * For type conversion, please use DataTypes.convert
+     * @param input Input string
+     * @param defaultValue Default value
+     * @returns Parsed value
+     */
+    export function parseString<T>(
+        input: string | undefined | null,
+        defaultValue?: T
+    ): T | undefined {
         // Undefined and empty case, return default value
-        if (input == null || input === '') return <any>defaultValue;
+        if (input == null || input === '') return <T>defaultValue;
 
         // String
         if (typeof defaultValue === 'string') return <any>input;
@@ -390,10 +413,10 @@ export namespace Utils {
             const json = JSON.parse(input);
 
             // Return
-            return json;
+            return <T>json;
         } catch {
             if (defaultValue == null) return <any>input;
-            return <any>defaultValue;
+            return <T>defaultValue;
         }
     }
 
