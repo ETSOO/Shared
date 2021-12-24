@@ -1,4 +1,8 @@
 export * from './types/FormData';
+
+export * from './storage/IStorage';
+export * from './storage/WindowStorage';
+
 export * from './DataTypes';
 export * from './DateUtils';
 export * from './DomUtils';

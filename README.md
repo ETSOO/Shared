@@ -15,6 +15,9 @@ Using yarn:
 $ yarn add @etsoo/shared
 ```
 
+## storage
+Storage interface and browser storage implementation
+
 ## DataTypes
 Data type definitions and type safe functions
 

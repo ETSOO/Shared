@@ -94,7 +94,7 @@ export namespace StorageUtils {
     export function getSessionData<T>(key: string): T | undefined;
 
     /**
-     * Get session storage data
+     * Get session storage data with default value
      * @param key Key name
      * @param defaultValue Default value
      */
@@ -103,6 +103,7 @@ export namespace StorageUtils {
     /**
      * Get session storage data
      * @param key Key name
+     * @param defaultValue Default value
      */
     export function getSessionData<T>(
         key: string,
