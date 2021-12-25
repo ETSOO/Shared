@@ -33,24 +33,33 @@ export class WindowStorage implements IStorage {
     /**
      * Get data
      * @param key Key name
+     * @param persistance From the persisted data
      */
-    getData<T>(key: string): T | undefined;
+    getData<T>(key: string, persistance?: boolean): T | undefined;
 
     /**
      * Get data with default value
      * @param key Key name
      * @param defaultValue Default value
+     * @param persistance From the persisted data
      */
-    getData<T>(key: string, defaultValue: T): T;
+    getData<T>(key: string, defaultValue: T, persistance?: boolean): T;
 
     /**
      * Get data
      * @param key Key name
      * @param defaultValue Default value
+     * @param persistance From the persisted data
      */
-    getData<T>(key: string, defaultValue?: T): T | undefined {
+    getData<T>(
+        key: string,
+        defaultValue?: T,
+        persistance?: boolean
+    ): T | undefined {
         // Get storage
-        const data = sessionStorage.getItem(key);
+        const data = persistance
+            ? localStorage.getItem(key)
+            : sessionStorage.getItem(key);
 
         // No default value
         if (defaultValue == null) return Utils.parseString<T>(data);
@@ -62,11 +71,16 @@ export class WindowStorage implements IStorage {
     /**
      * Get object data
      * @param key Key name
+     * @param persistance From the persisted data
      */
-    getObject<T extends {}>(key: string) {
+    getObject<T extends {}>(key: string, persistance?: boolean) {
         // Get storage
-        const data = sessionStorage.getItem(key);
+        const data = persistance
+            ? localStorage.getItem(key)
+            : sessionStorage.getItem(key);
+
         if (data == null) return undefined;
+
         return <T>JSON.parse(data);
     }
 
@@ -74,14 +88,16 @@ export class WindowStorage implements IStorage {
      * Set data
      * @param key Key name
      * @param data  Data, null for removal
-     * @param persistance Persist the data, false will stop persistance
+     * @param persistance To the persisted data, false will stop persistance
      */
     setData(key: string, data: unknown, persistance?: boolean) {
+        if (persistance) {
+            StorageUtils.setLocalData(key, data);
+            return;
+        }
+
         StorageUtils.setSessionData(key, data);
-        if (
-            persistance ||
-            (persistance == null && this.globalFields.includes(key))
-        ) {
+        if (persistance !== false && this.globalFields.includes(key)) {
             StorageUtils.setLocalData(key, data);
         }
     }

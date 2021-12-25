@@ -5,21 +5,24 @@ export interface IStorage {
     /**
      * Get data
      * @param key Key name
+     * @param persistance From the persisted data
      */
-    getData<T>(key: string): T | undefined;
+    getData<T>(key: string, persistance?: boolean): T | undefined;
 
     /**
      * Get data with default value
      * @param key Key name
      * @param defaultValue Default value
+     * @param persistance From the persisted data
      */
-    getData<T>(key: string, defaultValue: T): T;
+    getData<T>(key: string, defaultValue: T, persistance?: boolean): T;
 
     /**
-     * Get session storage object data
+     * Get object data
      * @param key Key name
+     * @param persistance From the persisted data
      */
-    getObject<T extends {}>(key: string): T | undefined;
+    getObject<T extends {}>(key: string, persistance?: boolean): T | undefined;
 
     /**
      * Set data
