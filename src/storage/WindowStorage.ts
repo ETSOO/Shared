@@ -1,6 +1,6 @@
 import { StorageUtils } from '../StorageUtils';
 import { Utils } from '../Utils';
-import { IStorage } from './IStorage';
+import { IStorage, IStorageInitCallback } from './IStorage';
 
 /**
  * Window storage
@@ -8,14 +8,30 @@ import { IStorage } from './IStorage';
  */
 export class WindowStorage implements IStorage {
     /**
+     * Instance count field name
+     */
+    private readonly instanceCountField = 'EtsooSmartERPInstanceCount';
+
+    private _instanceIndex: number;
+    /**
+     * Current instance index
+     */
+    get instanceIndex() {
+        return this._instanceIndex;
+    }
+
+    /**
      * Constructor
      * @param globalFields Global fields
      * @param callback Field and data callback
      */
     constructor(
         private globalFields: string[],
-        callback: (field: string, data: string | null) => string | null
+        callback: IStorageInitCallback
     ) {
+        // Init instance index
+        this._instanceIndex = this.getInstanceCount();
+
         if (globalFields.length == 0) return;
 
         // Copy global fields to session storage where first item does not exist
@@ -24,7 +40,11 @@ export class WindowStorage implements IStorage {
         if (firsItem) return;
 
         globalFields.forEach((field) => {
-            const data = callback(field, localStorage.getItem(field));
+            const data = callback(
+                field,
+                localStorage.getItem(field),
+                this._instanceIndex
+            );
             if (data == null) sessionStorage.removeItem(field);
             else sessionStorage.setItem(field, data);
         });
@@ -100,5 +120,24 @@ export class WindowStorage implements IStorage {
         if (persistance !== false && this.globalFields.includes(key)) {
             StorageUtils.setLocalData(key, data);
         }
+    }
+
+    /**
+     * Get current instance count
+     * @returns Current instance count
+     */
+    getInstanceCount() {
+        return this.getData(this.instanceCountField, 0, true);
+    }
+
+    /**
+     * Update instance count
+     * @param removed Is removed?
+     * @returns Current instance count
+     */
+    updateInstanceCount(removed: boolean) {
+        const count = this.getInstanceCount() + (removed ? -1 : 1);
+        this.setData(this.instanceCountField, count, true);
+        return count;
     }
 }
