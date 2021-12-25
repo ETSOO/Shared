@@ -10,8 +10,12 @@ export class WindowStorage implements IStorage {
     /**
      * Constructor
      * @param globalFields Global fields
+     * @param callback Field and data callback
      */
-    constructor(private globalFields: string[]) {
+    constructor(
+        private globalFields: string[],
+        callback: (field: string, data: string | null) => string | null
+    ) {
         if (globalFields.length == 0) return;
 
         // Copy global fields to session storage where first item does not exist
@@ -20,10 +24,9 @@ export class WindowStorage implements IStorage {
         if (firsItem) return;
 
         globalFields.forEach((field) => {
-            const data = localStorage.getItem(field);
-            if (data != null) {
-                sessionStorage.setItem(field, data);
-            }
+            const data = callback(field, localStorage.getItem(field));
+            if (data == null) sessionStorage.removeItem(field);
+            else sessionStorage.setItem(field, data);
         });
     }
 
@@ -71,10 +74,14 @@ export class WindowStorage implements IStorage {
      * Set data
      * @param key Key name
      * @param data  Data, null for removal
+     * @param persistance Persist the data, false will stop persistance
      */
-    setData(key: string, data: unknown) {
+    setData(key: string, data: unknown, persistance?: boolean) {
         StorageUtils.setSessionData(key, data);
-        if (this.globalFields.includes(key)) {
+        if (
+            persistance ||
+            (persistance == null && this.globalFields.includes(key))
+        ) {
             StorageUtils.setLocalData(key, data);
         }
     }

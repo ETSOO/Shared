@@ -25,13 +25,17 @@ export interface IStorage {
      * Set data
      * @param key Key name
      * @param data  Data, null for removal
+     * @param persistance Persist the data, false will stop persistance
      */
-    setData(key: string, data: unknown): void;
+    setData(key: string, data: unknown, persistance?: boolean): void;
 }
 
 /**
  * Storage constructor interface
  */
 export interface IStorageConstructor {
-    new (globalFields: string[]): IStorage;
+    new (
+        globalFields: string[],
+        callback: (field: string, data: string | null) => string | null
+    ): IStorage;
 }
