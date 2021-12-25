@@ -32,13 +32,7 @@ export class WindowStorage implements IStorage {
         // Init instance index
         this._instanceIndex = this.getInstanceCount();
 
-        if (globalFields.length == 0) return;
-
-        // Copy global fields to session storage where first item does not exist
-        // Duplicate browser tab would copy the session storage
-        const firsItem = sessionStorage.getItem(globalFields[0]);
-        if (firsItem) return;
-
+        // Copy global fields to session storage
         globalFields.forEach((field) => {
             const data = callback(
                 field,
