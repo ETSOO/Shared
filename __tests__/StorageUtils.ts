@@ -11,6 +11,7 @@ test('Tests for all', () => {
     expect(StorageUtils.getSessionData('string1', '')).toBe('');
     expect(StorageUtils.getSessionData('boolean', false)).toBe(true);
     expect(StorageUtils.getSessionData('number', 0)).toBe(3.14);
+    expect(StorageUtils.getSessionData('number1', 0)).toBe(0);
     expect(StorageUtils.getSessionData('test', {})).toHaveProperty('id', 123);
 });
 

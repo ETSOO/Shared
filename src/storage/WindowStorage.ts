@@ -127,7 +127,10 @@ export class WindowStorage implements IStorage {
      * @returns Current instance count
      */
     getInstanceCount() {
-        return this.getData(this.instanceCountField, 0, true);
+        const count = this.getData(this.instanceCountField, 0, true);
+        // Make sure starting from 0
+        if (count < 0) return 0;
+        return count;
     }
 
     /**
