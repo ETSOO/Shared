@@ -15,12 +15,12 @@ export namespace DomUtils {
     /**
      * Language cache parameter name
      */
-    export const Culture = 'culture';
+    export const CultureField = 'EtsooCulture';
 
     /**
      * Country cache parameter name
      */
-    export const Country = 'country';
+    export const CountryField = 'EtsooCountry';
 
     /**
      * Clear form data
@@ -198,8 +198,9 @@ export namespace DomUtils {
         let country: string | null;
         try {
             country =
-                new URL(location.href).searchParams.get(Country) ||
-                localStorage.getItem(Country);
+                new URL(location.href).searchParams.get(CountryField) ??
+                sessionStorage.getItem(CountryField) ??
+                localStorage.getItem(CountryField);
         } catch {
             country = null;
         }
@@ -216,8 +217,9 @@ export namespace DomUtils {
         let culture: string | null;
         try {
             culture =
-                new URL(location.href).searchParams.get(Culture) ||
-                localStorage.getItem(Culture);
+                new URL(location.href).searchParams.get(CultureField) ??
+                sessionStorage.getItem(CultureField) ??
+                localStorage.getItem(CultureField);
         } catch {
             culture = null;
         }
@@ -413,22 +415,6 @@ export namespace DomUtils {
             base.set(key, value.toString());
         });
         return base;
-    }
-
-    /**
-     * Save country name
-     * @param country Country name
-     */
-    export function saveCountry(country: string) {
-        localStorage.setItem(Country, country);
-    }
-
-    /**
-     * Save culture name
-     * @param culture Culture name
-     */
-    export function saveCulture(culture: string) {
-        localStorage.setItem(Culture, culture);
     }
 
     /**
