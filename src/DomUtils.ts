@@ -15,12 +15,12 @@ export namespace DomUtils {
     /**
      * Language cache parameter name
      */
-    export const CultureField = 'EtsooCulture';
+    export const CultureField = 'culture';
 
     /**
      * Country cache parameter name
      */
-    export const CountryField = 'EtsooCountry';
+    export const CountryField = 'country';
 
     /**
      * Clear form data
