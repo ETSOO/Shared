@@ -10,32 +10,54 @@ export interface IStorage {
     /**
      * Get data
      * @param key Key name
-     * @param persistance From the persisted data
      */
-    getData<T>(key: string, persistance?: boolean): T | undefined;
+    getData<T>(key: string): T | undefined;
 
     /**
      * Get data with default value
      * @param key Key name
      * @param defaultValue Default value
-     * @param persistance From the persisted data
      */
-    getData<T>(key: string, defaultValue: T, persistance?: boolean): T;
+    getData<T>(key: string, defaultValue: T): T;
+
+    /**
+     * Get persisted data
+     * @param key Key name
+     */
+    getPersistedData<T>(key: string): T | undefined;
+
+    /**
+     * Get persisted data with default value
+     * @param key Key name
+     * @param defaultValue Default value
+     */
+    getPersistedData<T>(key: string, defaultValue: T): T;
 
     /**
      * Get object data
      * @param key Key name
-     * @param persistance From the persisted data
      */
-    getObject<T extends {}>(key: string, persistance?: boolean): T | undefined;
+    getObject<T extends {}>(key: string): T | undefined;
+
+    /**
+     * Get persisted object data
+     * @param key Key name
+     */
+    getPersistedObject<T extends {}>(key: string): T | undefined;
 
     /**
      * Set data
      * @param key Key name
      * @param data  Data, null for removal
-     * @param persistance Persist the data, false will stop persistance
      */
-    setData(key: string, data: unknown, persistance?: boolean): void;
+    setData(key: string, data: unknown): void;
+
+    /**
+     * Set persisted data
+     * @param key Key name
+     * @param data  Data, null for removal
+     */
+    setPersistedData(key: string, data: unknown): void;
 
     /**
      * Get current instance count

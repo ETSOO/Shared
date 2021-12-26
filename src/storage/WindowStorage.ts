@@ -22,18 +22,18 @@ export class WindowStorage implements IStorage {
 
     /**
      * Constructor
-     * @param globalFields Global fields
+     * @param persistedFields Persisted fields
      * @param callback Field and data callback
      */
     constructor(
-        private globalFields: string[],
+        protected persistedFields: string[],
         callback: IStorageInitCallback
     ) {
         // Init instance index
         this._instanceIndex = this.getInstanceCount();
 
         // Copy global fields to session storage
-        globalFields.forEach((field) => {
+        persistedFields.forEach((field) => {
             const data = callback(
                 field,
                 localStorage.getItem(field),
@@ -47,33 +47,53 @@ export class WindowStorage implements IStorage {
     /**
      * Get data
      * @param key Key name
-     * @param persistance From the persisted data
      */
-    getData<T>(key: string, persistance?: boolean): T | undefined;
+    getData<T>(key: string): T | undefined;
 
     /**
      * Get data with default value
      * @param key Key name
      * @param defaultValue Default value
-     * @param persistance From the persisted data
      */
-    getData<T>(key: string, defaultValue: T, persistance?: boolean): T;
+    getData<T>(key: string, defaultValue: T): T;
 
     /**
      * Get data
      * @param key Key name
      * @param defaultValue Default value
-     * @param persistance From the persisted data
      */
-    getData<T>(
-        key: string,
-        defaultValue?: T,
-        persistance?: boolean
-    ): T | undefined {
+    getData<T>(key: string, defaultValue?: T): T | undefined {
         // Get storage
-        const data = persistance
-            ? localStorage.getItem(key)
-            : sessionStorage.getItem(key);
+        const data = sessionStorage.getItem(key);
+
+        // No default value
+        if (defaultValue == null) return Utils.parseString<T>(data);
+
+        // Return
+        return Utils.parseString<T>(data, defaultValue);
+    }
+
+    /**
+     * Get persisted data
+     * @param key Key name
+     */
+    getPersistedData<T>(key: string): T | undefined;
+
+    /**
+     * Get persisted data with default value
+     * @param key Key name
+     * @param defaultValue Default value
+     */
+    getPersistedData<T>(key: string, defaultValue: T): T;
+
+    /**
+     * Get persisted data
+     * @param key Key name
+     * @param defaultValue Default value
+     */
+    getPersistedData<T>(key: string, defaultValue?: T): T | undefined {
+        // Get storage
+        const data = localStorage.getItem(key);
 
         // No default value
         if (defaultValue == null) return Utils.parseString<T>(data);
@@ -85,13 +105,23 @@ export class WindowStorage implements IStorage {
     /**
      * Get object data
      * @param key Key name
-     * @param persistance From the persisted data
      */
-    getObject<T extends {}>(key: string, persistance?: boolean) {
+    getObject<T extends {}>(key: string) {
         // Get storage
-        const data = persistance
-            ? localStorage.getItem(key)
-            : sessionStorage.getItem(key);
+        const data = sessionStorage.getItem(key);
+
+        if (data == null) return undefined;
+
+        return <T>JSON.parse(data);
+    }
+
+    /**
+     * Get persisted object data
+     * @param key Key name
+     */
+    getPersistedObject<T extends {}>(key: string) {
+        // Get storage
+        const data = localStorage.getItem(key);
 
         if (data == null) return undefined;
 
@@ -102,18 +132,21 @@ export class WindowStorage implements IStorage {
      * Set data
      * @param key Key name
      * @param data  Data, null for removal
-     * @param persistance To the persisted data, false will stop persistance
      */
-    setData(key: string, data: unknown, persistance?: boolean) {
-        if (persistance) {
-            StorageUtils.setLocalData(key, data);
-            return;
-        }
-
+    setData(key: string, data: unknown) {
         StorageUtils.setSessionData(key, data);
-        if (persistance !== false && this.globalFields.includes(key)) {
-            StorageUtils.setLocalData(key, data);
+        if (this.persistedFields.includes(key)) {
+            this.setPersistedData(key, data);
         }
+    }
+
+    /**
+     * Set persisted data
+     * @param key Key name
+     * @param data  Data, null for removal
+     */
+    setPersistedData(key: string, data: unknown) {
+        StorageUtils.setLocalData(key, data);
     }
 
     /**
@@ -121,7 +154,7 @@ export class WindowStorage implements IStorage {
      * @returns Current instance count
      */
     getInstanceCount() {
-        const count = this.getData(this.instanceCountField, 0, true);
+        const count = this.getPersistedData(this.instanceCountField, 0);
         // Make sure starting from 0
         if (count < 0) return 0;
         return count;
@@ -134,7 +167,7 @@ export class WindowStorage implements IStorage {
      */
     updateInstanceCount(removed: boolean) {
         const count = this.getInstanceCount() + (removed ? -1 : 1);
-        this.setData(this.instanceCountField, count, true);
+        this.setPersistedData(this.instanceCountField, count);
         return count;
     }
 }
