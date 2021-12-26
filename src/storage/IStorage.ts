@@ -3,11 +3,6 @@
  */
 export interface IStorage {
     /**
-     * Current instance index
-     */
-    readonly instanceIndex: number;
-
-    /**
      * Get data
      * @param key Key name
      */
@@ -58,31 +53,4 @@ export interface IStorage {
      * @param data  Data, null for removal
      */
     setPersistedData(key: string, data: unknown): void;
-
-    /**
-     * Get current instance count
-     * @returns Current instance count
-     */
-    getInstanceCount(): number;
-
-    /**
-     * Update instance count
-     * @param removed Is removed?
-     * @returns Current instance count
-     */
-    updateInstanceCount(removed: boolean): number;
-}
-
-/**
- * Storage init callback
- */
-export interface IStorageInitCallback {
-    (field: string, data: string | null, instanceIndex: number): string | null;
-}
-
-/**
- * Storage constructor interface
- */
-export interface IStorageConstructor {
-    new (globalFields: string[], callback: IStorageInitCallback): IStorage;
 }

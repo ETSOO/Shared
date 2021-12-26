@@ -1,49 +1,12 @@
 import { StorageUtils } from '../StorageUtils';
 import { Utils } from '../Utils';
-import { IStorage, IStorageInitCallback } from './IStorage';
+import { IStorage } from './IStorage';
 
 /**
  * Window storage
  * https://developer.mozilla.org/en-US/docs/Web/API/Storage
  */
 export class WindowStorage implements IStorage {
-    /**
-     * Instance count field name
-     */
-    private readonly instanceCountField = 'EtsooSmartERPInstanceCount';
-
-    private _instanceIndex: number;
-    /**
-     * Current instance index
-     */
-    get instanceIndex() {
-        return this._instanceIndex;
-    }
-
-    /**
-     * Constructor
-     * @param persistedFields Persisted fields
-     * @param callback Field and data callback
-     */
-    constructor(
-        protected persistedFields: string[],
-        callback: IStorageInitCallback
-    ) {
-        // Init instance index
-        this._instanceIndex = this.getInstanceCount();
-
-        // Copy global fields to session storage
-        persistedFields.forEach((field) => {
-            const data = callback(
-                field,
-                localStorage.getItem(field),
-                this._instanceIndex
-            );
-            if (data == null) sessionStorage.removeItem(field);
-            else sessionStorage.setItem(field, data);
-        });
-    }
-
     /**
      * Get data
      * @param key Key name
@@ -135,9 +98,6 @@ export class WindowStorage implements IStorage {
      */
     setData(key: string, data: unknown) {
         StorageUtils.setSessionData(key, data);
-        if (this.persistedFields.includes(key)) {
-            this.setPersistedData(key, data);
-        }
     }
 
     /**
@@ -147,27 +107,5 @@ export class WindowStorage implements IStorage {
      */
     setPersistedData(key: string, data: unknown) {
         StorageUtils.setLocalData(key, data);
-    }
-
-    /**
-     * Get current instance count
-     * @returns Current instance count
-     */
-    getInstanceCount() {
-        const count = this.getPersistedData(this.instanceCountField, 0);
-        // Make sure starting from 0
-        if (count < 0) return 0;
-        return count;
-    }
-
-    /**
-     * Update instance count
-     * @param removed Is removed?
-     * @returns Current instance count
-     */
-    updateInstanceCount(removed: boolean) {
-        const count = this.getInstanceCount() + (removed ? -1 : 1);
-        this.setPersistedData(this.instanceCountField, count);
-        return count;
     }
 }
