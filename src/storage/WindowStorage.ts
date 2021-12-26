@@ -8,14 +8,38 @@ import { IStorage } from './IStorage';
  */
 export class WindowStorage implements IStorage {
     /**
+     * Clear keys
+     * @param keys Keys
+     * @param persisted Persisted or session data
+     */
+    clear(keys: string[], persisted?: boolean) {
+        keys.forEach((key) => {
+            if (persisted) this.setPersistedData(key, undefined);
+            else this.setData(key, undefined);
+        });
+    }
+
+    /**
      * Copy keys to session from persisted source
      * @param keys Keys
      * @param removeSource Remove from the source
      */
-    copy(keys: string[], removeSource?: boolean) {
+    copyFrom(keys: string[], removeSource?: boolean) {
         keys.forEach((key) => {
             this.setData(key, this.getPersistedData(key));
             if (removeSource) this.setPersistedData(key, undefined);
+        });
+    }
+
+    /**
+     * Copy keys to persisted source
+     * @param keys Keys
+     * @param removeSource Remove from the source
+     */
+    copyTo(keys: string[], removeSource?: boolean) {
+        keys.forEach((key) => {
+            this.setPersistedData(key, this.getData(key));
+            if (removeSource) this.setData(key, undefined);
         });
     }
 

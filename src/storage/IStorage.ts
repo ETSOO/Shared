@@ -3,11 +3,25 @@
  */
 export interface IStorage {
     /**
+     * Clear keys
+     * @param keys Keys
+     * @param persisted Persisted or session data
+     */
+    clear(keys: string[], persisted?: boolean): void;
+
+    /**
      * Copy keys to session from persisted source
      * @param keys Keys
      * @param removeSource Remove from the source
      */
-    copy(keys: string[], removeSource?: boolean): void;
+    copyFrom(keys: string[], removeSource?: boolean): void;
+
+    /**
+     * Copy keys to persisted source
+     * @param keys Keys
+     * @param removeSource Remove from the source
+     */
+    copyTo(keys: string[], removeSource?: boolean): void;
 
     /**
      * Get data
