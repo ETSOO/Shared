@@ -74,6 +74,32 @@ test('Tests for getEnumKeys', () => {
     expect(DataTypes.getEnumKeys(ProductUnit)).toContainEqual('GRAM');
 });
 
+test('Tests for getItemId', () => {
+    // Arrange
+    const items: DataTypes.IdItem[] = [
+        { id: 1 },
+        { id: '123' },
+        { id: () => 'f123' }
+    ];
+
+    // Assert
+    expect(DataTypes.getItemId(items[0])).toBe('1');
+    expect(DataTypes.getItemId(items[2])).toBe('f123');
+});
+
+test('Tests for getItemLabel', () => {
+    // Arrange
+    const items: DataTypes.IdLabelItem[] = [
+        { id: 1, label: '123' },
+        { id: '123', label: () => 'f123' },
+        { id: () => 'f123', label: 'l123' }
+    ];
+
+    // Assert
+    expect(DataTypes.getItemLabel(items[0])).toBe('123');
+    expect(DataTypes.getItemLabel(items[1])).toBe('f123');
+});
+
 test('Tests for isSimpleType', () => {
     expect(DataTypes.isSimpleType(1)).toBeTruthy();
     expect(DataTypes.isSimpleType(new Date())).toBeTruthy();

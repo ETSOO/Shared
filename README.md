@@ -38,6 +38,8 @@ Data type definitions and type safe functions
 |HAlign|Horizontal align|
 |HAlignEnum|Horizontal align enum|
 |IdType|Number and string combination id type|
+|IdItem|Item with id or id generator|
+|IdLabelItem|Item with id and label|
 |Simple|Basic or basic array type|
 |SimpleEnum|Simple type enum|
 |SimpleNames|Simple type names|
@@ -56,6 +58,8 @@ Data type definitions and type safe functions
 |getEnumByValue|Get enum item from value|
 |getEnumKey|Get enum string literal type value|
 |getEnumKeys|Get Enum keys|
+|getItemId|Get item id|
+|getItemLabel|Get item label|
 |isBasicName|Check the type is a basic type or not (type guard)|
 |isSimpleObject|Is the target a simple object, all values are simple type (Type guard)|
 |isSimpleType|Is the input value simple type, include null and undefined|

@@ -173,6 +173,47 @@ export namespace DataTypes {
     export type SimpleObject = Record<string, Simple | null | undefined>;
 
     /**
+     * Item with id property
+     */
+    export type IdItem = {
+        /**
+         * Id field or generator
+         */
+        id: IdType | (() => string);
+    };
+
+    /**
+     * Item with id and label property
+     */
+    export type IdLabelItem = IdItem & {
+        /**
+         * label field or generator
+         */
+        label: string | (() => string);
+    };
+
+    /**
+     * Get item id
+     * @param item Item with id
+     * @returns string id
+     */
+    export const getItemId = (item: IdItem) => {
+        if (typeof item.id === 'function') return item.id();
+        if (typeof item.id === 'number') return item.id.toString();
+        return item.id;
+    };
+
+    /**
+     * Get item label
+     * @param item Item with id
+     * @returns string id
+     */
+    export const getItemLabel = (item: IdLabelItem) => {
+        if (typeof item.label === 'function') return item.label();
+        return item.label;
+    };
+
+    /**
      * Culture definiton
      */
     export type CultureDefinition = Readonly<{
