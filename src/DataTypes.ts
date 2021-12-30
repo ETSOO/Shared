@@ -498,7 +498,7 @@ export namespace DataTypes {
      * @returns Id value
      */
     export function getIdValue<T extends {}>(
-        data: T,
+        data: T | undefined | null,
         key: keyof T | string
     ): IdType | undefined | null {
         if (data == null) return null;
@@ -516,7 +516,7 @@ export namespace DataTypes {
      * @returns String value
      */
     export function getStringValue<T extends {}>(
-        data: T,
+        data: T | undefined | null,
         key: keyof T | string
     ): string | undefined | null {
         const value = getIdValue(data, key);
