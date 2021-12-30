@@ -58,8 +58,10 @@ Data type definitions and type safe functions
 |getEnumByValue|Get enum item from value|
 |getEnumKey|Get enum string literal type value|
 |getEnumKeys|Get Enum keys|
+|getIdValue|Get object id field value|
 |getItemId|Get item id|
 |getItemLabel|Get item label|
+|getStringValue|Get object string field value|
 |isBasicName|Check the type is a basic type or not (type guard)|
 |isSimpleObject|Is the target a simple object, all values are simple type (Type guard)|
 |isSimpleType|Is the input value simple type, include null and undefined|

@@ -492,6 +492,39 @@ export namespace DataTypes {
     }
 
     /**
+     * Get object id field value
+     * @param data Data
+     * @param key Property name
+     * @returns Id value
+     */
+    export function getIdValue<T extends {}>(
+        data: T,
+        key: keyof T | string
+    ): IdType | undefined | null {
+        if (data == null) return null;
+        const value =
+            typeof key === 'string' ? Reflect.get(data, key) : data[key];
+        if (value == null) return null;
+        if (typeof value === 'number') return value;
+        return convert(value, 'string');
+    }
+
+    /**
+     * Get object string field value
+     * @param data Data
+     * @param key Property name
+     * @returns String value
+     */
+    export function getStringValue<T extends {}>(
+        data: T,
+        key: keyof T | string
+    ): string | undefined | null {
+        const value = getIdValue(data, key);
+        if (typeof value === 'number') return value.toString();
+        return value;
+    }
+
+    /**
      * Check the type is a basic type or not (type guard)
      * @param name Type name
      * @returns Is basic type
