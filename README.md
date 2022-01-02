@@ -24,6 +24,7 @@ Data type definitions and type safe functions
 |Name|Description|
 |---:|---|
 |DataType|Data type enum|
+|AddOrEditType|Add or edit conditional type for same data model|
 |Basic|Basic types, includes number, bigint, Date, boolean, string|
 |BasicArray|Basic type name array|
 |BasicConditional|Conditional type based on BasicNames|

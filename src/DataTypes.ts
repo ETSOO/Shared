@@ -148,6 +148,13 @@ export namespace DataTypes {
     export type IdType = number | string;
 
     /**
+     * Add or edit conditional type for same data model
+     */
+    export type AddOrEditType<T, Editing extends boolean> = Editing extends true
+        ? T
+        : Partial<T>;
+
+    /**
      * Enum value type
      */
     export type EnumValue = number | string;
