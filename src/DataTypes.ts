@@ -151,9 +151,10 @@ export namespace DataTypes {
      * Add or edit conditional type for same data model
      * Dynamic add changedFields for editing case
      */
-    export type AddOrEditType<T, Editing extends boolean> = Editing extends true
-        ? T & { changedFields?: string[] }
-        : Partial<T>;
+    export type AddOrEditType<
+        T,
+        Editing extends boolean
+    > = (Editing extends true ? T : Partial<T>) & { changedFields?: string[] };
 
     /**
      * Enum value type
