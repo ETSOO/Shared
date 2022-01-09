@@ -133,3 +133,15 @@ test('Test for snakeNameToWord', () => {
 test('Tests for mergeClasses', () => {
     expect(Utils.mergeClasses('a', '', 'b ', undefined, 'c')).toBe('a b c');
 });
+
+test('Tests for getResult', () => {
+    // Arrange
+    type test = ((visible: boolean) => number) | number;
+    const input: test = (visible) => (visible ? 1 : 0);
+    const inputNumber: test = 5;
+
+    // Act & assert
+    expect(Utils.getResult(input, true)).toBe(1);
+    expect(Utils.getResult(input, false)).toBe(0);
+    expect(Utils.getResult(inputNumber)).toBe(5);
+});

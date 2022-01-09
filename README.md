@@ -62,6 +62,7 @@ Data type definitions and type safe functions
 |getIdValue|Get object id field value|
 |getItemId|Get item id|
 |getItemLabel|Get item label|
+|getResult|Get input function or value result|
 |getStringValue|Get object string field value|
 |isBasicName|Check the type is a basic type or not (type guard)|
 |isSimpleObject|Is the target a simple object, all values are simple type (Type guard)|

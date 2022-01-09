@@ -188,6 +188,19 @@ export namespace Utils {
     }
 
     /**
+     * Get input function or value result
+     * @param input Input function or value
+     * @param args Arguments
+     * @returns Result
+     */
+    export const getResult = <R, F extends ((...args: unknown[]) => R) | R>(
+        input: F,
+        ...args: unknown[]
+    ): R => {
+        return typeof input === 'function' ? input(...args) : input;
+    };
+
+    /**
      * Get time zone
      * @returns Timezone
      */

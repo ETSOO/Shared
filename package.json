@@ -1,6 +1,6 @@
 {
     "name": "@etsoo/shared",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "TypeScript shared utilities and functions",
     "main": "lib/cjs/index.js",
     "module": "lib/mjs/index.js",
@@ -55,12 +55,12 @@
     "dependencies": {},
     "devDependencies": {
         "@types/jest": "^27.4.0",
-        "@typescript-eslint/eslint-plugin": "^5.8.0",
-        "@typescript-eslint/parser": "^5.8.0",
-        "eslint": "^8.5.0",
+        "@typescript-eslint/eslint-plugin": "^5.9.0",
+        "@typescript-eslint/parser": "^5.9.0",
+        "eslint": "^8.6.0",
         "eslint-config-airbnb-base": "^15.0.0",
-        "eslint-plugin-import": "^2.25.3",
-        "jest": "^27.4.5",
+        "eslint-plugin-import": "^2.25.4",
+        "jest": "^27.4.7",
         "ts-jest": "^27.1.2",
         "typescript": "^4.5.4"
     }
