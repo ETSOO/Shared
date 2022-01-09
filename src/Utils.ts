@@ -193,9 +193,12 @@ export namespace Utils {
      * @param args Arguments
      * @returns Result
      */
-    export const getResult = <R, F extends ((...args: unknown[]) => R) | R>(
-        input: F,
-        ...args: unknown[]
+    export const getResult = <
+        R extends DataTypes.Simple,
+        F extends (...args: any[]) => R
+    >(
+        input: F | R,
+        ...args: Parameters<F>
     ): R => {
         return typeof input === 'function' ? input(...args) : input;
     };
