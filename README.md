@@ -36,6 +36,7 @@ Data type definitions and type safe functions
 |EnumBase|Enum base type|
 |EnumValue|Enum value type|
 |ExtendedEnum|Extended type enum|
+|Func<R>|Function type, R is return type|
 |HAlign|Horizontal align|
 |HAlignEnum|Horizontal align enum|
 |IdType|Number and string combination id type|

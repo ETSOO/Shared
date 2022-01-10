@@ -141,7 +141,10 @@ test('Tests for getResult', () => {
     const inputNumber: test = 5;
 
     // Act & assert
-    expect(Utils.getResult(input, true)).toBe(1);
+    const result = Utils.getResult(input, true);
+    expect(result).toBe(1);
     expect(Utils.getResult(input, false)).toBe(0);
-    expect(Utils.getResult(inputNumber)).toBe(5);
+
+    const valueResult = Utils.getResult(inputNumber);
+    expect(valueResult).toBe(5);
 });

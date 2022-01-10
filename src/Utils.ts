@@ -193,13 +193,10 @@ export namespace Utils {
      * @param args Arguments
      * @returns Result
      */
-    export const getResult = <
-        R extends DataTypes.Simple,
-        F extends (...args: any[]) => R
-    >(
-        input: F | R,
-        ...args: Parameters<F>
-    ): R => {
+    export const getResult = <R, T = DataTypes.Func<R> | R>(
+        input: T,
+        ...args: T extends DataTypes.Func<R> ? Parameters<typeof input> : never
+    ): T extends DataTypes.Func<R> ? ReturnType<T> : T => {
         return typeof input === 'function' ? input(...args) : input;
     };
 

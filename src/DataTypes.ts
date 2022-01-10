@@ -167,6 +167,11 @@ export namespace DataTypes {
     export type EnumBase = Record<string, EnumValue>;
 
     /**
+     * Function type
+     */
+    export type Func<R> = (...args: any[]) => R;
+
+    /**
      * String key, unknown value Record
      */
     export type StringRecord = Record<string, unknown>;
