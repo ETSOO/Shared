@@ -72,6 +72,9 @@ test('Tests for getEnumKeys', () => {
         GRAM = 'GRAM33'
     }
     expect(DataTypes.getEnumKeys(ProductUnit)).toContainEqual('GRAM');
+
+    const keys = DataTypes.getEnumKeys(DataTypes.CombinedEnum);
+    expect(keys).toContainEqual('Unkwown');
 });
 
 test('Tests for getItemId', () => {

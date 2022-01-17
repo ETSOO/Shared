@@ -497,7 +497,7 @@ export namespace DataTypes {
      * @param input Input Enum
      * @returns Keys
      */
-    export function getEnumKeys<T extends EnumBase, K extends keyof T>(
+    export function getEnumKeys<T extends EnumBase, K extends keyof T & string>(
         input: T
     ): K[] {
         return Object.keys(input)
