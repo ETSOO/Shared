@@ -18,6 +18,16 @@ $ yarn add @etsoo/shared
 ## storage
 Storage interface and browser storage implementation
 
+## Keyboard
+Keyboard keys and codes
+
+|Name|Description|
+|---:|---|
+|Keys|KeyboardEvent.key constants|
+|Codes|KeyboardEvent.code constants|
+
+|isTypingContent|Is typing content or press command key|
+
 ## DataTypes
 Data type definitions and type safe functions
 
