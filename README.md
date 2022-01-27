@@ -152,6 +152,7 @@ String and other related utilities
 |Name|Description|
 |---:|---|
 |charsToNumber|Base64 chars to number|
+|correctTypes|Correct object's property value type|
 |equals|Two values equal|
 |formatInitial|Format inital character to lower case or upper case|
 |formatString|Format string with parameters|

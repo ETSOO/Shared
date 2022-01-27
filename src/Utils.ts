@@ -94,6 +94,24 @@ export namespace Utils {
     }
 
     /**
+     * Correct object's property value type
+     * @param input Input object
+     * @param fields Fields to correct
+     */
+    export function correctTypes<
+        T extends {},
+        F extends { [P in keyof T]: DataTypes.BasicNames }
+    >(input: T, fields: F) {
+        for (const field in fields) {
+            const value = Reflect.get(input, field);
+            const newValue = DataTypes.convertByType(value, fields[field]);
+            if (newValue !== value) {
+                Reflect.set(input, field, newValue);
+            }
+        }
+    }
+
+    /**
      * Two values equal
      * @param v1 Value 1
      * @param v2 Value 2

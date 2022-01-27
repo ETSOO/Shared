@@ -1,5 +1,30 @@
 import { Utils } from '../src/Utils';
 
+test('Tests for correctTypes', () => {
+    const input = {
+        id: '1',
+        price: '6.0',
+        amount: '',
+        date: '2022/01/28',
+        enabled: 'true',
+        ids: ['1', '2']
+    };
+    Utils.correctTypes(input, {
+        id: 'number',
+        price: 'number',
+        amount: 'number',
+        date: 'date',
+        enabled: 'boolean',
+        ids: 'number[]'
+    });
+    expect(typeof input.id).toBe('number');
+    expect(typeof input.price).toBe('number');
+    expect(input.amount).toBeUndefined();
+    expect((input.date as any) instanceof Date ? true : false).toBeTruthy();
+    expect(input.enabled).toBeTruthy();
+    expect(input.ids).toStrictEqual([1, 2]);
+});
+
 test('Tests for getDataChanges', () => {
     const input = {
         id: 1,
