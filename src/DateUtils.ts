@@ -148,7 +148,7 @@ export namespace DateUtils {
      * Format to 'yyyy-MM-dd', especially used for date input min/max property
      * @param date Input date
      */
-    export function formatForInput(date?: Date | string) {
+    export function formatForInput(date?: Date | string | null) {
         // Parse string as date
         if (typeof date === 'string') date = new Date(date);
 
