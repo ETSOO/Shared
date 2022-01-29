@@ -151,6 +151,7 @@ String and other related utilities
 
 |Name|Description|
 |---:|---|
+|addBlankItem|Add blank item to collection|
 |charsToNumber|Base64 chars to number|
 |correctTypes|Correct object's property value type|
 |equals|Two values equal|

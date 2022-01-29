@@ -78,6 +78,27 @@ String.prototype.removeNonLetters = function (this: string) {
  */
 export namespace Utils {
     /**
+     * Add blank item to collection
+     * @param options Options
+     * @param idField Id field, default is id
+     * @param labelField Label field, default is label
+     * @param blankLabel Blank label, default is ---
+     */
+    export function addBlankItem<T extends {}>(
+        options: T[],
+        idField?: string | keyof T,
+        labelField?: unknown,
+        blankLabel?: string
+    ) {
+        const blankItem: any = {
+            [idField ?? 'id']: '',
+            [typeof labelField === 'string' ? labelField : 'label']:
+                blankLabel ?? '---'
+        };
+        options.unshift(blankItem);
+    }
+
+    /**
      * Base64 chars to number
      * @param base64Chars Base64 chars
      * @returns Number

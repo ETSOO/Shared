@@ -1,5 +1,16 @@
 import { Utils } from '../src/Utils';
 
+test('Tests for addBlankItem', () => {
+    const options = [
+        { id: 1, name: 'a' },
+        { id: 2, name: 'b' }
+    ];
+    Utils.addBlankItem(options, 'id', 'name');
+    expect(options.length).toBe(3);
+    expect(options[0].id).toBe('');
+    expect(options[0].name).toBe('---');
+});
+
 test('Tests for correctTypes', () => {
     const input = {
         id: '1',
