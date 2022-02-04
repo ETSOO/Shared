@@ -77,6 +77,13 @@ test('Tests for formatString', () => {
     expect(template.format('aa', 'bb')).toBe(result);
 });
 
+test('Tests for hideData', () => {
+    expect('xz@etsoo.com'.hideEmail()).toBe('x***@etsoo.com');
+    expect('info@etsoo.com'.hideEmail()).toBe('in***@etsoo.com');
+    expect('info@etsoo.com'.hideData('@')).toBe('in***@etsoo.com');
+    expect('12345678'.hideData()).toBe('123***678');
+});
+
 test('Tests for isDigits', () => {
     expect(Utils.isDigits('1')).toBeTruthy();
     expect(Utils.isDigits('12', 3)).toBeFalsy();

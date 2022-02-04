@@ -159,6 +159,10 @@ String and other related utilities
 |formatString|Format string with parameters|
 |getDataChanges|Get data changed fields with input data updated|
 |getTimeZone|Get time zone|
+|hideData|Hide data|
+|hideEmail|Hide email data|
+|isDigits|Is digits string|
+|isEmail|Is email string|
 |joinItems|Join items as a string|
 |mergeFormData|Merge form data to primary one|
 |mergeClasses|Merge class names|
@@ -168,5 +172,6 @@ String and other related utilities
 |objectKeys|Get two object's unqiue properties|
 |objectUpdated|Get the new object's updated fields contrast to the previous object|
 |parseString|Parse string (JSON) to specific type|
+|removeNonLetters|Remove non letters (0-9, a-z, A-Z)|
 |setLabels|Set source with new labels|
 |snakeNameToWord|Snake name to works, 'snake_name' to 'Snake Name'|

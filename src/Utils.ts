@@ -17,6 +17,19 @@ declare global {
         formatInitial(this: string, upperCase: boolean): string;
 
         /**
+         * Hide data
+         * @param this Input string
+         * @param endChar End char
+         */
+        hideData(this: string, endChar?: string): string;
+
+        /**
+         * Hide email data
+         * @param this Input email
+         */
+        hideEmail(this: string): string;
+
+        /**
          * Is digits string
          * @param this Input string
          * @param minLength Minimum length
@@ -57,6 +70,26 @@ String.prototype.formatInitial = function (
         (upperCase ? initial.toUpperCase() : initial.toLowerCase()) +
         this.slice(1)
     );
+};
+
+String.prototype.hideData = function (this: string, endChar?: string) {
+    if (endChar != null) {
+        const index = this.indexOf(endChar);
+        if (index === -1) return this.hideData();
+        return this.substring(0, index).hideData() + this.substring(index);
+    }
+
+    var len = this.length;
+    if (len < 4) return this.substring(0, 1) + '***';
+    if (len < 6) return this.substring(0, 2) + '***';
+    if (len < 8) return this.substring(0, 2) + '***' + this.slice(-2);
+    if (len < 12) return this.substring(0, 3) + '***' + this.slice(-3);
+
+    return this.substring(0, 4) + '***' + this.slice(-4);
+};
+
+String.prototype.hideEmail = function (this: string) {
+    return this.hideData('@');
 };
 
 String.prototype.isDigits = function (this: string, minLength?: number) {
