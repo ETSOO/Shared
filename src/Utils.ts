@@ -73,6 +73,8 @@ String.prototype.formatInitial = function (
 };
 
 String.prototype.hideData = function (this: string, endChar?: string) {
+    if (this.length === 0) return this;
+
     if (endChar != null) {
         const index = this.indexOf(endChar);
         if (index === -1) return this.hideData();
