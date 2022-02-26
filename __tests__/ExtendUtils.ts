@@ -23,6 +23,26 @@ test('Tests for applyMixins', () => {
     expect(item.m2()).toBe('hello');
 });
 
+test('Tests for delayedExecutor', () => {
+    // Arrange
+    const f = jest.fn();
+
+    jest.useFakeTimers();
+    jest.spyOn(global, 'setTimeout');
+
+    const e = ExtendUtils.delayedExecutor(f, 50);
+
+    e.call(1, false, 'a');
+    expect(e.isRunning()).toBeTruthy();
+
+    e.call(2, true, 'b');
+    expect(setTimeout).toHaveBeenCalledTimes(2);
+
+    jest.runOnlyPendingTimers();
+    expect(f).toBeCalledTimes(1);
+    expect(e.isRunning()).toBeFalsy();
+});
+
 test('Tests for promiseHandler', async () => {
     // Arrange
     const p = (id: number) => {

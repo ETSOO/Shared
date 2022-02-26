@@ -20,6 +20,54 @@ export namespace ExtendUtils {
     }
 
     /**
+     * Create delayed executor
+     * @param func Function
+     * @param delayMiliseconds Delay miliseconds
+     * @returns Result
+     */
+    export function delayedExecutor<P extends any[]>(
+        func: (...args: P) => void,
+        delayMiliseconds: number
+    ) {
+        let seed: number = 0;
+        return {
+            /**
+             * Call the function
+             * @param args Args
+             */
+            call(...args: P) {
+                this.clear();
+                seed = window.setTimeout(
+                    (...args: P) => {
+                        func(...args);
+                        seed = 0;
+                    },
+                    delayMiliseconds,
+                    ...args
+                );
+            },
+
+            /**
+             * Clear
+             */
+            clear() {
+                if (this.isRunning()) {
+                    window.clearTimeout(seed);
+                    seed = 0;
+                }
+            },
+
+            /**
+             * Is running or not
+             * @returns Result
+             */
+            isRunning() {
+                return seed > 0;
+            }
+        };
+    }
+
+    /**
      * Promise handler to catch error
      * @param promise Promise
      */
