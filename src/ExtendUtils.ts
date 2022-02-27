@@ -1,3 +1,5 @@
+import { DelayedExecutorType } from './types/DelayedExecutorType';
+
 /**
  * Extend utilities
  */
@@ -28,7 +30,7 @@ export namespace ExtendUtils {
     export function delayedExecutor<P extends any[]>(
         func: (...args: P) => void,
         delayMiliseconds: number
-    ) {
+    ): DelayedExecutorType<P> {
         let seed: number = 0;
         return {
             /**

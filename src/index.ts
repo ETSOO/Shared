@@ -1,4 +1,5 @@
 export * from './types/FormData';
+export * from './types/DelayedExecutorType';
 
 export * from './storage/IStorage';
 export * from './storage/WindowStorage';
