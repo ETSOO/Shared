@@ -1,9 +1,10 @@
 export type DelayedExecutorType<P extends any[]> = {
     /**
      * Call the function
+     * @param miliseconds Delayed miliseconds for this call
      * @param args Args
      */
-    call(...args: P): void;
+    call(miliseconds?: number, ...args: P): void;
 
     /**
      * Clear

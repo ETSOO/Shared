@@ -122,6 +122,7 @@ Extend current class/object functioning
 |Name|Description|
 |---:|---|
 |applyMixins|Apply mixins to current class|
+|delayedExecutor|Create delayed executor|
 |promiseHandler|Promise handler to catch error|
 |sleep|Delay promise|
 

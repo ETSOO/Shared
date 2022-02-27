@@ -35,16 +35,17 @@ export namespace ExtendUtils {
         return {
             /**
              * Call the function
+             * @param miliseconds Delayed miliseconds for this call
              * @param args Args
              */
-            call(...args: P) {
+            call(miliseconds?: number, ...args: P) {
                 this.clear();
                 seed = window.setTimeout(
                     (...args: P) => {
                         func(...args);
                         seed = 0;
                     },
-                    delayMiliseconds,
+                    miliseconds ?? delayMiliseconds,
                     ...args
                 );
             },
