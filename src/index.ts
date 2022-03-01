@@ -1,5 +1,6 @@
-export * from './types/FormData';
 export * from './types/DelayedExecutorType';
+export * from './types/EColor';
+export * from './types/FormData';
 
 export * from './storage/IStorage';
 export * from './storage/WindowStorage';

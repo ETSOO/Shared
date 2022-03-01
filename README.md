@@ -18,6 +18,17 @@ $ yarn add @etsoo/shared
 ## storage
 Storage interface and browser storage implementation
 
+## EColor
+Etsoo implmented Color
+
+|Name|Description|
+|---:|---|
+|static getColors|Get HEX or RGB colors|
+|static getEColors|Get EColors|
+|static parse|Parse HTML color to EColor|
+|toHEXColor|To HEX color string|
+|toRGBColor|To RGB color string|
+
 ## Keyboard
 Keyboard keys and codes
 
