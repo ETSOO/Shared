@@ -13,5 +13,6 @@ test('Tests for parse', () => {
 });
 
 test('Tests for getColors', () => {
-    expect(EColor.getColors(undefined, 128).length).toBe(8);
+    const colors = EColor.getColors(undefined, 128);
+    expect(colors.length).toBe(8);
 });

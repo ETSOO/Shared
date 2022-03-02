@@ -19,11 +19,17 @@ export class EColor {
      * Get HEX or RGB colors
      * @param init Initial color
      * @param factor Increase factor
+     * @param adjustOrder Adjust order to increase difference
      * @param hex to HEX or not
      * @returns Result
      */
-    static getColors(init = '#000', factor: number = 51, hex: boolean = true) {
-        return EColor.getEColors(init, factor).map((c) =>
+    static getColors(
+        init: string = '#000',
+        factor: number = 51,
+        adjustOrder: boolean = true,
+        hex: boolean = true
+    ) {
+        return EColor.getEColors(init, factor, adjustOrder).map((c) =>
             hex ? c.toHEXColor() : c.toRGBColor()
         );
     }
@@ -32,9 +38,14 @@ export class EColor {
      * Get EColors
      * @param init Initial color
      * @param factor Increase factor
+     * @param adjustOrder Adjust order to increase difference
      * @returns Result
      */
-    static getEColors(init = '#000', factor: number = 51): EColor[] {
+    static getEColors(
+        init: string = '#000',
+        factor: number = 51,
+        adjustOrder: boolean = true
+    ): EColor[] {
         // Init color
         const initColor = EColor.parse(init) ?? new EColor(0, 0, 0);
 
@@ -48,18 +59,53 @@ export class EColor {
         }
 
         // RGB loop
-        const colors: EColor[] = [initColor];
-
+        const colors: (EColor | undefined)[] = [initColor];
         for (const r of factors) {
             for (const g of factors) {
                 for (const b of factors) {
-                    const newColor = initColor.clone(r, g, b);
-                    if (newColor) colors.push(newColor);
+                    colors.push(initColor.clone(r, g, b));
                 }
             }
         }
 
-        return colors;
+        // Non-nullable colors
+        const nColors = colors.filter(
+            (color): color is EColor => color != null
+        );
+
+        // Adjust order
+        if (adjustOrder) {
+            const firstColor = nColors.shift();
+            if (firstColor) {
+                let color = firstColor;
+                const newColors: EColor[] = [color];
+
+                while (nColors.length > 0) {
+                    const result = nColors.reduce(
+                        (p, c, index) => {
+                            const delta = color.getDeltaValue(c);
+                            if (delta != null && delta > p.delta) {
+                                p.delta = delta;
+                                p.color = c;
+                                p.index = index;
+                            }
+                            return p;
+                        },
+                        { delta: 0, color, index: -1 }
+                    );
+
+                    if (result.delta > 0) {
+                        color = result.color;
+                        newColors.push(color);
+                        nColors.splice(result.index, 1);
+                    }
+                }
+
+                return newColors;
+            }
+        }
+
+        return nColors;
     }
 
     /**
@@ -143,7 +189,7 @@ export class EColor {
     ) {}
 
     /**
-     * Clone color with adjusts
+     * Clone color with adjustments
      * @param adjustR Adjust R value
      * @param adjustG Adjust G value
      * @param adjustB Adjust B value
@@ -169,6 +215,99 @@ export class EColor {
     }
 
     /**
+     * Get contrast ratio, a value between 0 and 1
+     * @param color Contrast color
+     */
+    getContrastRatio(color: EColor) {
+        const lum1 = this.getLuminance();
+        const lum2 = color.getLuminance();
+        const brightest = Math.max(lum1, lum2);
+        const darkest = Math.min(lum1, lum2);
+        return (brightest + 0.05) / (darkest + 0.05);
+    }
+
+    /**
+     * Get Delta value (perceptible by human eyes)
+     * <= 1, Not perceptible by human eyes
+     * 1 - 2, Perceptible through close observation
+     * 2 - 10, Perceptible at a glance
+     * 11 - 49, Colors are more similar than opposite
+     * 100+, Colors are exact opposite
+     * @param color Contrast color
+     * @returns Value
+     */
+    getDeltaValue(color: EColor) {
+        const labA = this.toLabValue();
+        const labB = color.toLabValue();
+        const deltaL = labA[0] - labB[0];
+        const deltaA = labA[1] - labB[1];
+        const deltaB = labA[2] - labB[2];
+        const c1 = Math.sqrt(labA[1] * labA[1] + labA[2] * labA[2]);
+        const c2 = Math.sqrt(labB[1] * labB[1] + labB[2] * labB[2]);
+        const deltaC = c1 - c2;
+        let deltaH = deltaA * deltaA + deltaB * deltaB - deltaC * deltaC;
+        deltaH = deltaH < 0 ? 0 : Math.sqrt(deltaH);
+        const sc = 1.0 + 0.045 * c1;
+        const sh = 1.0 + 0.015 * c1;
+        const deltaLKlsl = deltaL / 1.0;
+        const deltaCkcsc = deltaC / sc;
+        const deltaHkhsh = deltaH / sh;
+        const i =
+            deltaLKlsl * deltaLKlsl +
+            deltaCkcsc * deltaCkcsc +
+            deltaHkhsh * deltaHkhsh;
+        return i < 0 ? 0 : Math.sqrt(i);
+    }
+
+    /**
+     * Get luminance
+     * Darker one has higher luminance
+     * https://dev.to/alvaromontoro/building-your-own-color-contrast-checker-4j7o
+     */
+    getLuminance() {
+        const a = [this.r, this.g, this.b].map((v) => {
+            v /= 255;
+            return v <= 0.03928
+                ? v / 12.92
+                : Math.pow((v + 0.055) / 1.055, 2.4);
+        });
+        return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+    }
+
+    /**
+     * To HEX color string
+     * @returns HEX color string
+     */
+    toHEXColor() {
+        return `#${EColor.toHex(this.r)}${EColor.toHex(this.g)}${EColor.toHex(
+            this.b
+        )}`;
+    }
+
+    /**
+     * To Lab value
+     * @returns Lab value
+     */
+    toLabValue(): [number, number, number] {
+        let r = this.r / 255,
+            g = this.g / 255,
+            b = this.b / 255,
+            x,
+            y,
+            z;
+        r = r > 0.04045 ? Math.pow((r + 0.055) / 1.055, 2.4) : r / 12.92;
+        g = g > 0.04045 ? Math.pow((g + 0.055) / 1.055, 2.4) : g / 12.92;
+        b = b > 0.04045 ? Math.pow((b + 0.055) / 1.055, 2.4) : b / 12.92;
+        x = (r * 0.4124 + g * 0.3576 + b * 0.1805) / 0.95047;
+        y = (r * 0.2126 + g * 0.7152 + b * 0.0722) / 1.0;
+        z = (r * 0.0193 + g * 0.1192 + b * 0.9505) / 1.08883;
+        x = x > 0.008856 ? Math.pow(x, 1 / 3) : 7.787 * x + 16 / 116;
+        y = y > 0.008856 ? Math.pow(y, 1 / 3) : 7.787 * y + 16 / 116;
+        z = z > 0.008856 ? Math.pow(z, 1 / 3) : 7.787 * z + 16 / 116;
+        return [116 * y - 16, 500 * (x - y), 200 * (y - z)];
+    }
+
+    /**
      * To RGB color string
      * @param includeAlpha Include alpha or not
      * @returns RGB color string
@@ -181,15 +320,5 @@ export class EColor {
             return `RGBA(${this.r}, ${this.g}, ${this.b}, ${this.alpha ?? 1})`;
 
         return `RGB(${this.r}, ${this.g}, ${this.b})`;
-    }
-
-    /**
-     * To HEX color string
-     * @returns HEX color string
-     */
-    toHEXColor() {
-        return `#${EColor.toHex(this.r)}${EColor.toHex(this.g)}${EColor.toHex(
-            this.b
-        )}`;
     }
 }

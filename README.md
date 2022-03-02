@@ -26,7 +26,12 @@ Etsoo implmented Color
 |static getColors|Get HEX or RGB colors|
 |static getEColors|Get EColors|
 |static parse|Parse HTML color to EColor|
+|clone|Clone color with adjustments|
+|getContrastRatio|Get contrast ratio, a value between 0 and 1|
+|getDeltaValue|Get Delta value (perceptible by human eyes)|
+|getLuminance|Get luminance|
 |toHEXColor|To HEX color string|
+|toLabValue|To Lab value|
 |toRGBColor|To RGB color string|
 
 ## Keyboard
