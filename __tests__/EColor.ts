@@ -16,3 +16,10 @@ test('Tests for getColors', () => {
     const colors = EColor.getColors(undefined, 128);
     expect(colors.length).toBe(8);
 });
+
+test('Tests for toRGBColor', () => {
+    const color = new EColor(0, 0, 0);
+    expect(color.toRGBColor()).toBe('RGB(0, 0, 0)');
+    expect(color.toRGBColor(0.1)).toBe('RGBA(0, 0, 0, 0.1)');
+    expect(color.alpha).toBeUndefined();
+});

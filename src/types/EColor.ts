@@ -309,15 +309,25 @@ export class EColor {
 
     /**
      * To RGB color string
-     * @param includeAlpha Include alpha or not
+     * @param alpha Alpha value, false means ignore it
      * @returns RGB color string
      */
-    toRGBColor(includeAlpha?: boolean) {
-        // Default case
-        includeAlpha ??= this.alpha != null;
+    toRGBColor(alpha?: boolean | number) {
+        // Decide
+        let includeAlpha: boolean,
+            alphaValue: number | undefined = this.alpha;
+
+        if (typeof alpha === 'number') {
+            alphaValue = alpha;
+            includeAlpha = true;
+        } else if (alpha == null) {
+            includeAlpha = this.alpha != null;
+        } else {
+            includeAlpha = alpha;
+        }
 
         if (includeAlpha)
-            return `RGBA(${this.r}, ${this.g}, ${this.b}, ${this.alpha ?? 1})`;
+            return `RGBA(${this.r}, ${this.g}, ${this.b}, ${alphaValue ?? 1})`;
 
         return `RGB(${this.r}, ${this.g}, ${this.b})`;
     }
