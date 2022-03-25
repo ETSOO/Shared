@@ -6,6 +6,7 @@ export * from './storage/IStorage';
 export * from './storage/WindowStorage';
 
 export * from './DataTypes';
+export * from './ColorUtils';
 export * from './DateUtils';
 export * from './DomUtils';
 export * from './ExtendUtils';

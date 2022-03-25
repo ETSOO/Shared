@@ -1,4 +1,5 @@
 import { EColor } from '../src/types/EColor';
+import { ColorUtils } from '../src/ColorUtils';
 
 test('Tests for parse', () => {
     // Arrange & act
@@ -13,7 +14,7 @@ test('Tests for parse', () => {
 });
 
 test('Tests for getColors', () => {
-    const colors = EColor.getColors(undefined, 128);
+    const colors = ColorUtils.getColors(undefined, 128);
     expect(colors.length).toBe(8);
 });
 
