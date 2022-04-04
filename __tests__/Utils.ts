@@ -126,6 +126,12 @@ test('Tests for removeNonLetters', () => {
     expect(input.removeNonLetters()).toBe(result);
 });
 
+test('Tests for replaceNullOrEmpty', () => {
+    expect(Utils.replaceNullOrEmpty('a', 's')).toBe('a');
+    expect(Utils.replaceNullOrEmpty(null, 's')).toBe('s');
+    expect(Utils.replaceNullOrEmpty(' ', 's')).toBe('s');
+});
+
 test('Tests for objectEqual', () => {
     const obj1 = { a: 1, b: 'abc', c: true, d: null, f: [1, 2] };
     const obj2 = { a: '1', b: 'abc', c: true, f: [1, 2] };

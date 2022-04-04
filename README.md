@@ -190,5 +190,6 @@ String and other related utilities
 |objectUpdated|Get the new object's updated fields contrast to the previous object|
 |parseString|Parse string (JSON) to specific type|
 |removeNonLetters|Remove non letters (0-9, a-z, A-Z)|
+|replaceNullOrEmpty|Replace null or empty with default value|
 |setLabels|Set source with new labels|
 |snakeNameToWord|Snake name to works, 'snake_name' to 'Snake Name'|

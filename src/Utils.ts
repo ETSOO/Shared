@@ -517,6 +517,20 @@ export namespace Utils {
     };
 
     /**
+     * Replace null or empty with default value
+     * @param input Input string
+     * @param defaultValue Default value
+     * @returns Result
+     */
+    export const replaceNullOrEmpty = (
+        input: string | null | undefined,
+        defaultValue: string
+    ) => {
+        if (input == null || input.trim() === '') return defaultValue;
+        return input;
+    };
+
+    /**
      * Set source with new labels
      * @param source Source
      * @param labels Labels
