@@ -68,6 +68,7 @@ Data type definitions and type safe functions
 |IdType|Number and string combination id type|
 |IdItem|Item with id or id generator|
 |IdLabelItem|Item with id and label|
+|KeyCollection|Key collection, like { key1: {}, key2: {} }|
 |Simple|Basic or basic array type|
 |SimpleEnum|Simple type enum|
 |SimpleNames|Simple type names|

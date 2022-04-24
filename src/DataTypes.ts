@@ -157,6 +157,13 @@ export namespace DataTypes {
     > = (Editing extends true ? T : Partial<T>) & { changedFields?: string[] };
 
     /**
+     * Key collection, like { key1: {}, key2: {} }
+     */
+    export type KeyCollection<K extends readonly string[], I extends {}> = {
+        [index in K[number]]: I;
+    };
+
+    /**
      * Enum value type
      */
     export type EnumValue = number | string;
