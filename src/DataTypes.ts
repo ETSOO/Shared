@@ -241,22 +241,22 @@ export namespace DataTypes {
         /**
          * Name, like zh-CN
          */
-        readonly name: string;
+        name: string;
 
         /**
          * Label for description, like Simplifined Chinese
          */
-        readonly label: string;
+        label: string;
 
         /**
          * Resources
          */
-        readonly resources: Readonly<T>;
+        resources: T;
 
         /**
          * Compatible names
          */
-        readonly compatibleName?: string[];
+        compatibleName?: string[];
     }>;
 
     /**
