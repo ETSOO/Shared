@@ -281,8 +281,8 @@ export namespace DomUtils {
      * @param items Available cultures
      * @param culture Detected culture
      */
-    export const getCulture = (
-        items: DataTypes.CultureDefinition[],
+    export const getCulture = <T extends {}>(
+        items: DataTypes.CultureDefinition<T>[],
         culture: string
     ) => {
         if (items.length === 0) {

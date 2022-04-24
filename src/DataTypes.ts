@@ -237,7 +237,7 @@ export namespace DataTypes {
     /**
      * Culture definiton
      */
-    export type CultureDefinition = Readonly<{
+    export type CultureDefinition<T extends {} = StringRecord> = Readonly<{
         /**
          * Name, like zh-CN
          */
@@ -251,7 +251,7 @@ export namespace DataTypes {
         /**
          * Resources
          */
-        readonly resources: Readonly<StringRecord>;
+        readonly resources: Readonly<T>;
 
         /**
          * Compatible names
