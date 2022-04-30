@@ -262,6 +262,28 @@ export namespace DomUtils {
     }
 
     /**
+     * File to data URL
+     * @param file File
+     * @returns Data URL
+     */
+    export async function fileToDataURL(file: File) {
+        return new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onerror = reject;
+            reader.onload = () => {
+                const data = reader.result;
+                if (data == null) {
+                    reject();
+                    return;
+                }
+
+                resolve(data as string);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    /**
      * Form data to object
      * @param form Form data
      * @returns Object

@@ -122,6 +122,7 @@ DOM/window related utilities
 |detectedCountry|Current detected country|
 |detectedCulture|Current detected culture|
 |dimensionEqual|Check two rectangles equality|
+|fileToDataURL|File to data URL|
 |formDataToObject|Form data to object|
 |getCulture|Get the available culture definition|
 |getDataChanges|Get data changed fields with input data updated|
