@@ -23,3 +23,10 @@ test('Tests for parseWithUnit', () => {
     expect(NumberUtils.parseWithUnit('16')).toStrictEqual([16, '']);
     expect(NumberUtils.parseWithUnit('a16')).toBeUndefined();
 });
+
+test('Tests for toExact', () => {
+    // 0.7000000000000001
+    const result = 0.8 - 0.1;
+    expect(result).not.toBe(0.7);
+    expect(result.toExact()).toBe(0.7);
+});

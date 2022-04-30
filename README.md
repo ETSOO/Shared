@@ -152,6 +152,7 @@ Numbers related utilities
 |format|Format number|
 |formatMoney|Format money number|
 |parse|Parse float value|
+|toExact|To the exact precision number avoiding precision lost|
 
 ## StorageUtils
 Storage related utilities

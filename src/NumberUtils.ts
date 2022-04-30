@@ -1,3 +1,19 @@
+declare global {
+    interface Number {
+        /**
+         * To the exact precision number avoiding precision lost
+         * @param precision Precision
+         */
+        toExact(precision?: number): number;
+    }
+}
+
+Number.prototype.toExact = function (this: number, precision?: number) {
+    if (precision == null || precision < 1) precision = 4;
+    const p = Math.pow(10, precision ?? 4);
+    return Math.round(this * p) / p;
+};
+
 export namespace NumberUtils {
     /**
      * Format number
