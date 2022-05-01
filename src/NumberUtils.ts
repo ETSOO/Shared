@@ -9,8 +9,11 @@ declare global {
 }
 
 Number.prototype.toExact = function (this: number, precision?: number) {
-    if (precision == null || precision < 1) precision = 4;
-    const p = Math.pow(10, precision ?? 4);
+    if (precision == null || precision < 0) precision = 2;
+
+    if (precision === 0) return Math.round(this);
+
+    const p = Math.pow(10, precision);
     return Math.round(this * p) / p;
 };
 
