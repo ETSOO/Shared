@@ -1,6 +1,13 @@
 import { EColor } from '../src/types/EColor';
 import { ColorUtils } from '../src/ColorUtils';
 
+test('Tests for format', () => {
+    expect(EColor.format('transparent')).toBe('transparent');
+    expect(EColor.format('RED')).toBe('red');
+    expect(EColor.format('RGB(226, 24, 33)', true)).toBe('#e21821');
+    expect(EColor.format('RGB(226, 24, 33)')).toBe('RGB(226, 24, 33)');
+});
+
 test('Tests for parse', () => {
     // Arrange & act
     const colorShort = EColor.parse('#000');

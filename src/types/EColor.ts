@@ -16,6 +16,25 @@ export class EColor {
     }
 
     /**
+     * Format color
+     * @param input Input color text
+     * @param hexColor Format as Hex color
+     * @returns Result
+     */
+    static format(input: string | undefined | null, hexColor?: boolean) {
+        // Null
+        if (input == null) return undefined;
+
+        // Like transparent, black, red
+        if (/^[a-zA-Z]+$/gi.test(input)) return input.toLowerCase();
+
+        const color = EColor.parse(input);
+        if (color == null) return undefined;
+
+        return hexColor ? color.toHEXColor() : color.toRGBColor();
+    }
+
+    /**
      * HEX string to integer value
      * @param hex HEX string
      * @returns Integer value
