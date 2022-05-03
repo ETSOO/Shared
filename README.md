@@ -26,6 +26,7 @@ Etsoo implmented Color
 |static getColors|Get HEX or RGB colors|
 |static getEColors|Get EColors|
 |static parse|Parse HTML color to EColor|
+|Methods||
 |clone|Clone color with adjustments|
 |getContrastRatio|Get contrast ratio, a value between 0 and 1|
 |getDeltaValue|Get Delta value (perceptible by human eyes)|
@@ -63,7 +64,7 @@ ETSOO Extended abstract history class
 |length|States length|
 |state|Current state|
 |states|States|
-
+|Methods||
 |back|Back to the previous state|
 |clear|Clear all states but keep event listeners|
 |forward|Forward to the next state|
@@ -104,7 +105,7 @@ Data type definitions and type safe functions
 |StringRecord|String key, unknown value Record|
 |VAlign|Vertical align|
 |VAlignEnum|Vertical align enum|
-
+|Methods||
 |convert|Convert value to target type|
 |convertByType|Convert by type name like 'string'|
 |convertSimple|Convert value to target enum type|
@@ -132,7 +133,7 @@ Dates related utilities
 |DayFormat|YYYY-MM-DD|
 |MinuteFormat|YYYY-MM-DD hh:mm|
 |SecondFormat|YYYY-MM-DD hh:mm:ss|
-
+|Methods||
 |getDays|Get month's days|
 |forma|Format dates|
 |jsonParser|JSON parser|
