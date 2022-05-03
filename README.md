@@ -34,6 +34,16 @@ Etsoo implmented Color
 |toLabValue|To Lab value|
 |toRGBColor|To RGB color string|
 
+## EventClass
+Etsoo implmented abstract Event Class
+
+|Name|Description|
+|---:|---|
+|hasEvents|Has specific type and callback events|
+|off|Remove specific type and callback event|
+|on|Add event listener|
+|trigger|Trigger event|
+
 ## Keyboard
 Keyboard keys and codes
 
@@ -43,6 +53,23 @@ Keyboard keys and codes
 |Codes|KeyboardEvent.code constants|
 
 |isTypingContent|Is typing content or press command key|
+
+## EHistory
+ETSOO Extended abstract history class
+
+|Name|Description|
+|---:|---|
+|index|Current index|
+|length|States length|
+|state|Current state|
+|states|States|
+
+|back|Back to the previous state|
+|clear|Clear all states but keep event listeners|
+|forward|Forward to the next state|
+|go|Go to the specific state|
+|pushState|Adds an entry to the history stack|
+|replaceState|Modifies the current history entry|
 
 ## DataTypes
 Data type definitions and type safe functions
