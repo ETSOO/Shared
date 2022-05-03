@@ -7,11 +7,14 @@ test('Tests for history', () => {
     const history = new LHistory();
     expect(history.index).toBe(-1);
     history.pushState(1);
+    expect(history.getStatus()).toStrictEqual([false, false]);
     history.pushState(2);
     history.pushState(3);
+    expect(history.getStatus()).toStrictEqual([true, false]);
     expect(history.states).toStrictEqual([1, 2, 3]);
     expect(history.index).toBe(2);
     history.back();
+    expect(history.getStatus()).toStrictEqual([true, true]);
     history.pushState(4);
     expect(history.index).toBe(2);
     expect(history.states).toStrictEqual([1, 2, 4]);
@@ -34,7 +37,7 @@ test('Tests for events', () => {
     const pushFn = jest.fn();
     const replaceFn = jest.fn();
 
-    const history = new LHistory();
+    const history = new LHistory(3);
 
     history.on({
         clear: clearFn,
@@ -68,4 +71,9 @@ test('Tests for events', () => {
 
     // Previous handler stopped propagation
     expect(navigatorFn).toBeCalledTimes(5);
+
+    history.pushState(3);
+    history.pushState(4);
+    history.pushState(5);
+    expect(history.length).toBe(3);
 });

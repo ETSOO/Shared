@@ -61,6 +61,14 @@ export abstract class EHistory<T> extends EventClass<
     }
 
     /**
+     * Constructor
+     * @param maxDepth Max depth of the history
+     */
+    constructor(public readonly maxDepth: number = 20) {
+        super();
+    }
+
+    /**
      * Back to the previous state
      */
     back() {
@@ -136,6 +144,11 @@ export abstract class EHistory<T> extends EventClass<
 
         this.states.push(state);
         this._index++;
+
+        if (this.length > this.maxDepth) {
+            this.states.shift();
+        }
+
         this.trigger(this.createEvent('push', this._index));
     }
 
