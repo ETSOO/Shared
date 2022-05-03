@@ -94,6 +94,16 @@ export abstract class EHistory<T> extends EventClass<
     }
 
     /**
+     * Get [undo, redo] status
+     */
+    getStatus(): [boolean, boolean] {
+        if (this.length < 2) return [false, false];
+        if (this._index <= 0) return [false, true];
+        if (this._index + 1 >= this.length) return [true, false];
+        return [true, true];
+    }
+
+    /**
      * Go to the specific state
      * @param delta A negative value moves backwards, a positive value moves forwards
      */

@@ -68,6 +68,7 @@ ETSOO Extended abstract history class
 |back|Back to the previous state|
 |clear|Clear all states but keep event listeners|
 |forward|Forward to the next state|
+|getStatus|Get [undo, redo] status|
 |go|Go to the specific state|
 |pushState|Adds an entry to the history stack|
 |replaceState|Modifies the current history entry|
