@@ -1,5 +1,7 @@
 export * from './types/DelayedExecutorType';
 export * from './types/EColor';
+export * from './types/EHistory';
+export * from './types/EventClass';
 export * from './types/FormData';
 
 export * from './storage/IStorage';

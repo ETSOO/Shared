@@ -20,7 +20,7 @@ export interface EHistoryEventData {
  */
 export abstract class EHistory<
     T,
-    D extends EHistoryEventData
+    D extends EHistoryEventData = EHistoryEventData
 > extends EventClass<EHistoryEventType, D> {
     // Index
     private _index: number = -1;
