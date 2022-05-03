@@ -1,17 +1,7 @@
-import {
-    EHistory,
-    EHistoryEventData,
-    EHistoryEventType
-} from '../src/types/EHistory';
-import { EventBase } from '../src/types/EventClass';
+import { EHistory, EHistoryEvent } from '../src/types/EHistory';
 
 // Extended for tests
-class LHistoryEvent extends EventBase<EHistoryEventType, EHistoryEventData> {}
-class LHistory extends EHistory<number, EHistoryEventData> {
-    protected createEvent(type: EHistoryEventType, index: number) {
-        return new LHistoryEvent(this, type, { index });
-    }
-}
+class LHistory extends EHistory<number> {}
 
 test('Tests for history', () => {
     const history = new LHistory();
@@ -37,7 +27,7 @@ test('Tests for history', () => {
 
 test('Tests for events', () => {
     const navigatorFn = jest.fn();
-    const navigatorStopFn = jest.fn((event: LHistoryEvent) => {
+    const navigatorStopFn = jest.fn((event: EHistoryEvent) => {
         event.stopImmediatePropagation();
     });
     const clearFn = jest.fn();

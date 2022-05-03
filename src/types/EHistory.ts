@@ -16,12 +16,20 @@ export interface EHistoryEventData {
 }
 
 /**
+ * ETSOO Extended history event
+ */
+export class EHistoryEvent extends EventBase<
+    EHistoryEventType,
+    EHistoryEventData
+> {}
+
+/**
  * ETSOO Extended abstract history class
  */
-export abstract class EHistory<
-    T,
-    D extends EHistoryEventData = EHistoryEventData
-> extends EventClass<EHistoryEventType, D> {
+export abstract class EHistory<T> extends EventClass<
+    EHistoryEventType,
+    EHistoryEventData
+> {
     // Index
     private _index: number = -1;
 
@@ -74,10 +82,9 @@ export abstract class EHistory<
      * @param type Type
      * @param index Current index
      */
-    protected abstract createEvent(
-        type: EHistoryEventType,
-        index: number
-    ): EventBase<EHistoryEventType, D>;
+    protected createEvent(type: EHistoryEventType, index: number) {
+        return new EHistoryEvent(this, type, { index });
+    }
 
     /**
      * Forward to the next state
