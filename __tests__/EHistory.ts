@@ -1,4 +1,4 @@
-import { EHistory, EHistoryEvent } from '../src/types/EHistory';
+import { EHistory, EHistoryNavigateEvent } from '../src/types/EHistory';
 
 // Extended for tests
 class LHistory extends EHistory<number> {}
@@ -30,7 +30,7 @@ test('Tests for history', () => {
 
 test('Tests for events', () => {
     const navigatorFn = jest.fn();
-    const navigatorStopFn = jest.fn((event: EHistoryEvent) => {
+    const navigatorStopFn = jest.fn((event: EHistoryNavigateEvent) => {
         event.stopImmediatePropagation();
     });
     const clearFn = jest.fn();

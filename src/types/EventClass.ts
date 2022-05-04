@@ -3,7 +3,7 @@
  * T for type
  * D for data
  */
-export abstract class EventBase<T extends string, D> {
+export abstract class EventBase<T, D> {
     private _propagationStopped: boolean = false;
     /**
      * stopImmediatePropagation called
@@ -25,7 +25,7 @@ export abstract class EventBase<T extends string, D> {
      * @param type Type
      */
     constructor(
-        public readonly target: EventClass<T, D>,
+        public readonly target: {},
         public readonly type: T,
         public readonly data: D
     ) {
@@ -55,48 +55,35 @@ interface EventOptions {
     once?: boolean;
 }
 
-/**
- * Event class callback
- * T for type
- * D for data
- */
-export type EventClassCallback<T extends string, D> = (
-    event: EventBase<T, D>
-) => void;
-
-/**
- * Event class collection definition
- * T for type
- * D for data
- */
-export type EventClassCollection<T extends string, D> = {
-    [key in T]?: EventClassCallback<T, D>;
-};
+type EventClassDef = { [key: string]: {} };
 
 /**
  * Event class
  * T for type
  * D for data
  */
-export abstract class EventClass<T extends string, D> {
+export abstract class EventClass<D extends EventClassDef> {
     // Listeners
     private readonly listeners = new Map<
-        T,
-        [EventClassCallback<T, D>, EventOptions?][]
+        keyof D,
+        [(event: EventBase<keyof D, D[keyof D]>) => void, EventOptions?][]
     >();
 
     /**
      * Has specific type events
      * @param type Type
      */
-    hasEvents(type: T): boolean;
+    hasEvents<T extends keyof D>(type: T): boolean;
 
     /**
      * Has specific type and callback events
      * @param type Type
      * @param callback Callback
      */
-    hasEvents(type: T, callback: EventClassCallback<T, D>): boolean;
+    hasEvents<T extends keyof D>(
+        type: T,
+        callback: (event: EventBase<T, D[T]>) => void
+    ): boolean;
 
     /**
      * Has specific type and callback events
@@ -104,7 +91,10 @@ export abstract class EventClass<T extends string, D> {
      * @param callback Callback
      * @returns Result
      */
-    hasEvents(type: T, callback?: EventClassCallback<T, D>) {
+    hasEvents<T extends keyof D>(
+        type: T,
+        callback?: (event: EventBase<T, D[T]>) => void
+    ) {
         const items = this.listeners.get(type);
         if (items == null || items.length === 0) return false;
 
@@ -119,21 +109,27 @@ export abstract class EventClass<T extends string, D> {
      * Remove all specific type events
      * @param type Type
      */
-    off(type: T): void;
+    off<T extends keyof D>(type: T): void;
 
     /**
      * Remove specific type and callback event
      * @param type Type
      * @param callback Callback
      */
-    off(type: T, callback: EventClassCallback<T, D>): void;
+    off<T extends keyof D>(
+        type: T,
+        callback: (event: EventBase<T, D[T]>) => void
+    ): void;
 
     /**
      * Remove specific type and callback event
      * @param type Type
      * @param callback Callback
      */
-    off(type: T, callback?: EventClassCallback<T, D>) {
+    off<T extends keyof D>(
+        type: T,
+        callback?: (event: EventBase<T, D[T]>) => void
+    ) {
         if (callback == null) {
             this.listeners.delete(type);
             return;
@@ -153,7 +149,9 @@ export abstract class EventClass<T extends string, D> {
      * Add event listeners
      * @param collection Collection of events
      */
-    on(collection: EventClassCollection<T, D>): void;
+    on(collection: {
+        [type in keyof D]: (event: EventBase<type, D[type]>) => void;
+    }): void;
 
     /**
      * Add event listener
@@ -161,9 +159,9 @@ export abstract class EventClass<T extends string, D> {
      * @param callback Callback
      * @param options Options
      */
-    on(
+    on<T extends keyof D>(
         type: T,
-        callback: EventClassCallback<T, D>,
+        callback: (event: EventBase<T, D[T]>) => void,
         options?: EventOptions
     ): void;
 
@@ -173,14 +171,18 @@ export abstract class EventClass<T extends string, D> {
      * @param callback Callback
      * @param options Options
      */
-    on(
-        type: EventClassCollection<T, D> | T,
-        callback?: EventClassCallback<T, D>,
+    on<T extends keyof D>(
+        type:
+            | {
+                  [type in keyof D]: (event: EventBase<type, D[type]>) => void;
+              }
+            | T,
+        callback?: (event: EventBase<T, D[T]>) => void,
         options?: EventOptions
     ) {
         if (typeof type === 'object') {
             for (const key in type) {
-                const item = key as T;
+                const item = key as keyof D;
                 const itemCallback = type[item] ?? callback;
                 if (itemCallback) this.on(item, itemCallback, options);
             }
@@ -189,14 +191,17 @@ export abstract class EventClass<T extends string, D> {
 
         if (callback == null) return;
         this.listeners.has(type) || this.listeners.set(type, []);
-        this.listeners.get(type)?.push([callback, options]);
+
+        // String to T conversion problem
+        // "keyofStringsOnly": true could solve part of it
+        this.listeners.get(type)?.push([callback as any, options]);
     }
 
     /**
      * Trigger event
      * @param event Event
      */
-    trigger(event: EventBase<T, D>) {
+    trigger<T extends keyof D>(event: EventBase<T, D[T]>) {
         const items = this.listeners.get(event.type);
         if (items == null) return;
 

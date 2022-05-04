@@ -1,19 +1,27 @@
 import { EventBase, EventClass } from './EventClass';
 
-/**
- * ETSOO Extended history event type
- */
-export type EHistoryEventType = 'navigate' | 'push' | 'replace' | 'clear';
-
-/**
- * ETSOO Extended history event data
- */
-export interface EHistoryEventData {
+interface EHistoryEventData {
     /**
      * Current index
      */
     index: number;
 }
+
+interface EHistoryNavigateEventData extends EHistoryEventData {
+    /**
+     * Delta
+     */
+    delta: number;
+}
+
+type EHistoryEventDef = {
+    clear: EHistoryEventData;
+    navigate: EHistoryNavigateEventData;
+    push: EHistoryEventData;
+    replace: EHistoryEventData;
+};
+
+type EHistoryEventType = Exclude<keyof EHistoryEventDef, 'navigate'>;
 
 /**
  * ETSOO Extended history event
@@ -24,12 +32,21 @@ export class EHistoryEvent extends EventBase<
 > {}
 
 /**
+ * ETSOO Extended history navigate event
+ */
+export class EHistoryNavigateEvent extends EventBase<
+    'navigate',
+    EHistoryNavigateEventData
+> {
+    constructor(target: {}, data: EHistoryNavigateEventData) {
+        super(target, 'navigate', data);
+    }
+}
+
+/**
  * ETSOO Extended abstract history class
  */
-export abstract class EHistory<T> extends EventClass<
-    EHistoryEventType,
-    EHistoryEventData
-> {
+export abstract class EHistory<T> extends EventClass<EHistoryEventDef> {
     // Index
     private _index: number = -1;
 
@@ -90,8 +107,12 @@ export abstract class EHistory<T> extends EventClass<
      * @param type Type
      * @param index Current index
      */
-    protected createEvent(type: EHistoryEventType, index: number) {
+    protected createEvent<T extends EHistoryEventType>(type: T, index: number) {
         return new EHistoryEvent(this, type, { index });
+    }
+
+    protected createNavigateEvent(index: number, delta: number) {
+        return new EHistoryNavigateEvent(this, { index, delta });
     }
 
     /**
@@ -129,7 +150,7 @@ export abstract class EHistory<T> extends EventClass<
         this._index = newIndex;
 
         // Trigger event
-        this.trigger(this.createEvent('navigate', newIndex));
+        this.trigger(this.createNavigateEvent(newIndex, delta));
     }
 
     /**
