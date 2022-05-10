@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         /* Visit https://aka.ms/tsconfig.json to read more about this file */
-        "target": "ES2019",
+        "target": "ES6",
         "module": "ESNext",
         "moduleResolution": "node",
         "isolatedModules": true,
@@ -11,6 +11,8 @@
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
+        "importHelpers": true,
+        "downlevelIteration": true,
         "forceConsistentCasingInFileNames": true,
         "lib": ["dom", "dom.iterable", "esnext"]
     },
