@@ -11,8 +11,6 @@
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
-        "importHelpers": true,
-        "downlevelIteration": true,
         "forceConsistentCasingInFileNames": true,
         "lib": ["dom", "dom.iterable", "esnext"]
     },
