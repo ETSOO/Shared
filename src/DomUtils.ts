@@ -151,8 +151,15 @@ export namespace DomUtils {
         }
     }
 
+    /**
+     * Cast data as template format
+     * @param source Source data
+     * @param template Format template
+     * @param keepSource Keep other source properties
+     * @returns Result
+     */
     export function dataAs<T extends DataTypes.BasicTemplate>(
-        source: IFormData | {},
+        source: unknown,
         template: T,
         keepSource: boolean = false
     ): DataTypes.BasicTemplateType<T> {
@@ -160,8 +167,10 @@ export namespace DomUtils {
         // Object.create(...)
         const data = <DataTypes.BasicTemplateType<T>>{};
 
-        // Travel all properties
-        dataAsTraveller(source, data, template, keepSource, false);
+        if (source != null && typeof source === 'object') {
+            // Travel all properties
+            dataAsTraveller(source, data, template, keepSource, false);
+        }
 
         // Return
         return data;

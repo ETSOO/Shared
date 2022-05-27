@@ -147,7 +147,7 @@ DOM/window related utilities
 |Name|Description|
 |---:|---|
 |clearFormData|Clear form data|
-|dataAs|Cast data to target type|
+|dataAs|Cast data as template format|
 |detectedCountry|Current detected country|
 |detectedCulture|Current detected culture|
 |dimensionEqual|Check two rectangles equality|
