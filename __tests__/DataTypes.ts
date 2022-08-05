@@ -90,11 +90,17 @@ test('Tests for getItemId', () => {
     expect(DataTypes.getItemId(items[2])).toBe('f123');
 });
 
-test('Tests for getIdValue', () => {
+test('Tests for getValue', () => {
     const data = { id: 1, flag: true };
+    expect(DataTypes.getValue(data, 'id')).toBe(1);
+    expect(DataTypes.getValue(data, 'flag')).toBe('true');
+    expect(DataTypes.getValue(data, 'unknown')).toBeNull();
+});
+
+test('Tests for getIdValue', () => {
+    const data = { id: 1, flag: true, field: 'string' };
     expect(DataTypes.getIdValue(data, 'id')).toBe(1);
-    expect(DataTypes.getIdValue(data, 'flag')).toBe('true');
-    expect(DataTypes.getIdValue(data, 'unknown')).toBeNull();
+    expect(DataTypes.getIdValue(data, 'field')).toBe('string');
 });
 
 test('Tests for getStringValue', () => {

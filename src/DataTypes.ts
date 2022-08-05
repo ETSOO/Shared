@@ -214,6 +214,13 @@ export namespace DataTypes {
     };
 
     /**
+     * Get specific type keys
+     */
+    export type Keys<T, R = string | number> = {
+        [k in keyof T]: T[k] extends R ? k : never;
+    }[keyof T];
+
+    /**
      * Get item id
      * @param item Item with id
      * @returns string id
@@ -513,12 +520,12 @@ export namespace DataTypes {
     }
 
     /**
-     * Get object id field value
+     * Get object field value
      * @param data Data
      * @param key Property name
-     * @returns Id value
+     * @returns Value
      */
-    export function getIdValue<T extends {}>(
+    export function getValue<T extends {}>(
         data: T | undefined | null,
         key: keyof T | string
     ): IdType | undefined | null {
@@ -531,6 +538,19 @@ export namespace DataTypes {
     }
 
     /**
+     * Get object id field value
+     * @param data Data
+     * @param key Property name
+     * @returns Id value
+     */
+    export function getIdValue<
+        T extends {},
+        K extends Keys<T, string | number>
+    >(data: T, key: K): T[K] {
+        return data[key];
+    }
+
+    /**
      * Get object string field value
      * @param data Data
      * @param key Property name
@@ -540,7 +560,7 @@ export namespace DataTypes {
         data: T | undefined | null,
         key: keyof T | string
     ): string | undefined | null {
-        const value = getIdValue(data, key);
+        const value = getValue(data, key);
         if (typeof value === 'number') return value.toString();
         return value;
     }

@@ -98,6 +98,7 @@ Data type definitions and type safe functions
 |IdItem|Item with id or id generator|
 |IdLabelItem|Item with id and label|
 |KeyCollection|Key collection, like { key1: {}, key2: {} }|
+|Keys|Get specific type keys|
 |Simple|Basic or basic array type|
 |SimpleEnum|Simple type enum|
 |SimpleNames|Simple type names|
@@ -121,6 +122,7 @@ Data type definitions and type safe functions
 |getItemLabel|Get item label|
 |getResult|Get input function or value result|
 |getStringValue|Get object string field value|
+|getValue|Get object field value|
 |isBasicName|Check the type is a basic type or not (type guard)|
 |isSimpleObject|Is the target a simple object, all values are simple type (Type guard)|
 |isSimpleType|Is the input value simple type, include null and undefined|

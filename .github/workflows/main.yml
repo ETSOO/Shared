@@ -28,7 +28,7 @@ jobs:
       # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v1
         with:
-          node-version: '14.18'
+          node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
 
       # Named after Continuous Integration, installs dependencies directly from package-lock.json
