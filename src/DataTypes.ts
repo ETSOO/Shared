@@ -196,21 +196,21 @@ export namespace DataTypes {
     /**
      * Item with id property
      */
-    export type IdItem = {
+    export type IdItem<T extends IdType = number> = {
         /**
-         * Id field or generator
+         * Id field
          */
-        id: IdType | (() => string);
+        id: T;
     };
 
     /**
      * Item with id and label property
      */
-    export type IdLabelItem = IdItem & {
+    export type IdLabelItem<T extends IdType = number> = IdItem<T> & {
         /**
-         * label field or generator
+         * label field
          */
-        label: string | (() => string);
+        label: string;
     };
 
     /**
@@ -219,27 +219,6 @@ export namespace DataTypes {
     export type Keys<T, R = string | number> = {
         [k in keyof T]: T[k] extends R ? k : never;
     }[keyof T];
-
-    /**
-     * Get item id
-     * @param item Item with id
-     * @returns string id
-     */
-    export const getItemId = (item: IdItem) => {
-        if (typeof item.id === 'function') return item.id();
-        if (typeof item.id === 'number') return item.id.toString();
-        return item.id;
-    };
-
-    /**
-     * Get item label
-     * @param item Item with id
-     * @returns string id
-     */
-    export const getItemLabel = (item: IdLabelItem) => {
-        if (typeof item.label === 'function') return item.label();
-        return item.label;
-    };
 
     /**
      * Culture definiton

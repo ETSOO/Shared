@@ -118,8 +118,6 @@ Data type definitions and type safe functions
 |getEnumKey|Get enum string literal type value|
 |getEnumKeys|Get Enum keys|
 |getIdValue|Get object id field value|
-|getItemId|Get item id|
-|getItemLabel|Get item label|
 |getResult|Get input function or value result|
 |getStringValue|Get object string field value|
 |getValue|Get object field value|

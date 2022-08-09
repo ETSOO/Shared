@@ -77,17 +77,16 @@ test('Tests for getEnumKeys', () => {
     expect(keys).toContainEqual('Unkwown');
 });
 
-test('Tests for getItemId', () => {
+test('Tests for IdLabelItem', () => {
     // Arrange
-    const items: DataTypes.IdItem[] = [
-        { id: 1 },
-        { id: '123' },
-        { id: () => 'f123' }
+    const items: DataTypes.IdLabelItem[] = [
+        { id: 1, label: 'Item 1' },
+        { id: 2, label: 'Item 2' }
     ];
 
     // Assert
-    expect(DataTypes.getItemId(items[0])).toBe('1');
-    expect(DataTypes.getItemId(items[2])).toBe('f123');
+    expect(items[0].id).toBe(1);
+    expect(items[1].label).toBe('Item 2');
 });
 
 test('Tests for getValue', () => {
@@ -107,19 +106,6 @@ test('Tests for getStringValue', () => {
     const data = { id: 1, flag: true };
     expect(DataTypes.getStringValue(data, 'id')).toBe('1');
     expect(DataTypes.getStringValue(data, 'flag')).toBe('true');
-});
-
-test('Tests for getItemLabel', () => {
-    // Arrange
-    const items: DataTypes.IdLabelItem[] = [
-        { id: 1, label: '123' },
-        { id: '123', label: () => 'f123' },
-        { id: () => 'f123', label: 'l123' }
-    ];
-
-    // Assert
-    expect(DataTypes.getItemLabel(items[0])).toBe('123');
-    expect(DataTypes.getItemLabel(items[1])).toBe('f123');
 });
 
 test('Tests for isSimpleType', () => {
