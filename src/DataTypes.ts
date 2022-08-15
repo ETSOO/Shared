@@ -171,7 +171,7 @@ export namespace DataTypes {
     /**
      * Enum base type
      */
-    export type EnumBase<T extends EnumValue = EnumValue> = Record<string, T>;
+    export type EnumBase = Record<string, EnumValue>;
 
     /**
      * Function type
