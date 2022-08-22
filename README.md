@@ -88,6 +88,8 @@ Data type definitions and type safe functions
 |BasicTemplateType|Basic template type|
 |CombinedEnum|Combined type enum|
 |CultureDefinition|Culture definition|
+|DI|Dynamic interface with multiple properties|
+|DIS|Dynamic interface with single property|
 |EnumBase|Enum base type|
 |EnumValue|Enum value type|
 |ExtendedEnum|Extended type enum|
@@ -97,6 +99,7 @@ Data type definitions and type safe functions
 |IdType|Number and string combination id type|
 |IdItem|Item with id or id generator|
 |IdLabelItem|Item with id and label|
+|IdLabelType|Item with id and label dynamic type|
 |KeyCollection|Key collection, like { key1: {}, key2: {} }|
 |Keys|Get specific type keys|
 |Simple|Basic or basic array type|

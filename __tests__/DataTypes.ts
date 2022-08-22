@@ -1,5 +1,22 @@
 import { DataTypes } from '../src/DataTypes';
 
+test('Tests for DI', () => {
+    const item: DataTypes.DIS<'id', number> & DataTypes.DIS<'label', string> = {
+        id: 1,
+        label: 'Etsoo'
+    };
+    expect(item.id).toBe(1);
+});
+
+test('Tests for IdLabelType', () => {
+    const item: DataTypes.IdLabelItem = {
+        id: 1,
+        label: 'Etsoo'
+    };
+    const itemCopy: DataTypes.IdLabelType<'id', 'label'> = { ...item };
+    expect(item).toEqual(itemCopy);
+});
+
 test('Tests for convert', () => {
     expect(DataTypes.convert('5', 0)).toStrictEqual(5);
     expect(

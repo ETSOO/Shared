@@ -214,6 +214,15 @@ export namespace DataTypes {
     };
 
     /**
+     * Item with id and label dynamic type
+     */
+    export type IdLabelType<
+        I extends string,
+        L extends string,
+        D extends IdType = number
+    > = DIS<I, D> & DIS<L, string>;
+
+    /**
      * Get specific type keys
      */
     export type Keys<T, R = string | number> = {
@@ -244,6 +253,16 @@ export namespace DataTypes {
          */
         compatibleName?: string[];
     }>;
+
+    /**
+     * Dynamic interface with multiple properties
+     */
+    export type DI<K extends readonly string[], T> = { [P in K[number]]: T };
+
+    /**
+     * Dynamic interface with single property
+     */
+    export type DIS<K extends string, T> = { [P in K]: T };
 
     /**
      * Convert value to target type
