@@ -523,16 +523,14 @@ export namespace DataTypes {
      * @param key Property name
      * @returns Value
      */
-    export function getValue<T extends {}>(
+    export function getValue<T extends {}, K extends keyof T | string>(
         data: T | undefined | null,
-        key: keyof T | string
-    ): IdType | undefined | null {
-        if (data == null) return null;
-        const value =
-            typeof key === 'string' ? Reflect.get(data, key) : data[key];
-        if (value == null) return null;
-        if (typeof value === 'number') return value;
-        return convert(value, 'string');
+        key: K
+    ): K extends keyof T ? T[K] : undefined {
+        if (data != null && typeof key === 'string' && key in data) {
+            return Reflect.get(data, key);
+        }
+        return undefined as any;
     }
 
     /**
@@ -549,6 +547,22 @@ export namespace DataTypes {
     }
 
     /**
+     * Get object id field value 1
+     * @param data Data
+     * @param key Property name
+     * @returns Id value
+     */
+    export function getIdValue1<T extends {}, K extends keyof T | string>(
+        data: T | undefined | null,
+        key: K
+    ): K extends keyof T ? (T[K] extends number ? number : string) : undefined {
+        const value = getValue(data, key);
+        if (value == null) return undefined as any;
+        if (typeof value === 'number') return value as any;
+        return `${value}` as any;
+    }
+
+    /**
      * Get object string field value
      * @param data Data
      * @param key Property name
@@ -557,10 +571,11 @@ export namespace DataTypes {
     export function getStringValue<T extends {}>(
         data: T | undefined | null,
         key: keyof T | string
-    ): string | undefined | null {
+    ): string | undefined {
         const value = getValue(data, key);
-        if (typeof value === 'number') return value.toString();
-        return value;
+        if (value == null) return undefined;
+        if (typeof value === 'string') return value;
+        return `${value}`;
     }
 
     /**

@@ -109,8 +109,8 @@ test('Tests for IdLabelItem', () => {
 test('Tests for getValue', () => {
     const data = { id: 1, flag: true };
     expect(DataTypes.getValue(data, 'id')).toBe(1);
-    expect(DataTypes.getValue(data, 'flag')).toBe('true');
-    expect(DataTypes.getValue(data, 'unknown')).toBeNull();
+    expect(DataTypes.getValue(data, 'flag')).toBeTruthy();
+    expect(DataTypes.getValue(data, 'unknown')).toBeUndefined();
 });
 
 test('Tests for getIdValue', () => {
