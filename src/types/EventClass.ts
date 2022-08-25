@@ -55,7 +55,7 @@ interface EventOptions {
     once?: boolean;
 }
 
-type EventClassDef = { [key: string]: {} };
+type EventClassDef = { [key: string]: object };
 
 /**
  * Event class

@@ -80,7 +80,7 @@ export namespace StorageUtils {
      * Get local storage object data
      * @param key Key name
      */
-    export function getLocalObject<T extends {}>(key: string) {
+    export function getLocalObject<T extends object>(key: string) {
         // Get storage
         const data = localStorage.getItem(key);
         if (data == null) return undefined;
@@ -123,7 +123,7 @@ export namespace StorageUtils {
      * Get session storage object data
      * @param key Key name
      */
-    export function getSessionObject<T extends {}>(key: string) {
+    export function getSessionObject<T extends object>(key: string) {
         // Get storage
         const data = sessionStorage.getItem(key);
         if (data == null) return undefined;

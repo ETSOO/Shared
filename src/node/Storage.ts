@@ -10,7 +10,6 @@ export class NodeStorage {
 
     /**
      * Constructor
-     * @param session Is session storage
      */
     constructor() {}
 

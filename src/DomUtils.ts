@@ -30,7 +30,7 @@ export namespace DomUtils {
      */
     export function clearFormData(
         data: IFormData,
-        source?: {},
+        source?: object,
         keepFields?: string[]
     ) {
         // Unique keys, FormData may have same name keys
@@ -98,9 +98,9 @@ export namespace DomUtils {
     }
 
     function dataAsTraveller(
-        source: IFormData | {},
-        data: {},
-        template: {},
+        source: IFormData | object,
+        data: object,
+        template: object,
         keepSource: boolean,
         isValue: boolean
     ) {
@@ -183,8 +183,8 @@ export namespace DomUtils {
      * @param keepSource Means even the template does not include the definition, still keep the item
      * @returns Result
      */
-    export function dataValueAs<T extends {}>(
-        source: IFormData | {},
+    export function dataValueAs<T extends object>(
+        source: IFormData | object,
         templateValue: T,
         keepSource: boolean = false
     ): Partial<T> {
@@ -312,7 +312,7 @@ export namespace DomUtils {
      * @param items Available cultures
      * @param culture Detected culture
      */
-    export const getCulture = <T extends {}>(
+    export const getCulture = <T extends DataTypes.StringRecord>(
         items: DataTypes.CultureDefinition<T>[],
         culture: string
     ) => {
@@ -453,7 +453,7 @@ export namespace DomUtils {
      * @param name Element name or first collection item
      * @param container Container, limits the element range
      */
-    export function setFocus(name: string | {}, container?: HTMLElement) {
+    export function setFocus(name: string | object, container?: HTMLElement) {
         const elementName =
             typeof name === 'string' ? name : Object.keys(name)[0];
 

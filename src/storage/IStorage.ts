@@ -53,13 +53,13 @@ export interface IStorage {
      * Get object data
      * @param key Key name
      */
-    getObject<T extends {}>(key: string): T | undefined;
+    getObject<T extends object>(key: string): T | undefined;
 
     /**
      * Get persisted object data
      * @param key Key name
      */
-    getPersistedObject<T extends {}>(key: string): T | undefined;
+    getPersistedObject<T extends object>(key: string): T | undefined;
 
     /**
      * Set data

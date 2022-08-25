@@ -119,7 +119,7 @@ export namespace Utils {
      * @param labelField Label field, default is label
      * @param blankLabel Blank label, default is ---
      */
-    export function addBlankItem<T extends {}>(
+    export function addBlankItem<T extends object>(
         options: T[],
         idField?: string | keyof T,
         labelField?: unknown,
@@ -155,7 +155,7 @@ export namespace Utils {
      * @param fields Fields to correct
      */
     export function correctTypes<
-        T extends {},
+        T extends object,
         F extends { [P in keyof T]: DataTypes.BasicNames }
     >(input: T, fields: F) {
         for (const field in fields) {
@@ -218,8 +218,8 @@ export namespace Utils {
      * @returns
      */
     export function getDataChanges(
-        input: {},
-        initData: {},
+        input: object,
+        initData: object,
         ignoreFields: string[] = ['id']
     ): string[] {
         // Changed fields
@@ -375,8 +375,8 @@ export namespace Utils {
      * @returns Result
      */
     export function objectEqual(
-        obj1: {},
-        obj2: {},
+        obj1: object,
+        obj2: object,
         ignoreFields: string[] = [],
         strict = 1
     ) {
@@ -402,8 +402,8 @@ export namespace Utils {
      * @returns Unique properties
      */
     export function objectKeys(
-        obj1: {},
-        obj2: {},
+        obj1: object,
+        obj2: object,
         ignoreFields: string[] = []
     ) {
         // All keys
@@ -424,8 +424,8 @@ export namespace Utils {
      * @returns Updated fields
      */
     export function objectUpdated(
-        objNew: {},
-        objPrev: {},
+        objNew: object,
+        objPrev: object,
         ignoreFields: string[] = [],
         strict = 1
     ) {
@@ -537,7 +537,7 @@ export namespace Utils {
      * @param reference Key reference dictionary
      */
     export const setLabels = (
-        source: {},
+        source: DataTypes.StringRecord,
         labels: DataTypes.StringRecord,
         reference?: Readonly<DataTypes.StringDictionary>
     ) => {

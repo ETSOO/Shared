@@ -105,7 +105,7 @@ export class WindowStorage implements IStorage {
      * Get object data
      * @param key Key name
      */
-    getObject<T extends {}>(key: string) {
+    getObject<T extends object>(key: string) {
         // Get storage
         const data = sessionStorage.getItem(key);
 
@@ -118,7 +118,7 @@ export class WindowStorage implements IStorage {
      * Get persisted object data
      * @param key Key name
      */
-    getPersistedObject<T extends {}>(key: string) {
+    getPersistedObject<T extends object>(key: string) {
         // Get storage
         const data = localStorage.getItem(key);
 

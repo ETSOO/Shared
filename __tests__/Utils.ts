@@ -143,9 +143,9 @@ test('Tests for objectEqual', () => {
 
 test('Tests for objectUpdated', () => {
     const objPrev = { a: 1, b: 'abc', c: true, d: null, f: [1, 2] };
-    const objNew = { a: 2, b: 'abc', d: new Date(), f: [1, 2, 3] };
+    const objNew = { a: 2, b: 'abc', d: new Date(), f: [1, 2, 3], g: true };
     const fields = Utils.objectUpdated(objNew, objPrev, ['d']);
-    expect(fields.sort()).toStrictEqual(['a', 'c', 'f']);
+    expect(fields.sort()).toStrictEqual(['a', 'c', 'f', 'g']);
 });
 
 test('Tests for parseString', () => {

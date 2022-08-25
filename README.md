@@ -102,6 +102,7 @@ Data type definitions and type safe functions
 |IdLabelType|Item with id and label dynamic type|
 |KeyCollection|Key collection, like { key1: {}, key2: {} }|
 |Keys|Get specific type keys|
+|ObjType|Generic object type|
 |Simple|Basic or basic array type|
 |SimpleEnum|Simple type enum|
 |SimpleNames|Simple type names|

@@ -1,4 +1,10 @@
 /**
+ * Generic object type
+ * Narrow case, uses StringRecord
+ * Before was wrong with {}, from 4.8 unknown = {} | null | undefined
+ */
+
+/**
  * Interface data types
  */
 export namespace DataTypes {
@@ -159,8 +165,8 @@ export namespace DataTypes {
     /**
      * Key collection, like { key1: {}, key2: {} }
      */
-    export type KeyCollection<K extends readonly string[], I extends {}> = {
-        [index in K[number]]: I;
+    export type KeyCollection<K extends readonly string[], I extends object> = {
+        [P in K[number]]: I;
     };
 
     /**
@@ -232,27 +238,28 @@ export namespace DataTypes {
     /**
      * Culture definiton
      */
-    export type CultureDefinition<T extends {} = StringRecord> = Readonly<{
-        /**
-         * Name, like zh-CN
-         */
-        name: string;
+    export type CultureDefinition<T extends StringRecord = StringRecord> =
+        Readonly<{
+            /**
+             * Name, like zh-CN
+             */
+            name: string;
 
-        /**
-         * Label for description, like Simplifined Chinese
-         */
-        label: string;
+            /**
+             * Label for description, like Simplifined Chinese
+             */
+            label: string;
 
-        /**
-         * Resources
-         */
-        resources: T;
+            /**
+             * Resources
+             */
+            resources: T;
 
-        /**
-         * Compatible names
-         */
-        compatibleName?: string[];
-    }>;
+            /**
+             * Compatible names
+             */
+            compatibleName?: string[];
+        }>;
 
     /**
      * Dynamic interface with multiple properties
@@ -523,7 +530,7 @@ export namespace DataTypes {
      * @param key Property name
      * @returns Value
      */
-    export function getValue<T extends {}, K extends keyof T | string>(
+    export function getValue<T extends object, K extends keyof T | string>(
         data: T | undefined | null,
         key: K
     ): K extends keyof T ? T[K] : undefined {
@@ -540,7 +547,7 @@ export namespace DataTypes {
      * @returns Id value
      */
     export function getIdValue<
-        T extends {},
+        T extends object,
         K extends Keys<T, string | number>
     >(data: T, key: K): T[K] {
         return data[key];
@@ -552,7 +559,7 @@ export namespace DataTypes {
      * @param key Property name
      * @returns Id value
      */
-    export function getIdValue1<T extends {}, K extends keyof T | string>(
+    export function getIdValue1<T extends object, K extends keyof T | string>(
         data: T | undefined | null,
         key: K
     ): K extends keyof T ? (T[K] extends number ? number : string) : undefined {
@@ -568,7 +575,7 @@ export namespace DataTypes {
      * @param key Property name
      * @returns String value
      */
-    export function getStringValue<T extends {}>(
+    export function getStringValue<T extends object>(
         data: T | undefined | null,
         key: keyof T | string
     ): string | undefined {
