@@ -231,7 +231,7 @@ export namespace DataTypes {
     /**
      * Get specific type keys
      */
-    export type Keys<T, R = string | number> = {
+    export type Keys<T extends object, R = string | number> = {
         [k in keyof T]: T[k] extends R ? k : never;
     }[keyof T];
 
@@ -656,3 +656,17 @@ export type ListType = DataTypes.IdLabelItem<number>;
  * List item with string id type
  */
 export type ListType1 = DataTypes.IdLabelItem<string>;
+
+/**
+ * Id default type
+ */
+export type IdDefaultType<T extends object> = T extends { id: number | string }
+    ? DataTypes.Keys<T> & 'id'
+    : DataTypes.Keys<T>;
+
+/**
+ * Label default type
+ */
+export type LabelDefaultType<T extends object> = T extends { label: string }
+    ? DataTypes.Keys<T> & 'label'
+    : DataTypes.Keys<T>;

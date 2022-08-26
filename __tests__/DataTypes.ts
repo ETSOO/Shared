@@ -1,4 +1,4 @@
-import { DataTypes } from '../src/DataTypes';
+import { DataTypes, IdDefaultType, LabelDefaultType } from '../src/DataTypes';
 
 test('Tests for DI', () => {
     const item: DataTypes.DIS<'id', number> & DataTypes.DIS<'label', string> = {
@@ -131,4 +131,26 @@ test('Tests for isSimpleType', () => {
     expect(DataTypes.isSimpleType(Symbol())).toBeFalsy();
     expect(DataTypes.isSimpleType(['a', 'b', 'c'])).toBeTruthy();
     expect(DataTypes.isSimpleType({})).toBeFalsy();
+});
+
+test('Tests for IdDefaultType', () => {
+    const test = <T extends object, F extends keyof T = IdDefaultType<T>>(
+        obj: T,
+        field?: F
+    ) => {
+        const f = field ?? ('id' as F);
+        return obj[f];
+    };
+
+    type D = { label: string; name: string; id: number };
+    const data: D = {
+        label: 'label',
+        name: 'name',
+        id: 1
+    };
+    const v = test<D>(data);
+    expect(typeof v).toBe('number');
+
+    const v1 = test<D, LabelDefaultType<D>>(data, 'label');
+    expect(v1).toBe('label');
 });
