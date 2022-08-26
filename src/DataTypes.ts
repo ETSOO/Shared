@@ -668,5 +668,5 @@ export type IdDefaultType<T extends object> = T extends { id: number | string }
  * Label default type
  */
 export type LabelDefaultType<T extends object> = T extends { label: string }
-    ? DataTypes.Keys<T> & 'label'
-    : DataTypes.Keys<T>;
+    ? DataTypes.Keys<T, string> & 'label'
+    : DataTypes.Keys<T, string>;
