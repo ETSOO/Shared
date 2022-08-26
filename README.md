@@ -74,7 +74,7 @@ ETSOO Extended abstract history class
 |replaceState|Modifies the current history entry|
 
 ## DataTypes
-Data type definitions and type safe functions
+Data type definitions and type safe functions. ListItemType and ListItemType1 are sugar types.
 
 |Name|Description|
 |---:|---|

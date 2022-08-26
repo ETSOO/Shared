@@ -646,3 +646,13 @@ export namespace DataTypes {
         return true;
     }
 }
+
+/**
+ * List item with number id type
+ */
+export type ListType = DataTypes.IdLabelItem<number>;
+
+/**
+ * List item with string id type
+ */
+export type ListType1 = DataTypes.IdLabelItem<string>;
