@@ -142,6 +142,7 @@ Dates related utilities
 |Methods||
 |getDays|Get month's days|
 |forma|Format dates|
+|formatForInput|Format to 'yyyy-MM-dd' or 'yyyy-MM-ddThh:mm:ss, especially used for date input min/max property|
 |jsonParser|JSON parser|
 |parse|Parse string to date|
 |substract|Date extended method, substract a date|

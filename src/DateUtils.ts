@@ -145,10 +145,14 @@ export namespace DateUtils {
     }
 
     /**
-     * Format to 'yyyy-MM-dd', especially used for date input min/max property
+     * Format to 'yyyy-MM-dd' or 'yyyy-MM-ddThh:mm:ss, especially used for date input min/max property
      * @param date Input date
+     * @param hasSecond 'undefined' for date only, 'false' for hour:minute only
      */
-    export function formatForInput(date?: Date | string | null) {
+    export function formatForInput(
+        date?: Date | string | null,
+        hasSecond?: boolean
+    ) {
         // Parse string as date
         if (typeof date === 'string') date = new Date(date);
 
@@ -162,8 +166,13 @@ export namespace DateUtils {
             date.getDate().toString().padStart(2, '0')
         ];
 
-        // Return
-        return parts.join('-');
+        // Date
+        const d = parts.join('-');
+        if (hasSecond == null) return d;
+
+        const hm = [date.getHours(), date.getMinutes()];
+        if (hasSecond) hm.push(date.getSeconds());
+        return `${d}T${hm.join(':')}`;
     }
 
     /**

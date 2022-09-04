@@ -56,8 +56,15 @@ test('Tests for formatForInput', () => {
     const result1 = DateUtils.formatForInput('2021/7/17');
     expect(result1).toBe('2021-07-17');
 
-    const result2 = DateUtils.formatForInput(new Date(2021, 5, 6));
+    const d = new Date(2021, 5, 6, 20, 18, 45);
+    const result2 = DateUtils.formatForInput(d);
     expect(result2).toBe('2021-06-06');
+
+    const result3 = DateUtils.formatForInput(d, false);
+    expect(result3).toBe('2021-06-06T20:18');
+
+    const result4 = DateUtils.formatForInput(d, true);
+    expect(result4).toBe('2021-06-06T20:18:45');
 });
 
 test('Tests for substract', () => {
