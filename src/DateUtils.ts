@@ -170,8 +170,11 @@ export namespace DateUtils {
         const d = parts.join('-');
         if (hasSecond == null) return d;
 
-        const hm = [date.getHours(), date.getMinutes()];
-        if (hasSecond) hm.push(date.getSeconds());
+        const hm = [
+            date.getHours().toString().padStart(2, '0'),
+            date.getMinutes().toString().padStart(2, '0')
+        ];
+        if (hasSecond) hm.push(date.getSeconds().toString().padStart(2, '0'));
         return `${d}T${hm.join(':')}`;
     }
 
