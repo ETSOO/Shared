@@ -76,3 +76,21 @@ test('Tests for substract', () => {
     expect(d4.substract(d1).totalYears < 2).toBeTruthy();
     expect(d2.substract(d1).totalMinutes > 10).toBeTruthy();
 });
+
+test('Tests for sameDay', () => {
+    expect(
+        DateUtils.sameDay('2022/9/11 22:03', new Date(2022, 8, 11, 10, 3))
+    ).toBeTruthy();
+    expect(
+        DateUtils.sameDay('2022/9/11 22:03', new Date(2022, 9, 11, 10, 3))
+    ).toBeFalsy();
+});
+
+test('Tests for sameMonth', () => {
+    expect(
+        DateUtils.sameMonth('2022-09-11 22:03', new Date(2022, 8, 10, 10, 3))
+    ).toBeTruthy();
+    expect(
+        DateUtils.sameMonth('2022/9/11 22:03', '2022/8/31 23:59:59')
+    ).toBeFalsy();
+});

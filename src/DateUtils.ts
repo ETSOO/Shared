@@ -222,4 +222,39 @@ export namespace DateUtils {
         }
         return input;
     }
+
+    /**
+     * Two dates are in the same day
+     * @param d1 First date
+     * @param d2 Second date
+     * @returns Result
+     */
+    export function sameDay(
+        d1?: Date | string | null,
+        d2?: Date | string | null
+    ) {
+        d1 = parse(d1);
+        d2 = parse(d2);
+        if (d1 == null || d2 == null) return false;
+        return d1.toDateString() === d2.toDateString();
+    }
+
+    /**
+     * Two dates are in the same month
+     * @param d1 First date
+     * @param d2 Second date
+     * @returns Result
+     */
+    export function sameMonth(
+        d1?: Date | string | null,
+        d2?: Date | string | null
+    ) {
+        d1 = parse(d1);
+        d2 = parse(d2);
+        if (d1 == null || d2 == null) return false;
+        return (
+            d1.getFullYear() === d2.getFullYear() &&
+            d1.getMonth() === d2.getMonth()
+        );
+    }
 }
