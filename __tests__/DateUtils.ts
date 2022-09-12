@@ -77,6 +77,11 @@ test('Tests for substract', () => {
     expect(d2.substract(d1).totalMinutes > 10).toBeTruthy();
 });
 
+test('Tests for parse', () => {
+    const d1 = DateUtils.parse('2014-01-01T13:13:34.441Z')?.toJSON();
+    expect(d1).toBe('2014-01-01T13:13:34.441Z');
+});
+
 test('Tests for sameDay', () => {
     expect(
         DateUtils.sameDay('2022/9/11 22:03', new Date(2022, 8, 11, 10, 3))
