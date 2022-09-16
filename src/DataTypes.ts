@@ -236,6 +236,18 @@ export namespace DataTypes {
     }[keyof T];
 
     /**
+     * Require at least one property of the keys
+     */
+    export type RequireAtLeastOne<T, Keys extends keyof T> = Pick<
+        T,
+        Exclude<keyof T, Keys>
+    > &
+        {
+            [K in Keys]-?: Required<Pick<T, K>> &
+                Partial<Pick<T, Exclude<Keys, K>>>;
+        }[Keys];
+
+    /**
      * Culture definiton
      */
     export type CultureDefinition<T extends StringRecord = StringRecord> =

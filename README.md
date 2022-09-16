@@ -103,6 +103,7 @@ Data type definitions and type safe functions. ListItemType and ListItemType1 ar
 |KeyCollection|Key collection, like { key1: {}, key2: {} }|
 |Keys|Get specific type keys|
 |ObjType|Generic object type|
+|RequireAtLeastOne|Require at least one property of the keys|
 |Simple|Basic or basic array type|
 |SimpleEnum|Simple type enum|
 |SimpleNames|Simple type names|
