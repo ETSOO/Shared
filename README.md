@@ -234,3 +234,6 @@ String and other related utilities
 |replaceNullOrEmpty|Replace null or empty with default value|
 |setLabels|Set source with new labels|
 |snakeNameToWord|Snake name to works, 'snake_name' to 'Snake Name'|
+|trim|Trim chars|
+|trimEnd|Trim end chars|
+|trimStart|Trim start chars|

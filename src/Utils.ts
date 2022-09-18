@@ -572,4 +572,43 @@ export namespace Utils {
 
         return items.map((part) => part.formatInitial(true)).join(' ');
     };
+
+    /**
+     * Trim chars
+     * @param input Input string
+     * @param chars Trim chars
+     * @returns Result
+     */
+    export const trim = (input: string, ...chars: string[]) => {
+        return trimEnd(trimStart(input, ...chars), ...chars);
+    };
+
+    /**
+     * Trim end chars
+     * @param input Input string
+     * @param chars Trim chars
+     * @returns Result
+     */
+    export const trimEnd = (input: string, ...chars: string[]) => {
+        let start = input.length - 1;
+
+        while (start >= 0 && chars.indexOf(input[start]) >= 0) --start;
+
+        return input.substring(0, start + 1);
+    };
+
+    /**
+     * Trim start chars
+     * @param input Input string
+     * @param chars Trim chars
+     * @returns Result
+     */
+    export const trimStart = (input: string, ...chars: string[]) => {
+        let start = 0;
+        const end = input.length;
+
+        while (start < end && chars.indexOf(input[start]) >= 0) ++start;
+
+        return input.substring(start);
+    };
 }

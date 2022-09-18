@@ -197,3 +197,21 @@ test('Tests for getResult', () => {
     const valueResult = Utils.getResult(inputNumber);
     expect(valueResult).toBe(5);
 });
+
+test('Tests for trim', () => {
+    expect(Utils.trim('//a/', '/')).toBe('a');
+    expect(Utils.trim('/*/a/', ...['/', '*'])).toBe('a');
+    expect(Utils.trim('abc', ...['/', '*'])).toBe('abc');
+});
+
+test('Tests for trimStart', () => {
+    expect(Utils.trimStart('//a/', '/')).toBe('a/');
+    expect(Utils.trimStart('/*/a/', ...['/', '*'])).toBe('a/');
+    expect(Utils.trimStart('abc', ...['/', '*'])).toBe('abc');
+});
+
+test('Tests for trimEnd', () => {
+    expect(Utils.trimEnd('//a/', '/')).toBe('//a');
+    expect(Utils.trimEnd('/*/a*/', ...['/', '*'])).toBe('/*/a');
+    expect(Utils.trimEnd('abc', ...['/', '*'])).toBe('abc');
+});
