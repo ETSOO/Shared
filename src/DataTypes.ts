@@ -220,6 +220,16 @@ export namespace DataTypes {
     };
 
     /**
+     * Item with id and name property
+     */
+    export type IdNameItem<T extends IdType = number> = IdItem<T> & {
+        /**
+         * name field
+         */
+        name: string;
+    };
+
+    /**
      * Item with id and label dynamic type
      */
     export type IdLabelType<

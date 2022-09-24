@@ -100,6 +100,7 @@ Data type definitions and type safe functions. ListItemType and ListItemType1 ar
 |IdItem|Item with id or id generator|
 |IdLabelItem|Item with id and label|
 |IdLabelType|Item with id and label dynamic type|
+|IdNameItem|Item with id and name|
 |KeyCollection|Key collection, like { key1: {}, key2: {} }|
 |Keys|Get specific type keys|
 |ObjType|Generic object type|
