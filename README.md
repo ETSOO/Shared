@@ -131,6 +131,7 @@ Data type definitions and type safe functions. ListItemType and ListItemType1 ar
 |isBasicName|Check the type is a basic type or not (type guard)|
 |isSimpleObject|Is the target a simple object, all values are simple type (Type guard)|
 |isSimpleType|Is the input value simple type, include null and undefined|
+|jsonReplacer|JSON.stringify replacer with full path|
 
 
 ## DateUtils

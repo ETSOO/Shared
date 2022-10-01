@@ -154,3 +154,29 @@ test('Tests for IdDefaultType', () => {
     const v1 = test<D, LabelDefaultType<D>>(data, 'label');
     expect(v1).toBe('label');
 });
+
+test('Tests for jsonReplacer', () => {
+    const obj = { a: 1, b: 'hello', c: { c1: 'C1', c2: false, c3: 128 } };
+
+    const json1 = JSON.stringify(
+        obj,
+        DataTypes.jsonReplacer(function (key, value, path) {
+            if (['', 'a'].includes(key)) {
+                return value;
+            }
+            return undefined;
+        })
+    );
+    expect(json1).toBe('{"a":1}');
+
+    const json2 = JSON.stringify(
+        obj,
+        DataTypes.jsonReplacer(function (key, value, path) {
+            if (['', 'c'].includes(key) || path === 'c.c2') {
+                return value;
+            }
+            return undefined;
+        })
+    );
+    expect(json2).toBe('{"c":{"c2":false}}');
+});

@@ -667,6 +667,29 @@ export namespace DataTypes {
 
         return true;
     }
+
+    /**
+     * JSON.stringify replacer with full path
+     * https://stackoverflow.com/questions/61681176/json-stringify-replacer-how-to-get-full-path
+     */
+    export function jsonReplacer(
+        replacer: (this: any, key: string, value: any, path: string) => any
+    ) {
+        const m = new Map();
+
+        return function (this: any, key: any, value: any) {
+            const path =
+                m.get(this) + (Array.isArray(this) ? `[${key}]` : '.' + key);
+            if (value === Object(value)) m.set(value, path);
+
+            return replacer.call(
+                this,
+                key,
+                value,
+                path.replace(/undefined\.\.?/, '')
+            );
+        };
+    }
 }
 
 /**
