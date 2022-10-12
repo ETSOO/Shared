@@ -185,6 +185,11 @@ export namespace DataTypes {
     export type Func<R> = (...args: any[]) => R;
 
     /**
+     * Mixins constructor
+     */
+    export type MConstructor<T = {}> = new (...args: any[]) => T;
+
+    /**
      * String key, unknown value Record
      */
     export type StringRecord = Record<string, unknown>;
