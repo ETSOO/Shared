@@ -155,12 +155,17 @@ export namespace DataTypes {
 
     /**
      * Add or edit conditional type for same data model
-     * Dynamic add changedFields for editing case
+     * Dynamic add id and changedFields for editing case
      */
     export type AddOrEditType<
-        T,
-        Editing extends boolean
-    > = (Editing extends true ? T : Partial<T>) & { changedFields?: string[] };
+        T extends object,
+        Editing extends boolean,
+        D extends string = 'id'
+    > = Editing extends true
+        ? Partial<T> & { [key in D]: number | string } & {
+              changedFields?: string[];
+          }
+        : T;
 
     /**
      * Key collection, like { key1: {}, key2: {} }
