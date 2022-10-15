@@ -159,10 +159,11 @@ export namespace DataTypes {
      */
     export type AddOrEditType<
         T extends object,
-        Editing extends boolean,
-        D extends string = 'id'
-    > = Editing extends true
-        ? Partial<T> & { [key in D]: number | string } & {
+        E extends boolean, // Editing or not
+        I extends IdType = number, // Id type, default is number
+        D extends string = 'id' // Id field name
+    > = E extends true
+        ? Partial<T> & { [key in D]: I } & {
               changedFields?: string[];
           }
         : T;
