@@ -158,8 +158,8 @@ export namespace DataTypes {
      * ChangedFields for editing case
      */
     export type AddAndEditType<
-        T extends object,
-        D extends keyof T = T extends { id: IdType } ? 'id' : any
+        T extends { [key in D]: IdType },
+        D extends string = 'id'
     > =
         | (Omit<T, D> & { [key in D]: undefined | never })
         | (Partial<T> & Readonly<Pick<T, D>> & { changedFields?: string[] });
@@ -169,9 +169,9 @@ export namespace DataTypes {
      * ChangedFields for editing case
      */
     export type AddOrEditType<
-        T extends object, // Entity modal
+        T extends { [key in D]: IdType }, // Entity modal
         E extends boolean, // Editing or not
-        D extends keyof T = T extends { id: IdType } ? 'id' : any // Default is 'id' field
+        D extends string = 'id' // Default is 'id' field
     > = E extends false
         ? Optional<T, D>
         : Partial<T> & Readonly<Pick<T, D>> & { changedFields?: string[] };
