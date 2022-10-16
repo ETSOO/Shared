@@ -154,13 +154,24 @@ export namespace DataTypes {
     export type IdType = number | string;
 
     /**
-     * Add or edit conditional type for same data model
+     * Add and edit data type
+     * ChangedFields for editing case
+     */
+    export type AddAndEditType<
+        T extends object,
+        D extends keyof T = T extends { id: IdType } ? 'id' : any
+    > =
+        | (Omit<T, D> & { [key in D]: undefined | never })
+        | (Partial<T> & Readonly<Pick<T, D>> & { changedFields?: string[] });
+
+    /**
+     * Add or edit conditional type
      * ChangedFields for editing case
      */
     export type AddOrEditType<
         T extends object, // Entity modal
         E extends boolean, // Editing or not
-        D extends keyof T = T extends { id: number | string } ? 'id' : any // Default is 'id' field
+        D extends keyof T = T extends { id: IdType } ? 'id' : any // Default is 'id' field
     > = E extends false
         ? Optional<T, D>
         : Partial<T> & Readonly<Pick<T, D>> & { changedFields?: string[] };
