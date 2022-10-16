@@ -155,18 +155,15 @@ export namespace DataTypes {
 
     /**
      * Add or edit conditional type for same data model
-     * Dynamic add id and changedFields for editing case
+     * ChangedFields for editing case
      */
     export type AddOrEditType<
-        T extends object,
+        T extends object, // Entity modal
         E extends boolean, // Editing or not
-        I extends IdType = number, // Id type, default is number
-        D extends string = 'id' // Id field name
-    > = E extends true
-        ? Partial<T> & { [key in D]: I } & {
-              changedFields?: string[];
-          }
-        : T;
+        D extends keyof T = T extends { id: number | string } ? 'id' : any // Default is 'id' field
+    > = E extends false
+        ? Optional<T, D>
+        : Partial<T> & Readonly<Pick<T, D>> & { changedFields?: string[] };
 
     /**
      * Key collection, like { key1: {}, key2: {} }
@@ -194,6 +191,12 @@ export namespace DataTypes {
      * Mixins constructor
      */
     export type MConstructor<T = {}> = new (...args: any[]) => T;
+
+    /**
+     * Make properties optional
+     */
+    export type Optional<T, K extends keyof T> = Pick<Partial<T>, K> &
+        Omit<T, K>;
 
     /**
      * String key, unknown value Record
