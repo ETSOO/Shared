@@ -180,3 +180,18 @@ test('Tests for jsonReplacer', () => {
     );
     expect(json2).toBe('{"c":{"c2":false}}');
 });
+
+test('Tests for AddAndEditType', () => {
+    type Entity = DataTypes.AddAndEditType<{
+        id: number;
+        name: string;
+        age?: number;
+    }>;
+
+    const data1: Entity = { id: 1, name: 'hello', changedFields: ['name'] };
+    const data2: Entity = { id: undefined, name: 'hello' };
+    const data3: Entity = { name: 'hello' };
+
+    expect(data1.name).toBe(data2.name);
+    expect(data2.name).toBe(data3.name);
+});

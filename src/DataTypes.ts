@@ -161,7 +161,7 @@ export namespace DataTypes {
         T extends { [key in D]: IdType },
         D extends string = 'id'
     > =
-        | (Omit<T, D> & { [key in D]: undefined | never })
+        | (Omit<T, D> & { [key in D]?: undefined | never })
         | (Partial<T> & Readonly<Pick<T, D>> & { changedFields?: string[] });
 
     /**
