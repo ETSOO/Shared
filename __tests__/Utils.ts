@@ -14,6 +14,7 @@ test('Tests for addBlankItem', () => {
 test('Tests for correctTypes', () => {
     const input = {
         id: '1',
+        ignore: '2',
         price: '6.0',
         amount: '',
         date: '2022/01/28',

@@ -156,11 +156,13 @@ export namespace Utils {
      */
     export function correctTypes<
         T extends object,
-        F extends { [P in keyof T]: DataTypes.BasicNames }
+        F extends { [P in keyof T]?: DataTypes.BasicNames }
     >(input: T, fields: F) {
         for (const field in fields) {
+            const type = fields[field];
+            if (type == null) continue;
             const value = Reflect.get(input, field);
-            const newValue = DataTypes.convertByType(value, fields[field]);
+            const newValue = DataTypes.convertByType(value, type);
             if (newValue !== value) {
                 Reflect.set(input, field, newValue);
             }
