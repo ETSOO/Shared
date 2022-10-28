@@ -125,12 +125,18 @@ export namespace Utils {
         labelField?: unknown,
         blankLabel?: string
     ) {
-        const blankItem: any = {
-            [idField ?? 'id']: '',
-            [typeof labelField === 'string' ? labelField : 'label']:
-                blankLabel ?? '---'
-        };
-        options.unshift(blankItem);
+        // Avoid duplicate blank items
+        idField ??= 'id';
+        if (options.length === 0 || Reflect.get(options[0], idField) !== '') {
+            const blankItem: any = {
+                [idField]: '',
+                [typeof labelField === 'string' ? labelField : 'label']:
+                    blankLabel ?? '---'
+            };
+            options.unshift(blankItem);
+        }
+
+        return options;
     }
 
     /**

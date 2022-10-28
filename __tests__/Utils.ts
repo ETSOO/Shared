@@ -9,6 +9,8 @@ test('Tests for addBlankItem', () => {
     expect(options.length).toBe(3);
     expect(options[0].id).toBe('');
     expect(options[0].name).toBe('---');
+    Utils.addBlankItem(options, 'id', 'name');
+    expect(options.length).toBe(3);
 });
 
 test('Tests for correctTypes', () => {
