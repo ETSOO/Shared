@@ -200,6 +200,36 @@ export namespace Utils {
     }
 
     /**
+     * Exclude specific items
+     * @param items Items
+     * @param field Filter field
+     * @param excludedValues Excluded values
+     * @returns Result
+     */
+    export function exclude<
+        T extends { [P in D]: DataTypes.IdType },
+        D extends string = 'id'
+    >(items: T[], field: D, ...excludedValues: T[D][]) {
+        return items.filter((item) => !excludedValues.includes(item[field]));
+    }
+
+    /**
+     * Async exclude specific items
+     * @param items Items
+     * @param field Filter field
+     * @param excludedValues Excluded values
+     * @returns Result
+     */
+    export async function excludeAsync<
+        T extends { [P in D]: DataTypes.IdType },
+        D extends string = 'id'
+    >(items: Promise<T[] | undefined>, field: D, ...excludedValues: T[D][]) {
+        const result = await items;
+        if (result == null) return result;
+        return exclude(result, field, ...excludedValues);
+    }
+
+    /**
      * Format inital character to lower case or upper case
      * @param input Input string
      * @param upperCase To upper case or lower case

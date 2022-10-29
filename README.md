@@ -218,6 +218,8 @@ String and other related utilities
 |charsToNumber|Base64 chars to number|
 |correctTypes|Correct object's property value type|
 |equals|Two values equal|
+|exclude|Exclude specific items|
+|excludeAsync|Async exclude specific items|
 |formatInitial|Format inital character to lower case or upper case|
 |formatString|Format string with parameters|
 |getDataChanges|Get data changed fields with input data updated|

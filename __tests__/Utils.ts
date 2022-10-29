@@ -67,6 +67,16 @@ test('Tests for getDataChanges', () => {
     expect(input.amount).toBeUndefined();
 });
 
+test('Tests for exclude', () => {
+    const options = [
+        { id1: 1, name: 'a' },
+        { id1: 2, name: 'b' }
+    ];
+    const result = Utils.exclude(options, 'id1', 1);
+    expect(result.length).toBe(1);
+    expect(result[0].id1).toBe(2);
+});
+
 test('Tests for formatInitial', () => {
     expect(Utils.formatInitial('HelloWorld')).toBe('helloWorld');
     expect('HelloWorld'.formatInitial(false)).toBe('helloWorld');
