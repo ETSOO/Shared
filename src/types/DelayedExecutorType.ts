@@ -1,4 +1,4 @@
-export type DelayedExecutorType<P extends any[]> = {
+export type DelayedExecutorType<P extends any[] = []> = {
     /**
      * Call the function
      * @param miliseconds Delayed miliseconds for this call
