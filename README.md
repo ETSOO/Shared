@@ -215,6 +215,7 @@ String and other related utilities
 |Name|Description|
 |---:|---|
 |addBlankItem|Add blank item to collection|
+|arrayDifferences|Array 1 items do not exist in Array 2 or reverse match|
 |charsToNumber|Base64 chars to number|
 |correctTypes|Correct object's property value type|
 |equals|Two values equal|

@@ -13,6 +13,13 @@ test('Tests for addBlankItem', () => {
     expect(options.length).toBe(3);
 });
 
+test('Tests for arrayDifferences', () => {
+    const a1 = ['a', 'b', 'c', 'e'];
+    const a2 = ['a', 'c', 'd'];
+    expect(Utils.arrayDifferences(a1, a2)).toEqual(['b', 'e']);
+    expect(Utils.arrayDifferences(a1, a2, true)).toEqual(['b', 'e', 'd']);
+});
+
 test('Tests for correctTypes', () => {
     const input = {
         id: '1',
