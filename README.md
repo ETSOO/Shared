@@ -169,6 +169,7 @@ DOM/window related utilities
 |formDataToObject|Form data to object|
 |getCulture|Get the available culture definition|
 |getDataChanges|Get data changed fields with input data updated|
+|getInputValue|Get input value depending on its type|
 |getLocationKey|Get an unique key combined with current URL|
 |headersToObject|Convert headers to object|
 |isFormData|Is IFormData type guard|

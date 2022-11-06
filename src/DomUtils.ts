@@ -342,6 +342,22 @@ export namespace DomUtils {
     };
 
     /**
+     * Get input value depending on its type
+     * @param input HTML input
+     * @returns Result
+     */
+    export function getInputValue(input: HTMLInputElement) {
+        const type = input.type;
+        if (type === 'number' || type === 'range') {
+            const num = input.valueAsNumber;
+            if (isNaN(num)) return null;
+            return num;
+        } else if (type === 'date' || type === 'datetime-local')
+            return input.valueAsDate;
+        return input.value;
+    }
+
+    /**
      * Get an unique key combined with current URL
      * @param key Key
      */
