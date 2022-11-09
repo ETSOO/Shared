@@ -63,8 +63,14 @@ test('Tests for formatForInput', () => {
     const result3 = DateUtils.formatForInput(d, false);
     expect(result3).toBe('2021-06-06T20:08');
 
+    const result31 = DateUtils.formatForInput(d, 'date');
+    expect(result31).toBe('2021-06-06');
+
     const result4 = DateUtils.formatForInput(d, true);
     expect(result4).toBe('2021-06-06T20:08:45');
+
+    const result41 = DateUtils.formatForInput(d, 'datetime-local');
+    expect(result41).toBe('2021-06-06T20:08:45');
 });
 
 test('Tests for substract', () => {

@@ -147,17 +147,24 @@ export namespace DateUtils {
     /**
      * Format to 'yyyy-MM-dd' or 'yyyy-MM-ddThh:mm:ss, especially used for date input min/max property
      * @param date Input date
-     * @param hasSecond 'undefined' for date only, 'false' for hour:minute only
+     * @param hasSecondOrType 'undefined' for date only, 'false' for hour:minute only, 'true' for all, or input field type
      */
     export function formatForInput(
         date?: Date | string | null,
-        hasSecond?: boolean
+        hasSecondOrType?: boolean | string
     ) {
         // Parse string as date
         if (typeof date === 'string') date = new Date(date);
 
         // Default is now
         date ??= new Date();
+
+        const hasSecond =
+            typeof hasSecondOrType === 'string'
+                ? hasSecondOrType === 'date'
+                    ? undefined
+                    : true
+                : hasSecondOrType;
 
         // Parts
         const parts = [
