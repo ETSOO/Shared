@@ -340,8 +340,11 @@ export namespace DataTypes {
 
         // Target type
         const targetType = getBasicNameByValue(target, false);
-        if (targetType == null) return undefined;
-        return <any>convertByType(input, targetType);
+        if (targetType == null) {
+            if (typeof input === typeof target) return <T>input;
+            return undefined;
+        }
+        return <T>convertByType(input, targetType);
     }
 
     /**

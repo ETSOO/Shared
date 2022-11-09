@@ -1,4 +1,5 @@
 import { DataTypes } from './DataTypes';
+import isEqual from 'lodash.isequal';
 
 declare global {
     interface String {
@@ -200,9 +201,8 @@ export namespace Utils {
             return v1 === v2;
         }
 
-        // For array and object
-        if (typeof v1 === 'object')
-            return JSON.stringify(v1) === JSON.stringify(v2);
+        // For date, array and object
+        if (typeof v1 === 'object') return isEqual(v1, v2);
 
         // 1 and '1' case
         if (strict === 0) return v1 == v2;
