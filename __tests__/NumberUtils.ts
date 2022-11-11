@@ -1,7 +1,6 @@
 import { NumberUtils } from '../src/NumberUtils';
 
 test('Tests for format', () => {
-    expect(NumberUtils.format(undefined)).toBeUndefined();
     expect(NumberUtils.format(12.4, 'zh-CN', { style: 'percent' })).toBe(
         '1,240%'
     );
