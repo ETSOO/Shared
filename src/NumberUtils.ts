@@ -18,6 +18,16 @@ Number.prototype.toExact = function (this: number, precision?: number) {
 };
 
 export namespace NumberUtils {
+    export function format(
+        input: undefined | null,
+        locale?: string | string[],
+        options?: Intl.NumberFormatOptions
+    ): undefined;
+    export function format(
+        input: number | bigint,
+        locale?: string | string[],
+        options?: Intl.NumberFormatOptions
+    ): string;
     /**
      * Format number
      * @param input Input
@@ -26,7 +36,7 @@ export namespace NumberUtils {
      * @returns Result
      */
     export function format(
-        input?: number | bigint,
+        input: number | bigint | undefined | null,
         locale?: string | string[],
         options?: Intl.NumberFormatOptions
     ) {
@@ -38,6 +48,20 @@ export namespace NumberUtils {
         return intl.format(input);
     }
 
+    export function formatMoney(
+        input: undefined | null,
+        currency?: string,
+        locale?: string | string[],
+        isInteger?: boolean,
+        options?: Intl.NumberFormatOptions
+    ): undefined;
+    export function formatMoney(
+        input: number | bigint,
+        currency?: string,
+        locale?: string | string[],
+        isInteger?: boolean,
+        options?: Intl.NumberFormatOptions
+    ): string;
     /**
      * Format money
      * @param input Input
@@ -48,12 +72,14 @@ export namespace NumberUtils {
      * @returns Result
      */
     export function formatMoney(
-        input?: number | bigint,
+        input: number | bigint | undefined | null,
         currency?: string,
         locale?: string | string[],
         isInteger: boolean = false,
         options: Intl.NumberFormatOptions = {}
     ) {
+        if (input == null) return format(input, locale, options);
+
         if (currency) {
             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat
             options.style = 'currency';
@@ -73,9 +99,7 @@ export namespace NumberUtils {
      * Parse float value
      * @param rawData Raw data
      */
-    export const parse = (
-        rawData: string | number | undefined | object
-    ): number => {
+    export const parse = (rawData: unknown): number => {
         if (rawData == null) {
             return Number.NaN;
         }
