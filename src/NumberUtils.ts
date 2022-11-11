@@ -18,16 +18,6 @@ Number.prototype.toExact = function (this: number, precision?: number) {
 };
 
 export namespace NumberUtils {
-    export function format(
-        input: undefined | null,
-        locale?: string | string[],
-        options?: Intl.NumberFormatOptions
-    ): undefined;
-    export function format(
-        input: number | bigint,
-        locale?: string | string[],
-        options?: Intl.NumberFormatOptions
-    ): string;
     /**
      * Format number
      * @param input Input
@@ -36,32 +26,15 @@ export namespace NumberUtils {
      * @returns Result
      */
     export function format(
-        input: number | bigint | undefined | null,
+        input: number | bigint,
         locale?: string | string[],
         options?: Intl.NumberFormatOptions
     ) {
-        if (input == null) return undefined;
-
         // Formatter
         const intl = new Intl.NumberFormat(locale, options);
-
         return intl.format(input);
     }
 
-    export function formatMoney(
-        input: undefined | null,
-        currency?: string,
-        locale?: string | string[],
-        isInteger?: boolean,
-        options?: Intl.NumberFormatOptions
-    ): undefined;
-    export function formatMoney(
-        input: number | bigint,
-        currency?: string,
-        locale?: string | string[],
-        isInteger?: boolean,
-        options?: Intl.NumberFormatOptions
-    ): string;
     /**
      * Format money
      * @param input Input
@@ -72,14 +45,12 @@ export namespace NumberUtils {
      * @returns Result
      */
     export function formatMoney(
-        input: number | bigint | undefined | null,
+        input: number | bigint,
         currency?: string,
         locale?: string | string[],
         isInteger: boolean = false,
         options: Intl.NumberFormatOptions = {}
     ) {
-        if (input == null) return format(input, locale, options);
-
         if (currency) {
             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat
             options.style = 'currency';
