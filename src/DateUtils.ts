@@ -195,6 +195,21 @@ export namespace DateUtils {
         new Date(year, month + 1, 0).getDate();
 
     /**
+     * Is the test date expired to now
+     * @param testDate Test date
+     * @returns Result
+     */
+    export function isExpired(testDate?: Date | string | null) {
+        if (testDate == null) return false;
+        const d = parse(testDate);
+
+        // Format error
+        if (d == null) return false;
+
+        return d.valueOf() < new Date().valueOf();
+    }
+
+    /**
      * Build JSON parser
      * @param keys Date field names
      * @returns JSON parser

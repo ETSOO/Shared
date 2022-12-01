@@ -73,6 +73,12 @@ test('Tests for formatForInput', () => {
     expect(result41).toBe('2021-06-06T20:08:45');
 });
 
+test('Tests for isExpired', () => {
+    expect(DateUtils.isExpired(null)).toBeFalsy();
+    expect(DateUtils.isExpired('2020/1/1')).toBeTruthy();
+    expect(DateUtils.isExpired('9999/1/1')).toBeFalsy();
+});
+
 test('Tests for substract', () => {
     const d1 = new Date('2021/1/13 12:00:00');
     const d2 = new Date('2022/1/13 12:00:00');
