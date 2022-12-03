@@ -221,17 +221,19 @@ test('Tests for detectedCulture', () => {
 test('Tests for getCulture', () => {
     const cultures: DataTypes.CultureDefinition[] = [
         {
-            name: 'zh-CN',
+            name: 'zh-Hans',
             label: '简体中文',
             resources: {},
-            compatibleName: ['zh-SG']
+            compatibleNames: ['zh-CN', 'zh-SG']
         },
-        { name: 'en-US', label: 'English', resources: {} }
+        { name: 'en', label: 'English', resources: {} }
     ];
 
-    expect(DomUtils.getCulture(cultures, 'zh-CN')?.name).toBe('zh-CN');
-    expect(DomUtils.getCulture(cultures, 'zh-SG')?.name).toBe('zh-CN');
-    expect(DomUtils.getCulture(cultures, 'en-GB')?.name).toBe('en-US');
+    expect(DomUtils.getCulture(cultures, 'zh-CN')?.name).toBe('zh-Hans');
+    expect(DomUtils.getCulture(cultures, 'zh-Hans-CN')?.name).toBe('zh-Hans');
+    expect(DomUtils.getCulture(cultures, 'zh-Hans-HK')?.name).toBe('zh-Hans');
+    expect(DomUtils.getCulture(cultures, 'zh-SG')?.name).toBe('zh-Hans');
+    expect(DomUtils.getCulture(cultures, 'en-GB')?.name).toBe('en');
 });
 
 test('Tests for getLocationKey', () => {

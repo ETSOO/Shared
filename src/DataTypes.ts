@@ -305,7 +305,7 @@ export namespace DataTypes {
             /**
              * Compatible names
              */
-            compatibleName?: string[];
+            compatibleNames?: string[];
         }>;
 
     /**

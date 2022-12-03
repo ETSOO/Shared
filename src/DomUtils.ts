@@ -325,8 +325,10 @@ export namespace DomUtils {
         if (exactMatch) return exactMatch;
 
         // Compatible match
-        const compatibleMatch = items.find((item) =>
-            item.compatibleName?.includes(culture)
+        const compatibleMatch = items.find(
+            (item) =>
+                item.compatibleNames?.includes(culture) ||
+                culture.startsWith(item + '-')
         );
         if (compatibleMatch) return compatibleMatch;
 
