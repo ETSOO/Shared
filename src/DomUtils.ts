@@ -308,6 +308,16 @@ export namespace DomUtils {
     }
 
     /**
+     * Culture match case Enum
+     */
+    export enum CultureMatch {
+        Exact,
+        Compatible,
+        SamePart,
+        Default
+    }
+
+    /**
      * Get the available culture definition
      * @param items Available cultures
      * @param culture Detected culture
@@ -315,14 +325,14 @@ export namespace DomUtils {
     export const getCulture = <T extends DataTypes.StringRecord>(
         items: DataTypes.CultureDefinition<T>[],
         culture: string
-    ) => {
+    ): [DataTypes.CultureDefinition<T> | undefined, CultureMatch] => {
         if (items.length === 0) {
-            return undefined;
+            return [undefined, CultureMatch.Exact];
         }
 
         // Exact match
         const exactMatch = items.find((item) => item.name === culture);
-        if (exactMatch) return exactMatch;
+        if (exactMatch) return [exactMatch, CultureMatch.Exact];
 
         // Compatible match
         const compatibleMatch = items.find(
@@ -330,17 +340,17 @@ export namespace DomUtils {
                 item.compatibleNames?.includes(culture) ||
                 culture.startsWith(item + '-')
         );
-        if (compatibleMatch) return compatibleMatch;
+        if (compatibleMatch) return [compatibleMatch, CultureMatch.Compatible];
 
         // Same part, like zh-CN and zh-HK
         const samePart = culture.split('-')[0];
         const samePartMatch = items.find((item) =>
             item.name.startsWith(samePart)
         );
-        if (samePartMatch) return samePartMatch;
+        if (samePartMatch) return [samePartMatch, CultureMatch.SamePart];
 
         // Default
-        return items[0];
+        return [items[0], CultureMatch.Default];
     };
 
     /**

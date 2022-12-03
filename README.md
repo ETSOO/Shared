@@ -161,6 +161,7 @@ DOM/window related utilities
 |Name|Description|
 |---:|---|
 |clearFormData|Clear form data|
+|CultureMatch|Culture match case Enum|
 |dataAs|Cast data as template format|
 |detectedCountry|Current detected country|
 |detectedCulture|Current detected culture|
