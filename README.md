@@ -15,6 +15,20 @@ Using yarn:
 $ yarn add @etsoo/shared
 ```
 
+## ActionResult / IActionResult, IdActionResult, DynamicActionResult
+|Name|Description|
+|---:|---|
+|static create|Create a result from error|
+|data|Result data|
+|detail|Details|
+|errors|Result errors|
+|field|Related field|
+|ok|Success or failure|
+|status|Status code|
+|title|Title|
+|traceId|Trace id|
+|type|Type|
+
 ## storage
 Storage interface and browser storage implementation
 
