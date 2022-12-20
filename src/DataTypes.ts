@@ -149,6 +149,30 @@ export namespace DataTypes {
     export type VAlign = Lowercase<keyof typeof VAlignEnum>;
 
     /**
+     * Placement enum
+     */
+    export enum PlacementEnum {
+        TopLeft,
+        TopCenter,
+        TopRight,
+
+        MiddleLeft,
+        Center,
+        MiddleRight,
+
+        BottomLeft,
+        BottomCenter,
+        BottomRight,
+
+        Unknown // Reserved for modal, only one instance held at the same time
+    }
+
+    /**
+     * Placement type
+     */
+    export type Placement = keyof typeof PlacementEnum;
+
+    /**
      * Number and string combination id type
      */
     export type IdType = number | string;

@@ -121,6 +121,8 @@ Data type definitions and type safe functions. ListItemType and ListItemType1 ar
 |MConstructor|Mixins constructor|
 |ObjType|Generic object type|
 |Optional|Make properties optional|
+|PlacementEnum|Placement enum|
+|Placement|Placement type|
 |RequireAtLeastOne|Require at least one property of the keys|
 |Simple|Basic or basic array type|
 |SimpleEnum|Simple type enum|
