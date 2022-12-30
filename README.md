@@ -32,6 +32,15 @@ $ yarn add @etsoo/shared
 ## storage
 Storage interface and browser storage implementation
 
+## ContentDisposition
+Content disposition of HTTP
+
+|Name|Description|
+|---:|---|
+|static parse|Parse header value|
+|Methods||
+|format|Format to standard output|
+
 ## EColor
 Etsoo implmented Color
 
