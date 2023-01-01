@@ -295,6 +295,8 @@ export namespace DomUtils {
                 } else {
                     await data.pipeTo(stream);
                 }
+
+                return true;
             } else {
                 const url = window.URL.createObjectURL(
                     data instanceof Blob
@@ -312,10 +314,14 @@ export namespace DomUtils {
                 a.remove();
 
                 window.URL.revokeObjectURL(url);
+
+                return true;
             }
         } catch (e) {
             console.log(e);
         }
+
+        return false;
     }
 
     /**
