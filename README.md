@@ -191,6 +191,7 @@ DOM/window related utilities
 |detectedCountry|Current detected country|
 |detectedCulture|Current detected culture|
 |dimensionEqual|Check two rectangles equality|
+|downloadFile|Download file from API fetch response body|
 |fileToDataURL|File to data URL|
 |formDataToObject|Form data to object|
 |getCulture|Get the available culture definition|

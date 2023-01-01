@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { DataTypes } from './DataTypes';
 import { FormDataFieldValue, IFormData } from './types/FormData';
 
@@ -268,6 +269,53 @@ export namespace DomUtils {
         }
 
         return false;
+    }
+
+    /**
+     * Download file from API fetch response body
+     * @param data Data
+     * @param suggestedName Suggested file name
+     * @param autoDetect Auto detect, false will use link click way
+     */
+    export async function downloadFile(
+        data: ReadableStream | Blob,
+        suggestedName?: string,
+        autoDetect: boolean = true
+    ) {
+        try {
+            if (autoDetect && 'showSaveFilePicker' in globalThis) {
+                const handle = await (globalThis as any).showSaveFilePicker({
+                    suggestedName
+                });
+
+                const stream = await handle.createWritable();
+
+                if (data instanceof Blob) {
+                    data.stream().pipeTo(stream);
+                } else {
+                    await data.pipeTo(stream);
+                }
+            } else {
+                const url = window.URL.createObjectURL(
+                    data instanceof Blob
+                        ? data
+                        : await new Response(data).blob()
+                );
+
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                if (suggestedName) a.download = suggestedName;
+
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+
+                window.URL.revokeObjectURL(url);
+            }
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     /**
