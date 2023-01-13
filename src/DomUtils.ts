@@ -284,9 +284,12 @@ export namespace DomUtils {
     ) {
         try {
             if (autoDetect && 'showSaveFilePicker' in globalThis) {
+                // AbortError - Use dismisses the window
                 const handle = await (globalThis as any).showSaveFilePicker({
                     suggestedName
                 });
+
+                if (!(await verifyPermission(handle, true))) return undefined;
 
                 const stream = await handle.createWritable();
 
@@ -546,5 +549,39 @@ export namespace DomUtils {
         );
 
         if (element != null) element.focus();
+    }
+
+    /**
+     * Verify file system permission
+     * https://developer.mozilla.org/en-US/docs/Web/API/FileSystemHandle/requestPermission
+     * @param fileHandle FileSystemHandle
+     * @param withWrite With write permission
+     * @returns Result
+     */
+    export async function verifyPermission(
+        fileHandle: any,
+        withWrite: boolean = false
+    ) {
+        if (
+            !('queryPermission' in fileHandle) ||
+            !('requestPermission' in fileHandle)
+        )
+            return false;
+
+        // FileSystemHandlePermissionDescriptor
+        const opts = { mode: withWrite ? 'readwrite' : 'read' };
+
+        // Check if we already have permission, if so, return true.
+        if ((await fileHandle.queryPermission(opts)) === 'granted') {
+            return true;
+        }
+
+        // Request permission to the file, if the user grants permission, return true.
+        if ((await fileHandle.requestPermission(opts)) === 'granted') {
+            return true;
+        }
+
+        // The user did not grant permission, return false.
+        return false;
     }
 }

@@ -204,6 +204,7 @@ DOM/window related utilities
 |mergeFormData|Merge form data to primary one|
 |mergeURLSearchParams|Merge URL search parameters|
 |setFocus|Set HTML element focus by name|
+|verifyPermission|Verify file system permission|
 
 ## ExtendUtils
 Extend current class/object functioning
