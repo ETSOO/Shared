@@ -4,8 +4,29 @@ import isEqual from 'lodash.isequal';
 declare global {
     interface String {
         /**
+         * Check the input string contains Chinese character or not
+         * @param this Input
+         * @param test Test string
+         */
+        containChinese(this: string): boolean;
+
+        /**
+         * Check the input string contains Korean character or not
+         * @param this Input
+         * @param test Test string
+         */
+        containKorean(this: string): boolean;
+
+        /**
+         * Check the input string contains Japanese character or not
+         * @param this Input
+         * @param test Test string
+         */
+        containJapanese(this: string): boolean;
+
+        /**
          * Format string with parameters
-         * @param this Template
+         * @param this Input template
          * @param parameters Parameters to fill the template
          */
         format(this: string, ...parameters: string[]): string;
@@ -50,6 +71,23 @@ declare global {
         removeNonLetters(this: string): string;
     }
 }
+
+String.prototype.containChinese = function (this: string): boolean {
+    const regExp =
+        /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]/g;
+    return regExp.test(this);
+};
+
+String.prototype.containKorean = function (this: string): boolean {
+    const regExp =
+        /[\uac00-\ud7af\u1100-\u11ff\u3130-\u318f\ua960-\ua97f\ud7b0-\ud7ff\u3400-\u4dbf]/g;
+    return regExp.test(this);
+};
+
+String.prototype.containJapanese = function (this: string): boolean {
+    const regExp = /[\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf]/g;
+    return regExp.test(this);
+};
 
 String.prototype.format = function (
     this: string,

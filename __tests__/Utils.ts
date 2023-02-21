@@ -13,6 +13,14 @@ test('Tests for addBlankItem', () => {
     expect(options.length).toBe(3);
 });
 
+test('Tests for containChinese', () => {
+    expect('123 abC'.containChinese()).toBeFalsy();
+    expect('亿速思维'.containChinese()).toBeTruthy();
+    expect('亿速Etsoo'.containChinese()).toBeTruthy();
+    expect('김 민수'.containKorean()).toBeTruthy();
+    expect('ぁ-ん'.containJapanese()).toBeTruthy();
+});
+
 test('Tests for arrayDifferences', () => {
     const a1 = ['a', 'b', 'c', 'e'];
     const a2 = ['a', 'c', 'd'];
