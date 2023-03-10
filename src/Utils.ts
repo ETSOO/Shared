@@ -661,6 +661,46 @@ export namespace Utils {
         return items.map((part) => part.formatInitial(true)).join(' ');
     };
 
+    function getSortValue(n1: number, n2: number) {
+        if (n1 === n2) return 0;
+        if (n1 === -1) return 1;
+        if (n2 === -1) return -1;
+        return n1 - n2;
+    }
+
+    /**
+     * Sort array by favored values
+     * @param items Items
+     * @param favored Favored values
+     * @returns Sorted array
+     */
+    export const sortByFavor = <T>(items: T[], favored: T[]) => {
+        return items.sort((r1, r2) => {
+            const n1 = favored.indexOf(r1);
+            const n2 = favored.indexOf(r2);
+            return getSortValue(n1, n2);
+        });
+    };
+
+    /**
+     * Sort array by favored field values
+     * @param items Items
+     * @param field Field to sort
+     * @param favored Favored field values
+     * @returns Sorted array
+     */
+    export const sortByFieldFavor = <T, F extends keyof T>(
+        items: T[],
+        field: F,
+        favored: T[F][]
+    ) => {
+        return items.sort((r1, r2) => {
+            const n1 = favored.indexOf(r1[field]);
+            const n2 = favored.indexOf(r2[field]);
+            return getSortValue(n1, n2);
+        });
+    };
+
     /**
      * Trim chars
      * @param input Input string

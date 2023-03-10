@@ -228,6 +228,29 @@ test('Tests for getResult', () => {
     expect(valueResult).toBe(5);
 });
 
+test('Tests for sortByFavor', () => {
+    const items = [1, 2, 3, 4, 5, 6, 7];
+    expect(Utils.sortByFavor(items, [5, 1, 3])).toStrictEqual([
+        5, 1, 3, 2, 4, 6, 7
+    ]);
+});
+
+test('Tests for sortByFieldFavor', () => {
+    const options = [
+        { id: 'a', name: 'a1' },
+        { id: 'b', name: 'b2' },
+        { id: 'c', name: 'c3' },
+        { id: 'd', name: 'd4' },
+        { id: 'e', name: 'e5' },
+        { id: 'f', name: 'f6' }
+    ];
+    expect(
+        Utils.sortByFieldFavor(options, 'id', ['e', 'a', 'c']).map(
+            (option) => option.name
+        )
+    ).toStrictEqual(['e5', 'a1', 'c3', 'b2', 'd4', 'f6']);
+});
+
 test('Tests for trim', () => {
     expect(Utils.trim('//a/', '/')).toBe('a');
     expect(Utils.trim('/*/a/', ...['/', '*'])).toBe('a');
