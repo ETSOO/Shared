@@ -356,9 +356,9 @@ export namespace DataTypes {
         if (Array.isArray(target)) {
             // Element item
             const elementItem = target.length > 0 ? target[0] : input;
-            const elementType =
-                getBasicNameByValue(elementItem, true) ?? 'unknown[]';
+            const elementType = getBasicNameByValue(elementItem, true);
 
+            if (elementType == null) return <T>input;
             return <any>convertByType(input, elementType);
         }
 
@@ -400,7 +400,7 @@ export namespace DataTypes {
 
             // Element type
             const elementType = <BasicNames>(
-                targetType.substr(0, targetType.length - 2)
+                targetType.slice(0, targetType.length - 2)
             );
 
             // Convert type

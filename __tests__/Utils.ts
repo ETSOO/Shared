@@ -84,6 +84,28 @@ test('Tests for getDataChanges', () => {
     expect(input.amount).toBeUndefined();
 });
 
+test('Tests for object array getDataChanges', () => {
+    const input = {
+        id: 1,
+        ids: [1, 2],
+        items: [
+            { id: 1, label: 'a' },
+            { id: 2, label: 'b' }
+        ]
+    };
+    const initData = {
+        id: 1,
+        ids: [1],
+        items: [
+            { id: 1, label: 'a' },
+            { id: 2, label: 'b' }
+        ]
+    };
+    const fields = Utils.getDataChanges(input, initData);
+    expect(fields).toStrictEqual(['ids']);
+    expect(input.items).toBeUndefined();
+});
+
 test('Tests for exclude', () => {
     const options = [
         { id1: 1, name: 'a' },
