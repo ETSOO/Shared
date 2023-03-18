@@ -1,5 +1,6 @@
 import { DataTypes } from './DataTypes';
 import isEqual from 'lodash.isequal';
+import { DateUtils } from './DateUtils';
 
 declare global {
     interface String {
@@ -327,6 +328,19 @@ export namespace Utils {
             }
 
             if (initValue != null) {
+                // Date when meets string
+                if (value instanceof Date) {
+                    if (
+                        value.valueOf() ===
+                        DateUtils.parse(initValue)?.valueOf()
+                    ) {
+                        Reflect.deleteProperty(input, key);
+                        return;
+                    }
+                    changes.push(key);
+                    return;
+                }
+
                 const newValue = DataTypes.convert(value, initValue);
                 if (Utils.equals(newValue, initValue)) {
                     Reflect.deleteProperty(input, key);

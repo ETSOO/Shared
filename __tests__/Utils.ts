@@ -64,6 +64,7 @@ test('Tests for getDataChanges', () => {
         amount: '',
         enabled: true,
         value: undefined,
+        date: new Date('2023/03/18'),
         ids: [1, 2],
         data: { d1: 1, d2: false, d3: 1.2, d4: 'Hello' }
     };
@@ -74,6 +75,7 @@ test('Tests for getDataChanges', () => {
         brand: 'ETSOO',
         price: 6,
         amount: 0,
+        date: '2023/03/18',
         enabled: true,
         ids: [1, 2],
         data: { d1: 1, d3: 1.2, d4: 'Hello', d2: false }
