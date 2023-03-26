@@ -96,6 +96,14 @@ ETSOO Extended abstract history class
 |pushState|Adds an entry to the history stack|
 |replaceState|Modifies the current history entry|
 
+## ArrayUtils
+Array related utilities
+
+|Name|Description|
+|---:|---|
+|differences|Array 1 items do not exist in Array 2 or reverse match|
+|toUnique|Make all items are unique|
+
 ## DataTypes
 Data type definitions and type safe functions. ListItemType and ListItemType1 are sugar types.
 
@@ -244,7 +252,6 @@ String and other related utilities
 |Name|Description|
 |---:|---|
 |addBlankItem|Add blank item to collection|
-|arrayDifferences|Array 1 items do not exist in Array 2 or reverse match|
 |charsToNumber|Base64 chars to number|
 |containChinese|Check the input string contains Chinese character or not|
 |correctTypes|Correct object's property value type|

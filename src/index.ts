@@ -9,6 +9,7 @@ export * from './storage/IStorage';
 export * from './storage/WindowStorage';
 
 export * from './ActionResult';
+export * from './ArrayUtils';
 export * from './DataTypes';
 export * from './ColorUtils';
 export * from './DateUtils';

@@ -180,18 +180,6 @@ export namespace Utils {
     }
 
     /**
-     * Array 1 items do not exist in Array 2 or reverse match
-     * @param a1 Array 1
-     * @param a2 Array 2
-     * @param round A round for both matches
-     */
-    export function arrayDifferences<T>(a1: T[], a2: T[], round?: boolean) {
-        const diff = a1.filter((x) => !a2.includes(x));
-        if (round) return [...diff, ...a2.filter((x) => !a1.includes(x))];
-        return diff;
-    }
-
-    /**
      * Base64 chars to number
      * @param base64Chars Base64 chars
      * @returns Number
