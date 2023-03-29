@@ -755,6 +755,13 @@ export type ListType = DataTypes.IdLabelItem<number>;
 export type ListType1 = DataTypes.IdLabelItem<string>;
 
 /**
+ * List item with compatible id and name / label
+ */
+export type ListType2 = {
+    id: DataTypes.IdType;
+} & ({ label: string } | { name: string });
+
+/**
  * Id default type
  */
 export type IdDefaultType<T extends object> = T extends { id: number | string }

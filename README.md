@@ -105,7 +105,7 @@ Array related utilities
 |toUnique|Make all items are unique|
 
 ## DataTypes
-Data type definitions and type safe functions. ListItemType and ListItemType1 are sugar types.
+Data type definitions and type safe functions. ListItemType, ListItemType1 and ListItemType2 are sugar types.
 
 |Name|Description|
 |---:|---|
