@@ -14,7 +14,9 @@ test('Tests for formatMoney', () => {
 test('Tests for getCurrencySymbol', () => {
     expect(NumberUtils.getCurrencySymbol('CNY')).toBe('¥');
     expect(NumberUtils.getCurrencySymbol('USD')).toBe('$');
-    expect(NumberUtils.getCurrencySymbol('USD', 'symbol')).toBe('US$');
+
+    // When locale = 'en-US' will be failed with '$'
+    expect(NumberUtils.getCurrencySymbol('USD', 'symbol', 'zh-CN')).toBe('US$');
     expect(NumberUtils.getCurrencySymbol('CNY', 'name', 'zh-CN')).toBe(
         '人民币'
     );
