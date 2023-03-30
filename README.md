@@ -231,6 +231,7 @@ Numbers related utilities
 |---:|---|
 |format|Format number|
 |formatMoney|Format money number|
+|getCurrencySymbol|Get currency symbol or name from ISO code|
 |parse|Parse float value|
 |toExact|To the exact precision number avoiding precision lost|
 

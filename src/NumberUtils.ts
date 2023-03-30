@@ -67,6 +67,30 @@ export namespace NumberUtils {
     }
 
     /**
+     * Get currency symbol or name from ISO code
+     * @param code ISO currency code, like USD / CNY
+     * @param display Display format
+     * @param locale Locale
+     * @returns Result
+     */
+    export function getCurrencySymbol(
+        code: string,
+        display: 'symbol' | 'narrowSymbol' | 'name' = 'narrowSymbol',
+        locale?: string
+    ): string | undefined {
+        const formatter = new Intl.NumberFormat(locale, {
+            style: 'currency',
+            currency: code,
+            currencyDisplay: display
+        });
+
+        const parts = formatter.formatToParts();
+        const symbol = parts.find((part) => part.type === 'currency')?.value;
+
+        return symbol;
+    }
+
+    /**
      * Parse float value
      * @param rawData Raw data
      */

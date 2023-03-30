@@ -11,6 +11,15 @@ test('Tests for formatMoney', () => {
     expect(NumberUtils.formatMoney(1282, 'CNY', 'zh-CN', true)).toBe('¥1,282');
 });
 
+test('Tests for getCurrencySymbol', () => {
+    expect(NumberUtils.getCurrencySymbol('CNY')).toBe('¥');
+    expect(NumberUtils.getCurrencySymbol('USD')).toBe('$');
+    expect(NumberUtils.getCurrencySymbol('USD', 'symbol')).toBe('US$');
+    expect(NumberUtils.getCurrencySymbol('CNY', 'name', 'zh-CN')).toBe(
+        '人民币'
+    );
+});
+
 test('Tests for parse', () => {
     expect(NumberUtils.parse('123')).toBe(123);
     expect(NumberUtils.parse(Object(123))).toBe(123);
