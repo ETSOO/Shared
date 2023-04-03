@@ -71,6 +71,12 @@ test('Tests for formatForInput', () => {
 
     const result41 = DateUtils.formatForInput(d, 'datetime-local');
     expect(result41).toBe('2021-06-06T20:08:45');
+
+    const result5 = DateUtils.formatForInput('');
+    expect(result5).toBeUndefined();
+
+    const result51 = DateUtils.formatForInput(null);
+    expect(result51).toBeUndefined();
 });
 
 test('Tests for isExpired', () => {

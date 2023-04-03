@@ -153,11 +153,11 @@ export namespace DateUtils {
         date?: Date | string | null,
         hasSecondOrType?: boolean | string
     ) {
+        // Return when null
+        if (date == null || date === '') return undefined;
+
         // Parse string as date
         if (typeof date === 'string') date = new Date(date);
-
-        // Default is now
-        date ??= new Date();
 
         const hasSecond =
             typeof hasSecondOrType === 'string'
