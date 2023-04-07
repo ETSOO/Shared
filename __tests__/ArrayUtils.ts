@@ -44,8 +44,21 @@ test('Tests for max / min fields', () => {
     const items = [
         { id: 1, label: 'a', amount: 3.14 },
         { id: 2, label: 'b', amount: 4.54 },
-        { id: 2, label: 'b', amount: 1.52 }
+        { id: 3, label: 'b', amount: 1.52 }
     ];
     expect(items.max('amount')).toBe(4.54);
     expect(items.min('amount')).toBe(1.52);
+});
+
+test('Tests for maxItem / minItem', () => {
+    const items = [
+        { id: 1, label: 'a', amount: 3.14 },
+        { id: 2, label: 'b', amount: 4.54 },
+        { id: 3, label: 'b', amount: 1.52 }
+    ];
+    expect(items.maxItem('amount')?.id).toBe(2);
+    expect(items.minItem('amount')?.id).toBe(3);
+
+    const emptyItems: { id: string; amount: number }[] = [];
+    expect(emptyItems.maxItem('amount')).toBeUndefined();
 });

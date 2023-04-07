@@ -23,6 +23,14 @@ declare global {
         ): number;
 
         /**
+         * Get max field value item
+         * @param field Object field to calculate
+         */
+        maxItem(
+            field: T extends object ? DataTypes.Keys<T, number> : never
+        ): T | undefined;
+
+        /**
          * Get min number item or number item property
          * @param field Object field to calculate
          */
@@ -33,6 +41,14 @@ declare global {
                 ? [DataTypes.Keys<T, number>]
                 : [never]
         ): number;
+
+        /**
+         * Get min field value item
+         * @param field Object field to calculate
+         */
+        minItem(
+            field: T extends object ? DataTypes.Keys<T, number> : never
+        ): T | undefined;
 
         /**
          * Sum number items or number item properties
@@ -85,6 +101,17 @@ Array.prototype.max = function <T>(
     return Math.max(...this.map((item) => item[field] as number));
 };
 
+Array.prototype.maxItem = function <T>(
+    this: Array<T>,
+    field: T extends object ? DataTypes.Keys<T, number> : never
+) {
+    if (this.length === 0) return undefined;
+
+    return this.reduce((prev, curr) =>
+        prev[field] > curr[field] ? prev : curr
+    );
+};
+
 Array.prototype.min = function <T>(
     this: Array<T>,
     field: T extends object ? DataTypes.Keys<T, number> : undefined
@@ -94,6 +121,17 @@ Array.prototype.min = function <T>(
     }
 
     return Math.min(...this.map((item) => item[field] as number));
+};
+
+Array.prototype.minItem = function <T>(
+    this: Array<T>,
+    field: T extends object ? DataTypes.Keys<T, number> : never
+) {
+    if (this.length === 0) return undefined;
+
+    return this.reduce((prev, curr) =>
+        prev[field] < curr[field] ? prev : curr
+    );
 };
 
 Array.prototype.sum = function <T>(

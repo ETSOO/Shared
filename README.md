@@ -103,7 +103,9 @@ Array related utilities
 |---:|---|
 |differences|Array 1 items do not exist in Array 2 or reverse match|
 |max|Get max number item or number item property|
+|maxItem|Get max field value item|
 |min|Get min number item or number item property|
+|minItem|Get min field value item|
 |sum|Sum number items or number item properties|
 |toUnique|Make all items are unique|
 
