@@ -33,3 +33,19 @@ test('Tests for sum fields', () => {
     ];
     expect(items.sum('amount')).toBe(7.68);
 });
+
+test('Tests for max / min numbers', () => {
+    const items = [12, 8, 22];
+    expect(items.max()).toBe(22);
+    expect(items.min()).toBe(8);
+});
+
+test('Tests for max / min fields', () => {
+    const items = [
+        { id: 1, label: 'a', amount: 3.14 },
+        { id: 2, label: 'b', amount: 4.54 },
+        { id: 2, label: 'b', amount: 1.52 }
+    ];
+    expect(items.max('amount')).toBe(4.54);
+    expect(items.min('amount')).toBe(1.52);
+});

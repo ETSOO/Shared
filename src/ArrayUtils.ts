@@ -11,6 +11,30 @@ declare global {
         different(target: Array<T>, round?: boolean): Array<T>;
 
         /**
+         * Get max number item or number item property
+         * @param field Object field to calculate
+         */
+        max(
+            ...field: T extends number
+                ? [undefined?]
+                : T extends object
+                ? [DataTypes.Keys<T, number>]
+                : [never]
+        ): number;
+
+        /**
+         * Get min number item or number item property
+         * @param field Object field to calculate
+         */
+        min(
+            ...field: T extends number
+                ? [undefined?]
+                : T extends object
+                ? [DataTypes.Keys<T, number>]
+                : [never]
+        ): number;
+
+        /**
          * Sum number items or number item properties
          * @param field Object field to calculate
          */
@@ -48,6 +72,28 @@ Array.prototype.toUnique = function <T>(this: Array<T>) {
         newArray.push(item);
     });
     return newArray;
+};
+
+Array.prototype.max = function <T>(
+    this: Array<T>,
+    field: T extends object ? DataTypes.Keys<T, number> : undefined
+) {
+    if (field == null) {
+        return Math.max(...(this as Array<number>));
+    }
+
+    return Math.max(...this.map((item) => item[field] as number));
+};
+
+Array.prototype.min = function <T>(
+    this: Array<T>,
+    field: T extends object ? DataTypes.Keys<T, number> : undefined
+) {
+    if (field == null) {
+        return Math.min(...(this as Array<number>));
+    }
+
+    return Math.min(...this.map((item) => item[field] as number));
 };
 
 Array.prototype.sum = function <T>(
