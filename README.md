@@ -102,6 +102,7 @@ Array related utilities
 |Name|Description|
 |---:|---|
 |differences|Array 1 items do not exist in Array 2 or reverse match|
+|sum|Sum number items or number item properties|
 |toUnique|Make all items are unique|
 
 ## DataTypes

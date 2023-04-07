@@ -20,3 +20,16 @@ test('Tests for differences', () => {
     expect(ArrayUtils.differences(a1, a2)).toEqual(['b', 'e']);
     expect(ArrayUtils.differences(a1, a2, true)).toEqual(['b', 'e', 'd']);
 });
+
+test('Tests for sum numbers', () => {
+    const items = [12, 8, 22];
+    expect(items.sum()).toBe(42);
+});
+
+test('Tests for sum fields', () => {
+    const items = [
+        { id: 1, label: 'a', amount: 3.14 },
+        { id: 2, label: 'b', amount: 4.54 }
+    ];
+    expect(items.sum('amount')).toBe(7.68);
+});

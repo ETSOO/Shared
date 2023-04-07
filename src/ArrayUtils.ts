@@ -1,4 +1,5 @@
 import isEqual from 'lodash.isequal';
+import { DataTypes } from './DataTypes';
 
 declare global {
     interface Array<T> {
@@ -8,6 +9,18 @@ declare global {
          * @param round A round for both matches
          */
         different(target: Array<T>, round?: boolean): Array<T>;
+
+        /**
+         * Sum number items or number item properties
+         * @param field Object field to calculate
+         */
+        sum(
+            ...field: T extends number
+                ? [undefined?]
+                : T extends object
+                ? [DataTypes.Keys<T, number>]
+                : [never]
+        ): number;
 
         /**
          * Make all items are unique
@@ -35,6 +48,17 @@ Array.prototype.toUnique = function <T>(this: Array<T>) {
         newArray.push(item);
     });
     return newArray;
+};
+
+Array.prototype.sum = function <T>(
+    this: Array<T>,
+    field: T extends object ? DataTypes.Keys<T, number> : undefined
+) {
+    if (field == null) {
+        return this.reduce((total, num) => total + (num as number), 0);
+    }
+
+    return this.reduce((total, item) => total + (item[field] as number), 0);
 };
 
 /**
