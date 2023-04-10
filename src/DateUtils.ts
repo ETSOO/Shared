@@ -63,6 +63,10 @@ export interface TimeSpan {
     totalYears: number;
 }
 
+type DateType = Date | string | null | undefined;
+
+type DateReturn<T extends DateType, R> = T extends Date ? R : R | undefined;
+
 export namespace DateUtils {
     /**
      * Day format, YYYY-MM-DD
@@ -103,17 +107,17 @@ export namespace DateUtils {
      * @param options Options
      * @param timeZone Time zone
      */
-    export function format(
-        input?: Date | string,
+    export function format<T extends DateType>(
+        input: T,
         locale?: string | string[],
         options?: FormatOptions,
         timeZone?: string
-    ) {
+    ): DateReturn<T, string> {
         // Parse
         const parsed = parse(input);
 
         // Null case
-        if (parsed == null) return undefined;
+        if (parsed == null) return <DateReturn<T, string>>undefined;
 
         // Default options
         options ??= DayFormat;
@@ -149,15 +153,16 @@ export namespace DateUtils {
      * @param date Input date
      * @param hasSecondOrType 'undefined' for date only, 'false' for hour:minute only, 'true' for all, or input field type
      */
-    export function formatForInput(
-        date?: Date | string | null,
+    export function formatForInput<T extends DateType>(
+        date: T,
         hasSecondOrType?: boolean | string
-    ) {
+    ): DateReturn<T, string> {
         // Return when null
-        if (date == null || date === '') return undefined;
+        if (date == null || date === '')
+            return <DateReturn<T, string>>undefined;
 
         // Parse string as date
-        if (typeof date === 'string') date = new Date(date);
+        const dt: Date = typeof date === 'string' ? new Date(date) : date;
 
         const hasSecond =
             typeof hasSecondOrType === 'string'
@@ -168,9 +173,9 @@ export namespace DateUtils {
 
         // Parts
         const parts = [
-            date.getFullYear(),
-            (date.getMonth() + 1).toString().padStart(2, '0'),
-            date.getDate().toString().padStart(2, '0')
+            dt.getFullYear(),
+            (dt.getMonth() + 1).toString().padStart(2, '0'),
+            dt.getDate().toString().padStart(2, '0')
         ];
 
         // Date
@@ -178,10 +183,10 @@ export namespace DateUtils {
         if (hasSecond == null) return d;
 
         const hm = [
-            date.getHours().toString().padStart(2, '0'),
-            date.getMinutes().toString().padStart(2, '0')
+            dt.getHours().toString().padStart(2, '0'),
+            dt.getMinutes().toString().padStart(2, '0')
         ];
-        if (hasSecond) hm.push(date.getSeconds().toString().padStart(2, '0'));
+        if (hasSecond) hm.push(dt.getSeconds().toString().padStart(2, '0'));
         return `${d}T${hm.join(':')}`;
     }
 
@@ -235,17 +240,17 @@ export namespace DateUtils {
      * @param input Input string
      * @returns Date
      */
-    export function parse(input?: Date | string | null) {
-        if (input == null) return undefined;
+    export function parse<T extends DateType>(input: T): DateReturn<T, Date> {
+        if (input == null) return <DateReturn<T, Date>>undefined;
         if (typeof input === 'string') {
             const f = input[0];
             if (f >= '0' && f <= '9' && /[-\/\s]/g.test(input)) {
                 const n = Date.parse(input);
                 if (!isNaN(n)) return new Date(n);
             }
-            return undefined;
+            return <DateReturn<T, Date>>undefined;
         }
-        return input;
+        return <Date>input;
     }
 
     /**
