@@ -80,7 +80,7 @@ test('Tests for getEnumByValue', () => {
 test('Tests for getEnumKey', () => {
     expect(
         DataTypes.getEnumKey(DataTypes.HAlignEnum, DataTypes.HAlignEnum.Center)
-    ).toBe('center');
+    ).toBe('Center');
 });
 
 test('Tests for getEnumKeys', () => {

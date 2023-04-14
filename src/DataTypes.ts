@@ -578,11 +578,8 @@ export namespace DataTypes {
      * @param value Value
      * @returns Result
      */
-    export function getEnumKey<T extends string>(
-        enumItem: EnumBase,
-        value: EnumValue
-    ) {
-        return <T>enumItem[value].toString().toLowerCase();
+    export function getEnumKey(enumItem: EnumBase, value: EnumValue) {
+        return enumItem[value].toString();
     }
 
     /**
