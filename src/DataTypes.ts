@@ -309,28 +309,27 @@ export namespace DataTypes {
     /**
      * Culture definiton
      */
-    export type CultureDefinition<T extends StringRecord = StringRecord> =
-        Readonly<{
-            /**
-             * Name, like zh-CN
-             */
-            name: string;
+    export type CultureDefinition<T extends StringRecord = StringRecord> = {
+        /**
+         * Name, like zh-CN
+         */
+        readonly name: string;
 
-            /**
-             * Label for description, like Simplifined Chinese
-             */
-            label: string;
+        /**
+         * Label for description, like Simplifined Chinese
+         */
+        label: string;
 
-            /**
-             * Resources
-             */
-            resources: T | (() => Promise<T>);
+        /**
+         * Resources
+         */
+        resources: T | (() => Promise<T>);
 
-            /**
-             * Compatible names
-             */
-            compatibleNames?: string[];
-        }>;
+        /**
+         * Compatible names
+         */
+        readonly compatibleNames?: string[];
+    };
 
     /**
      * Dynamic interface with multiple properties
