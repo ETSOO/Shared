@@ -33,7 +33,7 @@ export namespace DataTypes {
     /**
      * Basic type names
      */
-    export type BasicNames = typeof BasicArray[number];
+    export type BasicNames = (typeof BasicArray)[number];
 
     /**
      * Basic type template
@@ -324,7 +324,7 @@ export namespace DataTypes {
             /**
              * Resources
              */
-            resources: T;
+            resources: T | Promise<T>;
 
             /**
              * Compatible names
