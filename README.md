@@ -205,6 +205,7 @@ DOM/window related utilities
 |detectedCulture|Current detected culture|
 |dimensionEqual|Check two rectangles equality|
 |downloadFile|Download file from API fetch response body|
+|en|Get English resources definition|
 |fileToDataURL|File to data URL|
 |formDataToObject|Form data to object|
 |getCulture|Get the available culture definition|
@@ -218,6 +219,8 @@ DOM/window related utilities
 |mergeURLSearchParams|Merge URL search parameters|
 |setFocus|Set HTML element focus by name|
 |verifyPermission|Verify file system permission|
+|zhHans|Get simplified Chinese resources definition|
+|zhHant|Get traditional Chinese resources definition|
 
 ## ExtendUtils
 Extend current class/object functioning

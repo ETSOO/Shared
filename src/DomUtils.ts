@@ -375,6 +375,53 @@ export namespace DomUtils {
     }
 
     /**
+     * Get English resources definition
+     * @param resources Resources
+     * @returns Result
+     */
+    export const en = <
+        T extends DataTypes.StringRecord = DataTypes.StringRecord
+    >(
+        resources: T | (() => Promise<T>)
+    ): DataTypes.CultureDefinition<T> => ({
+        name: 'en',
+        label: 'English',
+        resources
+    });
+
+    /**
+     * Get simplified Chinese resources definition
+     * @param resources Resources
+     * @returns Result
+     */
+    export const zhHans = <
+        T extends DataTypes.StringRecord = DataTypes.StringRecord
+    >(
+        resources: T | (() => Promise<T>)
+    ): DataTypes.CultureDefinition<T> => ({
+        name: 'zh-Hans',
+        label: '简体中文',
+        resources,
+        compatibleNames: ['zh-CN', 'zh-SG']
+    });
+
+    /**
+     * Get traditional Chinese resources definition
+     * @param resources Resources
+     * @returns Result
+     */
+    export const zhHant = <
+        T extends DataTypes.StringRecord = DataTypes.StringRecord
+    >(
+        resources: T | (() => Promise<T>)
+    ): DataTypes.CultureDefinition<T> => ({
+        name: 'zh-Hant',
+        label: '繁體中文',
+        resources,
+        compatibleNames: ['zh-HK', 'zh-TW', 'zh-MO']
+    });
+
+    /**
      * Get the available culture definition
      * @param items Available cultures
      * @param culture Detected culture
