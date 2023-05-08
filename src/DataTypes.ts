@@ -324,7 +324,7 @@ export namespace DataTypes {
             /**
              * Resources
              */
-            resources: T | Promise<T>;
+            resources: T | (() => Promise<T>);
 
             /**
              * Compatible names
