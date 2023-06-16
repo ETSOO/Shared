@@ -238,6 +238,7 @@ Numbers related utilities
 |Name|Description|
 |---:|---|
 |format|Format number|
+|formatFileSize|Format file size|
 |formatMoney|Format money number|
 |getCurrencySymbol|Get currency symbol or name from ISO code|
 |parse|Parse float value|
