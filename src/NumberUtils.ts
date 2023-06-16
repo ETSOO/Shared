@@ -67,6 +67,21 @@ export namespace NumberUtils {
     }
 
     /**
+     * Format file size
+     * @param size File size
+     * @param fractionDigits Fraction digits
+     * @returns Result
+     */
+    export function formatFileSize(size: number, fractionDigits: number = 2) {
+        const i = size === 0 ? 0 : Math.floor(Math.log(size) / Math.log(1024));
+        return (
+            (size / Math.pow(1024, i)).toFixed(fractionDigits) +
+            ' ' +
+            ['B', 'KB', 'MB', 'GB', 'TB'][i]
+        );
+    }
+
+    /**
      * Get currency symbol or name from ISO code
      * @param code ISO currency code, like USD / CNY
      * @param display Display format

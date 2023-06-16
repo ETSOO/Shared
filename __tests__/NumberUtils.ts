@@ -40,3 +40,12 @@ test('Tests for toExact', () => {
     expect(result).not.toBe(0.7);
     expect(result.toExact()).toBe(0.7);
 });
+
+test('Tests for toFileSize', () => {
+    expect(NumberUtils.formatFileSize(1551859712)).toBe('1.45 GB');
+    expect(NumberUtils.formatFileSize(1551859712, 1)).toBe('1.4 GB');
+    expect(NumberUtils.formatFileSize(5000)).toBe('4.88 KB');
+    expect(NumberUtils.formatFileSize(999949)).toBe('976.51 KB');
+    expect(NumberUtils.formatFileSize(1125000)).toBe('1.07 MB');
+    expect(NumberUtils.formatFileSize(1125000, 1)).toBe('1.1 MB');
+});

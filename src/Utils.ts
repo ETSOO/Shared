@@ -359,7 +359,9 @@ export namespace Utils {
      */
     export const getResult = <R, T = DataTypes.Func<R> | R>(
         input: T,
-        ...args: T extends DataTypes.Func<R> ? Parameters<typeof input> : never
+        ...args: T extends DataTypes.Func<R>
+            ? Parameters<typeof input>
+            : never | []
     ): T extends DataTypes.Func<R> ? ReturnType<T> : T => {
         return typeof input === 'function' ? input(...args) : input;
     };
