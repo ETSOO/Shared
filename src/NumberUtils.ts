@@ -77,7 +77,7 @@ export namespace NumberUtils {
         return (
             (size / Math.pow(1024, i)).toFixed(fractionDigits) +
             ' ' +
-            ['B', 'KB', 'MB', 'GB', 'TB'][i]
+            ['B', 'KB', 'MB', 'GB', 'TB', 'PB'][i]
         );
     }
 

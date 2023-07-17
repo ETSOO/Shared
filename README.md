@@ -41,6 +41,9 @@ Content disposition of HTTP
 |Methods||
 |format|Format to standard output|
 
+## DataError
+Error with custom data
+
 ## EColor
 Etsoo implmented Color
 

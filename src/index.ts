@@ -1,4 +1,5 @@
 export * from './types/ContentDisposition';
+export * from './types/DataError';
 export * from './types/DelayedExecutorType';
 export * from './types/EColor';
 export * from './types/EHistory';
