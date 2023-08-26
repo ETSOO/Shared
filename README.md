@@ -287,6 +287,7 @@ String and other related utilities
 |objectEqual|Test two objects are equal or not|
 |objectKeys|Get two object's unqiue properties|
 |objectUpdated|Get the new object's updated fields contrast to the previous object|
+|parsePath|Parse path similar with node.js path.parse|
 |parseString|Parse string (JSON) to specific type|
 |removeNonLetters|Remove non letters (0-9, a-z, A-Z)|
 |replaceNullOrEmpty|Replace null or empty with default value|

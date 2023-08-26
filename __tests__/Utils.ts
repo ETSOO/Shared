@@ -245,6 +245,42 @@ test('Tests for getResult', () => {
     expect(valueResult).toBe(5);
 });
 
+test('Tests for parsePath, file only', () => {
+    const result = Utils.parsePath('a.jpg');
+    expect(result.root).toBe('');
+    expect(result.dir).toBe('');
+    expect(result.base).toBe('a.jpg');
+    expect(result.ext).toBe('.jpg');
+    expect(result.name).toBe('a');
+});
+
+test('Tests for parsePath, root file only', () => {
+    const result = Utils.parsePath('/a.JPG');
+    expect(result.root).toBe('/');
+    expect(result.dir).toBe('/');
+    expect(result.base).toBe('a.JPG');
+    expect(result.ext).toBe('.JPG');
+    expect(result.name).toBe('a');
+});
+
+test('Tests for parsePath, Linux path', () => {
+    const result = Utils.parsePath('/home/user/dir/file.txt');
+    expect(result.root).toBe('/');
+    expect(result.dir).toBe('/home/user/dir');
+    expect(result.base).toBe('file.txt');
+    expect(result.ext).toBe('.txt');
+    expect(result.name).toBe('file');
+});
+
+test('Tests for parsePath, Windows path', () => {
+    const result = Utils.parsePath('C:\\path\\dir\\file.txt');
+    expect(result.root).toBe('C:\\');
+    expect(result.dir).toBe('C:\\path\\dir');
+    expect(result.base).toBe('file.txt');
+    expect(result.ext).toBe('.txt');
+    expect(result.name).toBe('file');
+});
+
 test('Tests for sortByFavor', () => {
     const items = [1, 2, 3, 4, 5, 6, 7];
     expect(Utils.sortByFavor(items, [5, 1, 3])).toStrictEqual([

@@ -1,6 +1,7 @@
 import { DataTypes } from './DataTypes';
 import isEqual from 'lodash.isequal';
 import { DateUtils } from './DateUtils';
+import { ParsedPath } from './types/ParsedPath';
 
 declare global {
     interface String {
@@ -671,6 +672,54 @@ export namespace Utils {
         if (n2 === -1) return -1;
         return n1 - n2;
     }
+
+    /**
+     * Parse path similar with node.js path.parse
+     * @param path Input path
+     */
+    export const parsePath = (path: string): ParsedPath => {
+        // Two formats or mixed
+        // /home/user/dir/file.txt
+        // C:\\path\\dir\\file.txt
+        const lastIndex = Math.max(
+            path.lastIndexOf('/'),
+            path.lastIndexOf('\\')
+        );
+
+        let root = '',
+            dir = '',
+            base: string,
+            ext: string,
+            name: string;
+
+        if (lastIndex === -1) {
+            base = path;
+        } else {
+            base = path.substring(lastIndex + 1);
+            const index1 = path.indexOf('/');
+            const index2 = path.indexOf('\\');
+            const index =
+                index1 === -1
+                    ? index2
+                    : index2 === -1
+                    ? index1
+                    : Math.min(index1, index2);
+            root = path.substring(0, index + 1);
+            dir = path.substring(0, lastIndex);
+            if (dir === '') dir = root;
+        }
+
+        const extIndex = base.lastIndexOf('.');
+        if (extIndex === -1) {
+            name = base;
+            ext = '';
+        } else {
+            name = base.substring(0, extIndex);
+            ext = base.substring(extIndex);
+        }
+
+        return { root, dir, base, ext, name };
+    };
 
     /**
      * Sort array by favored values
