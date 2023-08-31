@@ -136,13 +136,16 @@ Data type definitions and type safe functions. ListItemType, ListItemType1 and L
 |Func<R>|Function type, R is return type|
 |HAlign|Horizontal align|
 |HAlignEnum|Horizontal align enum|
+|IdDefaultType|Id default type|
 |IdType|Number and string combination id type|
 |IdItem|Item with id or id generator|
 |IdLabelItem|Item with id and label|
 |IdLabelType|Item with id and label dynamic type|
 |IdNameItem|Item with id and name|
+|IdTitleItem|Item with id and title|
 |KeyCollection|Key collection, like { key1: {}, key2: {} }|
 |Keys|Get specific type keys|
+|LabelDefaultType|Label default type|
 |MConstructor|Mixins constructor|
 |ObjType|Generic object type|
 |Optional|Make properties optional|
@@ -155,6 +158,7 @@ Data type definitions and type safe functions. ListItemType, ListItemType1 and L
 |SimpleObject|Simple object, string key, simple type and null value Record|
 |StringDictionary|String key, string value Record|
 |StringRecord|String key, unknown value Record|
+|TitleDefaultType|Title default type|
 |VAlign|Vertical align|
 |VAlignEnum|Vertical align enum|
 |Methods||

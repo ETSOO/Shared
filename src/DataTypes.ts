@@ -279,6 +279,16 @@ export namespace DataTypes {
     };
 
     /**
+     * Item with id and title property
+     */
+    export type IdTitleItem<T extends IdType = number> = IdItem<T> & {
+        /**
+         * title field
+         */
+        title: string;
+    };
+
+    /**
      * Item with id and label dynamic type
      */
     export type IdLabelType<
@@ -751,11 +761,11 @@ export type ListType = DataTypes.IdLabelItem<number>;
 export type ListType1 = DataTypes.IdLabelItem<string>;
 
 /**
- * List item with compatible id and name / label
+ * List item with compatible id and name / label / title
  */
 export type ListType2 = {
     id: DataTypes.IdType;
-} & ({ label: string } | { name: string });
+} & ({ label: string } | { name: string } | { title: string });
 
 /**
  * Id default type
@@ -769,4 +779,11 @@ export type IdDefaultType<T extends object> = T extends { id: number | string }
  */
 export type LabelDefaultType<T extends object> = T extends { label: string }
     ? DataTypes.Keys<T, string> & 'label'
+    : DataTypes.Keys<T, string>;
+
+/**
+ * Title default type
+ */
+export type TitleDefaultType<T extends object> = T extends { title: string }
+    ? DataTypes.Keys<T, string> & 'title'
     : DataTypes.Keys<T, string>;
