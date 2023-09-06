@@ -62,3 +62,32 @@ test('Tests for maxItem / minItem', () => {
     const emptyItems: { id: string; amount: number }[] = [];
     expect(emptyItems.maxItem('amount')).toBeUndefined();
 });
+
+test('Tests for sortIds', () => {
+    const source = [
+        {
+            id: 'zh-Hans',
+            label: '中文（简体）, Chinese (Simplified)'
+        },
+        {
+            id: 'en',
+            label: '英语, English'
+        },
+        {
+            id: 'fr',
+            label: '法语, French'
+        },
+        {
+            id: 'de',
+            label: '德语, German'
+        },
+        {
+            id: 'zh-Hant',
+            label: '中文（繁体）, Chinese (Traditional)'
+        }
+    ];
+    source.sortByProperty('id', ['en', 'zh-Hans', 'zh-Hant']);
+
+    const ids = source.map((s) => s.id);
+    expect(ids).toStrictEqual(['en', 'zh-Hans', 'zh-Hant', 'fr', 'de']);
+});

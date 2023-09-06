@@ -51,6 +51,13 @@ declare global {
         ): T | undefined;
 
         /**
+         * Sort by property
+         * @param property Property
+         * @param values Property values
+         */
+        sortByProperty<P extends keyof T>(property: P, values: T[P][]): T[];
+
+        /**
          * Sum number items or number item properties
          * @param field Object field to calculate
          */
@@ -132,6 +139,22 @@ Array.prototype.minItem = function <T>(
     return this.reduce((prev, curr) =>
         prev[field] < curr[field] ? prev : curr
     );
+};
+
+Array.prototype.sortByProperty = function <T, P extends keyof T>(
+    this: Array<T>,
+    property: P,
+    values: T[P][]
+) {
+    return this.sort((a, b) => {
+        const ai = values.indexOf(a[property]);
+        const bi = values.indexOf(b[property]);
+
+        if (ai === bi) return 0;
+        if (ai < 0) return bi;
+        else if (bi < 0) return -ai;
+        else return ai - bi;
+    });
 };
 
 Array.prototype.sum = function <T>(
