@@ -63,7 +63,7 @@ test('Tests for maxItem / minItem', () => {
     expect(emptyItems.maxItem('amount')).toBeUndefined();
 });
 
-test('Tests for sortIds', () => {
+test('Tests for sortIds 1', () => {
     const source = [
         {
             id: 'zh-Hans',
@@ -90,4 +90,34 @@ test('Tests for sortIds', () => {
 
     const ids = source.map((s) => s.id);
     expect(ids).toStrictEqual(['en', 'zh-Hans', 'zh-Hant', 'fr', 'de']);
+});
+
+test('Tests for sortIds 2', () => {
+    const source = [
+        { id: 'AUD', label: '澳元' },
+        { id: 'CAD', label: '加元' },
+        { id: 'CNY', label: '人民币' },
+        { id: 'EUR', label: '欧元' },
+        { id: 'GBP', label: '英镑' },
+        { id: 'HKD', label: '港币' },
+        { id: 'JPY', label: '日元' },
+        { id: 'NZD', label: '纽币' },
+        { id: 'SGD', label: '新币' },
+        { id: 'USD', label: '美元' }
+    ];
+    source.sortByProperty('id', ['USD', 'CNY']);
+
+    const ids = source.map((s) => s.id);
+    expect(ids).toStrictEqual([
+        'USD',
+        'CNY',
+        'AUD',
+        'CAD',
+        'EUR',
+        'GBP',
+        'HKD',
+        'JPY',
+        'NZD',
+        'SGD'
+    ]);
 });

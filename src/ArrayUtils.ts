@@ -151,9 +151,8 @@ Array.prototype.sortByProperty = function <T, P extends keyof T>(
         const bi = values.indexOf(b[property]);
 
         if (ai === bi) return 0;
-        if (ai < 0) return bi;
-        else if (bi < 0) return -ai;
-        else return ai - bi;
+        if (ai < 0 || bi < 0) return bi === 0 ? 1 : bi;
+        return ai - bi;
     });
 };
 
