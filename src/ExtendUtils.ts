@@ -31,7 +31,7 @@ export namespace ExtendUtils {
         func: (...args: P) => void,
         delayMiliseconds: number
     ): DelayedExecutorType<P> {
-        let seed: number = 0;
+        let cancel: (() => void) | undefined;
         return {
             /**
              * Call the function
@@ -40,14 +40,10 @@ export namespace ExtendUtils {
              */
             call(miliseconds?: number, ...args: P) {
                 this.clear();
-                seed = window.setTimeout(
-                    (...args: P) => {
-                        func(...args);
-                        seed = 0;
-                    },
-                    miliseconds ?? delayMiliseconds,
-                    ...args
-                );
+                cancel = waitFor(() => {
+                    func(...args);
+                    cancel = undefined;
+                }, miliseconds ?? delayMiliseconds);
             },
 
             /**
@@ -55,8 +51,8 @@ export namespace ExtendUtils {
              */
             clear() {
                 if (this.isRunning()) {
-                    window.clearTimeout(seed);
-                    seed = 0;
+                    if (cancel) cancel();
+                    cancel = undefined;
                 }
             },
 
@@ -65,7 +61,7 @@ export namespace ExtendUtils {
              * @returns Result
              */
             isRunning() {
-                return seed > 0;
+                return cancel != null;
             }
         };
     }
@@ -85,7 +81,52 @@ export namespace ExtendUtils {
      */
     export function sleep(delay = 0) {
         return new Promise((resolve) => {
-            setTimeout(resolve, delay);
+            waitFor(() => resolve, delay);
         });
+    }
+
+    /**
+     * Wait for condition meets and execute callback
+     * requestAnimationFrame to replace setTimeout
+     * @param callback Callback
+     * @param checkReady Check ready, when it's a number, similar to setTimeout
+     * @returns cancel callback
+     */
+    export function waitFor(
+        callback: () => void,
+        checkReady: ((spanTime: number) => boolean) | number
+    ) {
+        let startTime: number | undefined;
+        let requestID: number | undefined;
+        function doWait(time?: number) {
+            // Reset request id
+            requestID = undefined;
+
+            // First time
+            if (startTime == null) startTime = time;
+
+            // Ignore
+            if (startTime === 0) return;
+
+            const spanTime =
+                startTime == null || time == null ? 0 : time - startTime;
+            if (
+                time != null &&
+                (typeof checkReady === 'number'
+                    ? spanTime >= checkReady
+                    : checkReady(spanTime))
+            ) {
+                callback();
+            } else {
+                requestID = requestAnimationFrame(doWait);
+            }
+        }
+
+        doWait();
+
+        return () => {
+            if (requestID) cancelAnimationFrame(requestID);
+            startTime = undefined;
+        };
     }
 }
