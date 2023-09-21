@@ -353,6 +353,36 @@ export namespace Utils {
     }
 
     /**
+     * Get nested value from object
+     * @param data Data
+     * @param name Field name, support property chain like 'jsonData.logSize'
+     * @returns Result
+     */
+    export function getNestedValue(data: object, name: string) {
+        const properties = name.split('.');
+        const len = properties.length;
+        if (len === 1) {
+            return Reflect.get(data, name);
+        } else {
+            let curr = data;
+            for (let i = 0; i < len; i++) {
+                const property = properties[i];
+
+                if (i + 1 === len) {
+                    return Reflect.get(curr, property);
+                } else {
+                    let p = Reflect.get(curr, property);
+                    if (p == null) {
+                        return undefined;
+                    }
+
+                    curr = p;
+                }
+            }
+        }
+    }
+
+    /**
      * Get input function or value result
      * @param input Input function or value
      * @param args Arguments
@@ -542,6 +572,33 @@ export namespace Utils {
     }
 
     /**
+     * Try to parse JSON input to array
+     * @param input JSON input
+     * @param checkValue Type check value
+     * @returns Result
+     */
+    export function parseJsonArray<T>(
+        input: string,
+        checkValue?: T
+    ): T[] | undefined {
+        try {
+            if (!input.startsWith('[')) input = `[${input}]`;
+            const array = JSON.parse(input);
+            const type = typeof checkValue;
+            if (
+                Array.isArray(array) &&
+                (checkValue == null ||
+                    !array.some((item) => typeof item !== type))
+            ) {
+                return array;
+            }
+        } catch (e) {
+            console.log('parseJsonArray', input, e);
+        }
+        return;
+    }
+
+    /**
      * Parse string (JSON) to specific type, no type conversion
      * For type conversion, please use DataTypes.convert
      * @param input Input string
@@ -671,6 +728,36 @@ export namespace Utils {
         if (n1 === -1) return 1;
         if (n2 === -1) return -1;
         return n1 - n2;
+    }
+
+    /**
+     * Set nested value to object
+     * @param data Data
+     * @param name Field name, support property chain like 'jsonData.logSize'
+     * @param value Value
+     */
+    export function setNestedValue(data: object, name: string, value: unknown) {
+        const properties = name.split('.');
+        const len = properties.length;
+        if (len === 1) Reflect.set(data, name, value);
+        else {
+            let curr = data;
+            for (let i = 0; i < len; i++) {
+                const property = properties[i];
+
+                if (i + 1 === len) {
+                    Reflect.set(curr, property, value);
+                } else {
+                    let p = Reflect.get(curr, property);
+                    if (p == null) {
+                        p = {};
+                        Reflect.set(curr, property, p);
+                    }
+
+                    curr = p;
+                }
+            }
+        }
     }
 
     /**

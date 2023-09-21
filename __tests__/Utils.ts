@@ -188,6 +188,12 @@ test('Tests for objectEqual', () => {
     expect(Utils.objectEqual(obj1, obj2, ['a'], 2)).toBeFalsy();
 });
 
+test('Tests for parseJsonArray', () => {
+    expect(Utils.parseJsonArray('[1, 3, "a"]', 0)).toBeUndefined();
+    expect(Utils.parseJsonArray('[1, 3, "a"]')).not.toBeUndefined();
+    expect(Utils.parseJsonArray('1, 3, 9')).not.toBeUndefined();
+});
+
 test('Tests for objectUpdated', () => {
     const objPrev = { a: 1, b: 'abc', c: true, d: null, f: [1, 2] };
     const objNew = { a: 2, b: 'abc', d: new Date(), f: [1, 2, 3], g: true };
@@ -228,6 +234,15 @@ test('Test for snakeNameToWord', () => {
 
 test('Tests for mergeClasses', () => {
     expect(Utils.mergeClasses('a', '', 'b ', undefined, 'c')).toBe('a b c');
+});
+
+test('Tests for getNestedValue', () => {
+    const obj = { jsonData: { photoSize: [200, 100], supportResizing: true } };
+    expect(Utils.getNestedValue(obj, 'jsonData.supportResizing')).toBeTruthy();
+    expect(
+        Array.isArray(Utils.getNestedValue(obj, 'jsonData.photoSize'))
+    ).toBeTruthy();
+    expect(Utils.getNestedValue(obj, 'jsonData.unknown')).toBeUndefined();
 });
 
 test('Tests for getResult', () => {
@@ -279,6 +294,16 @@ test('Tests for parsePath, Windows path', () => {
     expect(result.base).toBe('file.txt');
     expect(result.ext).toBe('.txt');
     expect(result.name).toBe('file');
+});
+
+test('Tests for setNestedValue', () => {
+    const obj = { jsonData: { photoSize: [200, 100], supportResizing: true } };
+
+    Utils.setNestedValue(obj, 'jsonData.supportResizing', false);
+    expect(obj.jsonData.supportResizing).toBeFalsy();
+
+    Utils.setNestedValue(obj, 'jsonData.newProperty.value', 125);
+    expect(Reflect.get((obj.jsonData as any).newProperty, 'value')).toBe(125);
 });
 
 test('Tests for sortByFavor', () => {

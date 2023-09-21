@@ -278,6 +278,7 @@ String and other related utilities
 |formatInitial|Format inital character to lower case or upper case|
 |formatString|Format string with parameters|
 |getDataChanges|Get data changed fields with input data updated|
+|getNestedValue|Get nested value from object|
 |getTimeZone|Get time zone|
 |hideData|Hide data|
 |hideEmail|Hide email data|
@@ -291,11 +292,13 @@ String and other related utilities
 |objectEqual|Test two objects are equal or not|
 |objectKeys|Get two object's unqiue properties|
 |objectUpdated|Get the new object's updated fields contrast to the previous object|
+|parseJsonArray|Try to parse JSON input to array|
 |parsePath|Parse path similar with node.js path.parse|
 |parseString|Parse string (JSON) to specific type|
 |removeNonLetters|Remove non letters (0-9, a-z, A-Z)|
 |replaceNullOrEmpty|Replace null or empty with default value|
 |setLabels|Set source with new labels|
+|setNestedValue|Set nested value to object|
 |snakeNameToWord|Snake name to works, 'snake_name' to 'Snake Name'|
 |sortByFavor|Sort array by favored values|
 |sortByFieldFavor|Sort array by favored field values|
