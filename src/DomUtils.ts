@@ -1,5 +1,6 @@
 /// <reference lib="dom" />
 import { DataTypes } from './DataTypes';
+import { DateUtils } from './DateUtils';
 import { FormDataFieldValue, IFormData } from './types/FormData';
 
 if (typeof navigator === 'undefined') {
@@ -469,7 +470,7 @@ export namespace DomUtils {
             if (isNaN(num)) return null;
             return num;
         } else if (type === 'date' || type === 'datetime-local')
-            return input.valueAsDate;
+            return input.valueAsDate ?? DateUtils.parse(input.value);
         return input.value;
     }
 

@@ -1,5 +1,6 @@
 import { DomUtils } from '../src/DomUtils';
 import { DataTypes } from '../src/DataTypes';
+import { DateUtils } from '../src/DateUtils';
 
 // Implement for tests
 class Rect implements DOMRect {
@@ -307,4 +308,21 @@ test('Tests for setFocus', () => {
 
     DomUtils.setFocus({ test: 'No content' }, container);
     expect(focus).toBeCalledTimes(2);
+});
+
+test('Tests for getInputValue', () => {
+    // Arrange
+    const input = document.createElement('input');
+    input.type = 'datetime-local';
+    input.value = DateUtils.formatForInput('2023-09-21T23:08', false) ?? '';
+
+    // Act
+    const result = DomUtils.getInputValue(input);
+
+    // Assert
+    expect(result).not.toBeUndefined();
+    expect(result instanceof Date).toBeTruthy();
+    if (result instanceof Date) {
+        expect(result.getDate()).toBe(21);
+    }
 });
