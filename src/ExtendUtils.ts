@@ -80,7 +80,7 @@ export namespace ExtendUtils {
      * @param delay Delay miniseconds
      */
     export function sleep(delay = 0) {
-        return new Promise((resolve) => {
+        return new Promise<void>((resolve) => {
             waitFor(() => resolve, delay);
         });
     }
