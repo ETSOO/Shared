@@ -81,7 +81,7 @@ export namespace ExtendUtils {
      */
     export function sleep(delay = 0) {
         return new Promise<void>((resolve) => {
-            waitFor(() => resolve, delay);
+            waitFor(resolve, delay);
         });
     }
 
