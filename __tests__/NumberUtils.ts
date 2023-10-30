@@ -25,7 +25,10 @@ test('Tests for getCurrencySymbol', () => {
 test('Tests for parse', () => {
     expect(NumberUtils.parse('123')).toBe(123);
     expect(NumberUtils.parse(Object(123))).toBe(123);
-    expect(isNaN(NumberUtils.parse('a'))).toBeTruthy();
+    expect(NumberUtils.parse('a')).toBeUndefined();
+    expect(NumberUtils.parse('a', 0)).toBe(0);
+    expect(NumberUtils.parse('')).toBeUndefined();
+    expect(NumberUtils.parse('', -1)).toBe(-1);
 });
 
 test('Tests for parseWithUnit', () => {

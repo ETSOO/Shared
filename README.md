@@ -248,7 +248,7 @@ Numbers related utilities
 |formatFileSize|Format file size|
 |formatMoney|Format money number|
 |getCurrencySymbol|Get currency symbol or name from ISO code|
-|parse|Parse float value|
+|parse|Parse to number, with or without default value|
 |toExact|To the exact precision number avoiding precision lost|
 
 ## StorageUtils

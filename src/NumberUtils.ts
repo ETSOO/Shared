@@ -106,20 +106,35 @@ export namespace NumberUtils {
     }
 
     /**
-     * Parse float value
+     * Parse number
      * @param rawData Raw data
      */
-    export const parse = (rawData: unknown): number => {
-        if (rawData == null) {
-            return Number.NaN;
+    export function parse(rawData: unknown): number | undefined;
+
+    /**
+     * Parse number with default value
+     * @param rawData Raw data
+     * @param defaultValue Default value
+     */
+    export function parse(rawData: unknown, defaultValue: number): number;
+
+    export function parse(
+        rawData: unknown,
+        defaultValue?: number
+    ): number | undefined {
+        if (rawData == null || rawData === '') {
+            return defaultValue;
         }
 
         if (typeof rawData === 'number') {
+            if (isNaN(rawData)) return defaultValue;
             return rawData;
         }
 
-        return parseFloat(rawData.toString());
-    };
+        const p = parseFloat(rawData.toString());
+        if (isNaN(p)) return defaultValue;
+        return p;
+    }
 
     /**
      * Parse float value and unit
