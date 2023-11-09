@@ -171,8 +171,10 @@ Data type definitions and type safe functions. ListItemType, ListItemType1 and L
 |getEnumByValue|Get enum item from value|
 |getEnumKey|Get enum string literal type value|
 |getEnumKeys|Get Enum keys|
+|getListItemLabel|Get ListType2 item label|
 |getIdValue|Get object id field value|
 |getIdValue1|Get object id field value 1|
+|getObjectItemLabel|Get object item label|
 |getResult|Get input function or value result|
 |getStringValue|Get object string field value|
 |getValue|Get object field value|

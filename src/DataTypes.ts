@@ -787,3 +787,31 @@ export type LabelDefaultType<T extends object> = T extends { label: string }
 export type TitleDefaultType<T extends object> = T extends { title: string }
     ? DataTypes.Keys<T, string> & 'title'
     : DataTypes.Keys<T, string>;
+
+/**
+ * Get ListType2 item label
+ * @param item Item
+ * @returns Result
+ */
+export function getListItemLabel<D extends ListType2>(item: D) {
+    return 'label' in item
+        ? item.label
+        : 'name' in item
+        ? item.name
+        : item.title;
+}
+
+/**
+ * Get object item label
+ * @param item Item
+ * @returns Result
+ */
+export function getObjectItemLabel(item: object): string {
+    return 'label' in item
+        ? `${item.label}`
+        : 'name' in item
+        ? `${item.name}`
+        : 'title' in item
+        ? `${item.title}`
+        : `${item}`;
+}
