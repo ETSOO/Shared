@@ -173,11 +173,6 @@ export namespace DataTypes {
     export type Placement = keyof typeof PlacementEnum;
 
     /**
-     * Number and string combination id type
-     */
-    export type IdType = number | string;
-
-    /**
      * Add and edit data type
      * ChangedFields for editing case
      */
@@ -300,7 +295,7 @@ export namespace DataTypes {
     /**
      * Get specific type keys
      */
-    export type Keys<T extends object, R = string | number> = {
+    export type Keys<T extends object, R = IdType> = {
         [k in keyof T]: T[k] extends R ? k : never;
     }[keyof T];
 
@@ -654,10 +649,10 @@ export namespace DataTypes {
      * @param key Property name
      * @returns Id value
      */
-    export function getIdValue<
-        T extends object,
-        K extends Keys<T, string | number>
-    >(data: T, key: K): T[K] {
+    export function getIdValue<T extends object, K extends Keys<T, IdType>>(
+        data: T,
+        key: K
+    ): T[K] {
         return data[key];
     }
 
@@ -779,6 +774,11 @@ export namespace DataTypes {
 }
 
 /**
+ * Number and string combination id type
+ */
+export type IdType = number | string;
+
+/**
  * List item with number id type
  */
 export type ListType = DataTypes.IdLabelItem<number>;
@@ -792,15 +792,16 @@ export type ListType1 = DataTypes.IdLabelItem<string>;
  * List item with compatible id and name / label / title
  */
 export type ListType2 = {
-    id: DataTypes.IdType;
+    id: IdType;
 } & ({ label: string } | { name: string } | { title: string });
 
 /**
  * Id default type
  */
-export type IdDefaultType<T extends object> = T extends { id: number | string }
-    ? DataTypes.Keys<T> & 'id'
-    : DataTypes.Keys<T>;
+export type IdDefaultType<
+    T extends object,
+    I extends IdType = IdType
+> = T extends { id: I } ? DataTypes.Keys<T> & 'id' : DataTypes.Keys<T>;
 
 /**
  * Label default type

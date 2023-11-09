@@ -1,4 +1,4 @@
-import { DataTypes } from './DataTypes';
+import { DataTypes, IdType } from './DataTypes';
 import isEqual from 'lodash.isequal';
 import { DateUtils } from './DateUtils';
 import { ParsedPath } from './types/ParsedPath';
@@ -247,7 +247,7 @@ export namespace Utils {
      * @returns Result
      */
     export function exclude<
-        T extends { [P in D]: DataTypes.IdType },
+        T extends { [P in D]: IdType },
         D extends string = 'id'
     >(items: T[], field: D, ...excludedValues: T[D][]) {
         return items.filter((item) => !excludedValues.includes(item[field]));
@@ -261,7 +261,7 @@ export namespace Utils {
      * @returns Result
      */
     export async function excludeAsync<
-        T extends { [P in D]: DataTypes.IdType },
+        T extends { [P in D]: IdType },
         D extends string = 'id'
     >(items: Promise<T[] | undefined>, field: D, ...excludedValues: T[D][]) {
         const result = await items;
