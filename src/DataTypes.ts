@@ -801,7 +801,7 @@ export type ListType2 = {
 export type IdDefaultType<
     T extends object,
     I extends IdType = IdType
-> = T extends { id: I } ? DataTypes.Keys<T> & 'id' : DataTypes.Keys<T>;
+> = T extends { id: I } ? DataTypes.Keys<T, I> & 'id' : DataTypes.Keys<T, I>;
 
 /**
  * Label default type
