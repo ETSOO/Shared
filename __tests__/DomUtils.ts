@@ -326,3 +326,15 @@ test('Tests for getInputValue', () => {
         expect(result.getDate()).toBe(21);
     }
 });
+
+test('Tests for setupLogging', () => {
+    // Arrange
+    const action = jest.fn();
+    DomUtils.setupLogging(action, true);
+
+    // Act
+    console.error('Test');
+
+    // Assert
+    expect(action).toHaveBeenCalledTimes(1);
+});

@@ -1,6 +1,8 @@
 /// <reference lib="dom" />
 import { DataTypes } from './DataTypes';
 import { DateUtils } from './DateUtils';
+import { Utils } from './Utils';
+import { ErrorData, ErrorType } from './types/ErrorData';
 import { FormDataFieldValue, IFormData } from './types/FormData';
 
 if (typeof navigator === 'undefined') {
@@ -597,6 +599,114 @@ export namespace DomUtils {
         );
 
         if (element != null) element.focus();
+    }
+
+    /**
+     * Setup logging
+     * @param action Logging action
+     * @param preventDefault Is prevent default action
+     */
+    export function setupLogging(
+        action: (data: ErrorData) => void | Promise<void>,
+        preventDefault?: ((type: ErrorType) => boolean) | boolean
+    ) {
+        // Avoid multiple setup, if there is already a handler, please set "globalThis.onunhandledrejection = null" first
+        if (globalThis.onunhandledrejection) return;
+
+        const errorPD = Utils.getResult(preventDefault, 'error') ?? true;
+        globalThis.onerror = (message, source, lineNo, colNo, error) => {
+            // Default source
+            source ||= globalThis.location.href;
+            let data: ErrorData;
+            if (typeof message === 'string') {
+                data = {
+                    type: 'error',
+                    message, // Share the same message with error
+                    source,
+                    lineNo,
+                    colNo,
+                    stack: error?.stack
+                };
+            } else {
+                data = {
+                    type: 'error',
+                    eventType: message.type,
+                    message:
+                        error?.message ??
+                        `${message.currentTarget} event error`,
+                    source,
+                    lineNo,
+                    colNo,
+                    stack: error?.stack
+                };
+            }
+
+            action(data);
+
+            // Return true to suppress error alert
+            return errorPD;
+        };
+
+        const rejectionPD = Utils.getResult(preventDefault, 'error') ?? true;
+        globalThis.onunhandledrejection = (event) => {
+            if (rejectionPD) event.preventDefault();
+
+            const reason = event.reason;
+            const data: ErrorData = {
+                type: 'unhandledrejection',
+                eventType: event.type,
+                message:
+                    typeof reason === 'string'
+                        ? reason
+                        : JSON.stringify(reason),
+                source: globalThis.location.href
+            };
+
+            action(data);
+        };
+
+        const localConsole = (
+            type: 'consoleWarn' | 'consoleError',
+            orgin: (...args: any[]) => void
+        ) => {
+            const consolePD = Utils.getResult(preventDefault, type) ?? false;
+            return (...args: any[]) => {
+                // Keep original action
+                if (!consolePD) orgin(...args);
+
+                const [first, ...rest] = args;
+                let message: string;
+                if (typeof first === 'string') {
+                    message = first;
+                } else {
+                    message = JSON.stringify(first);
+                }
+
+                const stack =
+                    rest.length > 0
+                        ? rest.map((item) => JSON.stringify(item)).join(', ')
+                        : undefined;
+
+                const data: ErrorData = {
+                    type,
+                    message,
+                    source: globalThis.location.href,
+                    stack
+                };
+
+                action(data);
+            };
+        };
+
+        globalThis.console.warn = localConsole(
+            'consoleWarn',
+            globalThis.console.warn
+        );
+
+        globalThis.console.error = localConsole(
+            'consoleError',
+            globalThis.console.error
+        );
     }
 
     /**
