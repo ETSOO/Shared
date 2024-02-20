@@ -593,7 +593,7 @@ export namespace Utils {
                 return array;
             }
         } catch (e) {
-            console.log('parseJsonArray', input, e);
+            console.error(`Utils.parseJsonArray ${input} with error`, e);
         }
         return;
     }

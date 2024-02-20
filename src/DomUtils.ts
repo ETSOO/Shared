@@ -324,7 +324,7 @@ export namespace DomUtils {
                 return true;
             }
         } catch (e) {
-            console.log(e);
+            console.error('DomUtils.downloadFile with error', e);
         }
 
         return false;
