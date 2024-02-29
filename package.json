@@ -1,10 +1,9 @@
 {
     "name": "@etsoo/shared",
-    "version": "1.2.27",
+    "version": "1.2.28",
     "description": "TypeScript shared utilities and functions",
     "main": "lib/cjs/index.js",
     "module": "lib/mjs/index.js",
-    "type": "module",
     "types": "lib/mjs/index.d.ts",
     "exports": {
         ".": {
