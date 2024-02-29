@@ -7,8 +7,8 @@ import { FormDataFieldValue, IFormData } from './types/FormData';
 
 if (typeof navigator === 'undefined') {
     // Test mock only
-    global.navigator = { language: 'en-US' } as any;
-    global.location = { href: 'http://localhost/' } as any;
+    globalThis.navigator = { language: 'en-US' } as any;
+    globalThis.location = { href: 'http://localhost/' } as any;
 }
 
 /**

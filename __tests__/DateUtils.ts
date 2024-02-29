@@ -98,6 +98,11 @@ test('Tests for substract', () => {
 test('Tests for parse', () => {
     const d1 = DateUtils.parse('2014-01-01T13:13:34.441Z')?.toJSON();
     expect(d1).toBe('2014-01-01T13:13:34.441Z');
+
+    const d2 = DateUtils.parse('2024-03-01T11:41');
+    expect(d2?.getDate()).toBe(1);
+    expect(d2?.getHours()).toBe(11);
+    expect(d2?.getSeconds()).toBe(0);
 });
 
 test('Tests for sameDay', () => {
