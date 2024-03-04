@@ -3,6 +3,7 @@
         /* Visit https://aka.ms/tsconfig.json to read more about this file */
         "target": "ES2020",
         "module": "NodeNext",
+        "moduleResolution": "NodeNext",
         "isolatedModules": true,
         "outDir": "./lib/cjs",
         "noEmit": false,
