@@ -49,28 +49,28 @@ test('Tests for events', () => {
     history.on('navigate', navigatorFn, { capture: true, once: true });
 
     history.clear();
-    expect(clearFn).toBeCalled();
+    expect(clearFn).toHaveBeenCalled();
 
     history.pushState(1);
-    expect(pushFn).toBeCalled();
+    expect(pushFn).toHaveBeenCalled();
 
     history.replaceState(11);
-    expect(replaceFn).toBeCalled();
+    expect(replaceFn).toHaveBeenCalled();
 
     history.pushState(2);
     history.back();
-    expect(navigatorFn).toBeCalledTimes(3);
+    expect(navigatorFn).toHaveBeenCalledTimes(3);
 
     history.forward();
     // Once handler was removed
-    expect(navigatorFn).toBeCalledTimes(5);
+    expect(navigatorFn).toHaveBeenCalledTimes(5);
 
     history.on('navigate', navigatorStopFn, { capture: true });
     history.go(-1);
-    expect(navigatorStopFn).toBeCalled();
+    expect(navigatorStopFn).toHaveBeenCalled();
 
     // Previous handler stopped propagation
-    expect(navigatorFn).toBeCalledTimes(5);
+    expect(navigatorFn).toHaveBeenCalledTimes(5);
 
     history.pushState(3);
     history.pushState(4);

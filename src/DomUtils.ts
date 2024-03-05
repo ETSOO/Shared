@@ -630,7 +630,7 @@ export namespace DomUtils {
             } else {
                 data = {
                     type: 'error',
-                    eventType: message.type,
+                    subType: message.type,
                     message:
                         error?.message ??
                         `${message.currentTarget} event error`,
@@ -652,15 +652,26 @@ export namespace DomUtils {
             if (rejectionPD) event.preventDefault();
 
             const reason = event.reason;
-            const data: ErrorData = {
-                type: 'unhandledrejection',
-                eventType: event.type,
-                message:
-                    typeof reason === 'string'
-                        ? reason
-                        : JSON.stringify(reason),
-                source: globalThis.location.href
-            };
+            let data: ErrorData;
+
+            if (reason instanceof Error) {
+                data = {
+                    type: 'unhandledrejection',
+                    subType: reason.name,
+                    message: reason.message,
+                    stack: reason.stack,
+                    source: globalThis.location.href
+                };
+            } else {
+                data = {
+                    type: 'unhandledrejection',
+                    message:
+                        typeof reason === 'string'
+                            ? reason
+                            : JSON.stringify(reason),
+                    source: globalThis.location.href
+                };
+            }
 
             action(data);
         };

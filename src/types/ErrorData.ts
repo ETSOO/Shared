@@ -6,7 +6,7 @@ export type ErrorType =
 
 export type ErrorData = {
     type: ErrorType;
-    eventType?: string;
+    subType?: string;
     message: string;
     source?: string;
     lineNo?: number;

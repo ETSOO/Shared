@@ -1,6 +1,7 @@
 import { DomUtils } from '../src/DomUtils';
 import { DataTypes } from '../src/DataTypes';
 import { DateUtils } from '../src/DateUtils';
+import { ErrorData } from '../src/types/ErrorData';
 
 // Implement for tests
 class Rect implements DOMRect {
@@ -302,12 +303,12 @@ test('Tests for setFocus', () => {
     container.append(input);
 
     DomUtils.setFocus('test');
-    expect(focus).toBeCalledTimes(1);
+    expect(focus).toHaveBeenCalledTimes(1);
 
     input.blur();
 
     DomUtils.setFocus({ test: 'No content' }, container);
-    expect(focus).toBeCalledTimes(2);
+    expect(focus).toHaveBeenCalledTimes(2);
 });
 
 test('Tests for getInputValue', () => {
@@ -327,9 +328,11 @@ test('Tests for getInputValue', () => {
     }
 });
 
-test('Tests for setupLogging', () => {
+test('Tests for setupLogging', async () => {
     // Arrange
-    const action = jest.fn();
+    const action = jest.fn((data: ErrorData) => {
+        expect(data.message).toBe('Test');
+    });
     DomUtils.setupLogging(action, true);
 
     // Act

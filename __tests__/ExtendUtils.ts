@@ -34,7 +34,7 @@ test('Tests for delayedExecutor', () => {
 
     e.call(2, true, 'b');
 
-    expect(f).toBeCalledTimes(0);
+    expect(f).toHaveBeenCalledTimes(0);
     e.clear();
     expect(e.isRunning()).toBeFalsy();
 });
