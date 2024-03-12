@@ -602,25 +602,28 @@ export namespace DomUtils {
     }
 
     /**
-     * Setup logging
+     * Setup frontend logging
      * @param action Logging action
      * @param preventDefault Is prevent default action
+     * @param window Window object
      */
     export function setupLogging(
         action: (data: ErrorData) => void | Promise<void>,
-        preventDefault?: ((type: ErrorType) => boolean) | boolean
+        preventDefault?: ((type: ErrorType) => boolean) | boolean,
+        window: Window & typeof globalThis = globalThis.window
     ) {
-        // Avoid multiple setup, if there is already a handler, please set "globalThis.onunhandledrejection = null" first
-        if (globalThis.onunhandledrejection) return;
+        // Avoid multiple setup, if there is already a handler, please set "window.onunhandledrejection = null" first
+        if (window.onunhandledrejection) return;
 
-        const errorPD = Utils.getResult(preventDefault, 'error') ?? true;
-        globalThis.onerror = (message, source, lineNo, colNo, error) => {
+        const errorType: ErrorType = 'error';
+        const errorPD = Utils.getResult(preventDefault, errorType) ?? true;
+        window.onerror = (message, source, lineNo, colNo, error) => {
             // Default source
-            source ||= globalThis.location.href;
+            source ||= window.location.href;
             let data: ErrorData;
             if (typeof message === 'string') {
                 data = {
-                    type: 'error',
+                    type: errorType,
                     message, // Share the same message with error
                     source,
                     lineNo,
@@ -629,7 +632,7 @@ export namespace DomUtils {
                 };
             } else {
                 data = {
-                    type: 'error',
+                    type: errorType,
                     subType: message.type,
                     message:
                         error?.message ??
@@ -647,29 +650,33 @@ export namespace DomUtils {
             return errorPD;
         };
 
-        const rejectionPD = Utils.getResult(preventDefault, 'error') ?? true;
-        globalThis.onunhandledrejection = (event) => {
+        const rejectionType: ErrorType = 'unhandledrejection';
+        const rejectionPD =
+            Utils.getResult(preventDefault, rejectionType) ?? true;
+        window.onunhandledrejection = (event) => {
             if (rejectionPD) event.preventDefault();
 
             const reason = event.reason;
+            const source = window.location.href;
             let data: ErrorData;
 
             if (reason instanceof Error) {
+                const { name: subType, message, stack } = reason;
                 data = {
-                    type: 'unhandledrejection',
-                    subType: reason.name,
-                    message: reason.message,
-                    stack: reason.stack,
-                    source: globalThis.location.href
+                    type: rejectionType,
+                    subType,
+                    message,
+                    stack,
+                    source
                 };
             } else {
                 data = {
-                    type: 'unhandledrejection',
+                    type: rejectionType,
                     message:
                         typeof reason === 'string'
                             ? reason
                             : JSON.stringify(reason),
-                    source: globalThis.location.href
+                    source
                 };
             }
 
@@ -701,7 +708,7 @@ export namespace DomUtils {
                 const data: ErrorData = {
                     type,
                     message,
-                    source: globalThis.location.href,
+                    source: window.location.href,
                     stack
                 };
 
@@ -709,14 +716,11 @@ export namespace DomUtils {
             };
         };
 
-        globalThis.console.warn = localConsole(
-            'consoleWarn',
-            globalThis.console.warn
-        );
+        window.console.warn = localConsole('consoleWarn', window.console.warn);
 
-        globalThis.console.error = localConsole(
+        window.console.error = localConsole(
             'consoleError',
-            globalThis.console.error
+            window.console.error
         );
     }
 

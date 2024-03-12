@@ -333,7 +333,7 @@ test('Tests for setupLogging', async () => {
     const action = jest.fn((data: ErrorData) => {
         expect(data.message).toBe('Test');
     });
-    DomUtils.setupLogging(action, true);
+    DomUtils.setupLogging(action, true, globalThis.self);
 
     // Act
     console.error('Test');

@@ -227,6 +227,7 @@ DOM/window related utilities
 |mergeFormData|Merge form data to primary one|
 |mergeURLSearchParams|Merge URL search parameters|
 |setFocus|Set HTML element focus by name|
+|setupLogging|Setup frontend logging|
 |verifyPermission|Verify file system permission|
 |zhHans|Get simplified Chinese resources definition|
 |zhHant|Get traditional Chinese resources definition|
