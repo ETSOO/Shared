@@ -4,6 +4,16 @@
  * Before was wrong with {}, from 4.8 unknown = {} | null | undefined
  */
 
+declare global {
+    interface BigInt {
+        toJSON(): String;
+    }
+}
+
+BigInt.prototype.toJSON = function () {
+    return this.toString() + 'n';
+};
+
 /**
  * Interface data types
  */
@@ -771,12 +781,31 @@ export namespace DataTypes {
             );
         };
     }
+
+    /**
+     * JSON.stringify receiver for bigint
+     * @param args Keys or paths to convert to bigint
+     * @returns JSON receiver function
+     */
+    export function jsonBigintReceiver(...args: string[]) {
+        return jsonReplacer(function (key, value, path) {
+            if (
+                (args.includes(key) || args.includes(path)) &&
+                typeof value === 'string'
+            ) {
+                if (value.endsWith('n')) return BigInt(value.slice(0, -1));
+                else return BigInt(value);
+            }
+
+            return value;
+        });
+    }
 }
 
 /**
  * Number and string combination id type
  */
-export type IdType = number | string;
+export type IdType = number | bigint | string;
 
 /**
  * List item with number id type

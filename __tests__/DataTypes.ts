@@ -17,6 +17,22 @@ test('Tests for IdLabelType', () => {
     expect(item).toEqual(itemCopy);
 });
 
+test('Tests for Bigint Type', () => {
+    const item: DataTypes.IdLabelItem<bigint> = {
+        id: 9007199254740999n,
+        label: 'Etsoo'
+    };
+
+    const json = JSON.stringify(item);
+    expect(json).toBe('{"id":"9007199254740999n","label":"Etsoo"}');
+
+    const itemBack = JSON.parse(
+        json,
+        DataTypes.jsonBigintReceiver('id')
+    ) as DataTypes.IdLabelItem<bigint>;
+    expect(itemBack.id).toBe(9007199254740999n);
+});
+
 test('Tests for convert', () => {
     expect(DataTypes.convert('5', 0)).toStrictEqual(5);
     expect(
