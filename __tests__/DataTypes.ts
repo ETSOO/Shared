@@ -18,7 +18,12 @@ test('Tests for IdLabelType', () => {
 });
 
 test('Tests for Bigint Type', () => {
-    const item: DataTypes.IdLabelItem<bigint> = {
+    type BigintType = {
+        id: bigint;
+        label: string;
+    };
+
+    const item: BigintType = {
         id: 9007199254740999n,
         label: 'Etsoo'
     };
@@ -29,7 +34,7 @@ test('Tests for Bigint Type', () => {
     const itemBack = JSON.parse(
         json,
         DataTypes.jsonBigintReceiver('id')
-    ) as DataTypes.IdLabelItem<bigint>;
+    ) as BigintType;
     expect(itemBack.id).toBe(9007199254740999n);
 });
 

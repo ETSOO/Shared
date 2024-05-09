@@ -15,7 +15,7 @@ export namespace Keyboard {
         Pause = 'Pause',
         CapsLock = 'CapsLock',
         Escape = 'Escape',
-        Space = '',
+        Space = ' ',
         PageUp = 'PageUp',
         PageDown = 'PageDown',
         End = 'End',
