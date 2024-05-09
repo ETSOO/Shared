@@ -805,7 +805,7 @@ export namespace DataTypes {
 /**
  * Number and string combination id type
  */
-export type IdType = number | bigint | string;
+export type IdType = number | string;
 
 /**
  * List item with number id type
