@@ -735,18 +735,30 @@ export namespace Utils {
      * @param data Data
      * @param name Field name, support property chain like 'jsonData.logSize'
      * @param value Value
+     * @param keepNull Keep null value or not
      */
-    export function setNestedValue(data: object, name: string, value: unknown) {
+    export function setNestedValue(
+        data: object,
+        name: string,
+        value: unknown,
+        keepNull?: boolean
+    ) {
         const properties = name.split('.');
         const len = properties.length;
-        if (len === 1) Reflect.set(data, name, value);
-        else {
+        if (len === 1) {
+            if (value == null && keepNull !== true) {
+                Reflect.deleteProperty(data, name);
+            } else {
+                Reflect.set(data, name, value);
+            }
+        } else {
             let curr = data;
             for (let i = 0; i < len; i++) {
                 const property = properties[i];
 
                 if (i + 1 === len) {
-                    Reflect.set(curr, property, value);
+                    setNestedValue(curr, property, value, keepNull);
+                    // Reflect.set(curr, property, value);
                 } else {
                     let p = Reflect.get(curr, property);
                     if (p == null) {

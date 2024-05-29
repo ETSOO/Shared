@@ -306,6 +306,16 @@ test('Tests for setNestedValue', () => {
     expect(Reflect.get((obj.jsonData as any).newProperty, 'value')).toBe(125);
 });
 
+test('Tests for setNestedValue removal', () => {
+    const obj = { jsonData: { photoSize: [200, 100], supportResizing: true } };
+
+    Utils.setNestedValue(obj, 'jsonData.photoSize', undefined);
+    expect(obj.jsonData.photoSize).toBeUndefined();
+
+    Utils.setNestedValue(obj, 'jsonData.supportResizing', undefined);
+    expect(obj.jsonData.supportResizing).toBeUndefined();
+});
+
 test('Tests for sortByFavor', () => {
     const items = [1, 2, 3, 4, 5, 6, 7];
     expect(Utils.sortByFavor(items, [5, 1, 3])).toStrictEqual([
