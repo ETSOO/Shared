@@ -355,4 +355,5 @@ test('Tests for trimEnd', () => {
     expect(Utils.trimEnd('//a/', '/')).toBe('//a');
     expect(Utils.trimEnd('/*/a*/', ...['/', '*'])).toBe('/*/a');
     expect(Utils.trimEnd('abc', ...['/', '*'])).toBe('abc');
+    expect(Utils.trimEnd('12.0.0.0', '.0')).toBe('12');
 });

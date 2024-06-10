@@ -224,8 +224,10 @@ DOM/window related utilities
 |headersToObject|Convert headers to object|
 |isFormData|Is IFormData type guard|
 |isJSONContentType|Is JSON content type|
+|isWechatClient|Is Wechat client|
 |mergeFormData|Merge form data to primary one|
 |mergeURLSearchParams|Merge URL search parameters|
+|parseUserAgent|parseUserAgent|
 |setFocus|Set HTML element focus by name|
 |setupLogging|Setup frontend logging|
 |verifyPermission|Verify file system permission|

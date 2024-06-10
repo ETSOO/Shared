@@ -328,6 +328,95 @@ test('Tests for getInputValue', () => {
     }
 });
 
+test('Tests for getUserAgentData 1', () => {
+    const data = DomUtils.parseUserAgent(
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
+    );
+    expect(data?.device).toBe('Desktop');
+    expect(data?.platform).toBe('Windows NT');
+    expect(data?.platformVersion).toBe('10.0');
+    expect(data?.brands.find((b) => b.brand === 'Chrome')?.version).toBe('124');
+});
+
+test('Tests for getUserAgentData 2', () => {
+    const data = DomUtils.parseUserAgent(
+        'Mozilla/5.0 (Linux; U; Android 2.3.6; zh-cn; GT-S5660 Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1 MicroMessenger/4.5.255'
+    );
+    expect(data?.device).toBe('GT-S5660');
+    expect(data?.platform).toBe('Android');
+    expect(data?.platformVersion).toBe('2.3.6');
+    expect(data?.mobile).toBeTruthy();
+    expect(DomUtils.isWechatClient(data)).toBeTruthy();
+});
+
+test('Tests for getUserAgentData 3', () => {
+    const data = DomUtils.parseUserAgent(
+        'Mozilla/5.0 (Linux; Android 7.1.1;MEIZU E3 Build/NGI77B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.126 MQQBrowser/9.6 TBS/044428 Mobile Safari/537.36 MicroMessenger/6.6.7.1321(0x26060739) NetType/WIFI Language/zh_CN'
+    );
+
+    expect(data?.device).toBe('MEIZU E3');
+    expect(data?.platform).toBe('Android');
+    expect(data?.platformVersion).toBe('7.1.1');
+    expect(data?.mobile).toBeTruthy();
+    expect(DomUtils.isWechatClient(data)).toBeTruthy();
+});
+
+test('Tests for getUserAgentData 4', () => {
+    const data = DomUtils.parseUserAgent(
+        'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Mobile/15E148 Safari/604.1'
+    );
+
+    expect(data?.device).toBe('iPhone');
+    expect(data?.platform).toBe('iPhone OS');
+    expect(data?.platformVersion).toBe('17.5.1');
+    expect(data?.mobile).toBeTruthy();
+    expect(DomUtils.isWechatClient(data)).toBeFalsy();
+});
+
+test('Tests for getUserAgentData 5', () => {
+    const data = DomUtils.parseUserAgent(
+        'Mozilla/5.0 (SMART-TV; Linux; Tizen 2.3) AppleWebkit/538.1 (KHTML, like Gecko) SamsungBrowser/1.0 TV Safari/538.1'
+    );
+
+    expect(data?.device).toBe('SMART-TV');
+    expect(data?.platform).toBe('Tizen');
+    expect(data?.platformVersion).toBe('2.3');
+    expect(data?.mobile).toBeFalsy();
+});
+
+test('Tests for getUserAgentData 6', () => {
+    const data = DomUtils.parseUserAgent(
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0 Safari/605.1.15'
+    );
+
+    expect(data?.device).toBe('Macintosh');
+    expect(data?.platform).toBe('Mac OS X');
+    expect(data?.platformVersion).toBe('10.15');
+    expect(data?.mobile).toBeFalsy();
+});
+
+test('Tests for getUserAgentData 7', () => {
+    const data = DomUtils.parseUserAgent(
+        'Mozilla/5.0 (Linux; Android 8.1; LEO-DLXXE Build/HONORLRA-AL00) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.111 HuaweiBrowser/9.1.1.308 Mobile Safari/537.36'
+    );
+
+    expect(data?.device).toBe('LEO-DLXXE');
+    expect(data?.platform).toBe('Android');
+    expect(data?.platformVersion).toBe('8.1');
+    expect(data?.mobile).toBeTruthy();
+});
+
+test('Tests for getUserAgentData 8', () => {
+    const data = DomUtils.parseUserAgent(
+        'Mozilla/5.0 (Linux; Android 9; SM-R825F Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/80.0.3987.119 Mobile Safari/537.36'
+    );
+
+    expect(data?.device).toBe('SM-R825F');
+    expect(data?.platform).toBe('Android');
+    expect(data?.platformVersion).toBe('9');
+    expect(data?.mobile).toBeTruthy();
+});
+
 test('Tests for setupLogging', async () => {
     // Arrange
     const action = jest.fn((data: ErrorData) => {

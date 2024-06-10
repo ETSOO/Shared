@@ -12,6 +12,40 @@ if (typeof navigator === 'undefined') {
 }
 
 /**
+ * User agent data, maybe replaced by navigator.userAgentData in future
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgentData
+ */
+export type UserAgentData = {
+    /**
+     * Browser brands
+     */
+    brands: {
+        brand: string;
+        version: string;
+    }[];
+
+    /**
+     * Is mobile device
+     */
+    mobile: boolean;
+
+    /**
+     * Device brand (name)
+     */
+    device: string;
+
+    /**
+     * Platform (OS)
+     */
+    platform: string;
+
+    /**
+     * Platform version
+     */
+    platformVersion?: string;
+};
+
+/**
  * Dom Utilities
  * Not all methods support Node
  */
@@ -368,6 +402,20 @@ export namespace DomUtils {
     }
 
     /**
+     * Is wechat client
+     * @param data User agent data
+     * @returns Result
+     */
+    export function isWechatClient(data?: UserAgentData | null) {
+        data ??= parseUserAgent();
+        if (!data) return false;
+
+        return data.brands.some(
+            (item) => item.brand.toLowerCase() === 'micromessenger'
+        );
+    }
+
+    /**
      * Culture match case Enum
      */
     export enum CultureMatch {
@@ -581,6 +629,114 @@ export namespace DomUtils {
             base.set(key, value.toString());
         });
         return base;
+    }
+
+    /**
+     * Parse navigator's user agent string
+     * Lightweight User-Agent string parser
+     * https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent
+     * @param ua User agent string
+     * @returns User agent data
+     */
+    export function parseUserAgent(ua?: string): UserAgentData | null {
+        ua ??= globalThis.navigator.userAgent;
+
+        if (!ua) {
+            return null;
+        }
+
+        const parts = ua.split(/(?!\(.*)\s+(?!\()(?![^(]*?\))/g);
+
+        let mobile = false;
+        let platform = '';
+        let platformVersion: string | undefined;
+        let device = 'Desktop';
+        const brands: UserAgentData['brands'] = [];
+
+        // with the 'g' will causing failures for multiple calls
+        const platformVersionReg =
+            /^[a-zA-Z0-9-\s]+\s+(0|\d+)(\.(0|\d+)){0,3}(\(|$)/;
+        const versionReg = /^[a-zA-Z0-9]+\/(0|\d+)(\.(0|\d+)){0,3}(\(|$)/;
+
+        parts.forEach((part) => {
+            const pl = part.toLowerCase();
+
+            if (pl.startsWith('mozilla/')) {
+                const data = /\((.*)\)$/.exec(part);
+                if (data && data.length > 1) {
+                    const pfItems = data[1].split(/;\s*/);
+
+                    // Platform + Version
+                    const pfIndex = pfItems.findIndex((item) =>
+                        platformVersionReg.test(item)
+                    );
+
+                    if (pfIndex !== -1) {
+                        const pfParts = pfItems[pfIndex].split(/\s+/);
+                        platformVersion = pfParts.pop();
+                        platform = pfParts.join(' ');
+                    } else {
+                        const appleVersionReg =
+                            /((iPhone|Mac)\s+OS(\s+\w+)?)\s+((0|\d+)(_(0|\d+)){0,3})/i;
+
+                        for (let i = 0; i < pfItems.length; i++) {
+                            const match = appleVersionReg.exec(pfItems[i]);
+                            if (match && match.length > 4) {
+                                platform = match[1];
+                                platformVersion = match[4].replace(/_/g, '.');
+
+                                pfItems.splice(i, 1);
+                                break;
+                            }
+                        }
+                    }
+
+                    // Device
+                    const deviceIndex = pfItems.findIndex((item) =>
+                        item.includes(' Build/')
+                    );
+                    if (deviceIndex === -1) {
+                        const firstItem = pfItems[0];
+                        if (
+                            firstItem.toLowerCase() !== 'linux' &&
+                            !firstItem.startsWith(platform)
+                        ) {
+                            device = firstItem;
+                            pfItems.shift();
+                        }
+                    } else {
+                        device = pfItems[deviceIndex].split(' Build/')[0];
+                        pfItems.splice(deviceIndex, 1);
+                    }
+                }
+                return;
+            }
+
+            if (pl === 'mobile' || pl.startsWith('mobile/')) {
+                mobile = true;
+                return;
+            }
+
+            if (pl === 'version' || pl.startsWith('version/')) {
+                // No process
+                return;
+            }
+
+            if (versionReg.test(part)) {
+                let [brand, version] = part.split('/');
+                const pindex = version.indexOf('(');
+                if (pindex > 0) {
+                    version = version.substring(0, pindex);
+                }
+                brands.push({
+                    brand,
+                    version: Utils.trimEnd(version, '.0')
+                });
+                return;
+            }
+        });
+
+        return { mobile, platform, platformVersion, brands, device };
     }
 
     /**

@@ -870,11 +870,11 @@ export namespace Utils {
      * @returns Result
      */
     export const trimEnd = (input: string, ...chars: string[]) => {
-        let start = input.length - 1;
-
-        while (start >= 0 && chars.indexOf(input[start]) >= 0) --start;
-
-        return input.substring(0, start + 1);
+        let char: string | undefined;
+        while ((char = chars.find((char) => input.endsWith(char))) != null) {
+            input = input.substring(0, input.length - char.length);
+        }
+        return input;
     };
 
     /**
@@ -884,11 +884,10 @@ export namespace Utils {
      * @returns Result
      */
     export const trimStart = (input: string, ...chars: string[]) => {
-        let start = 0;
-        const end = input.length;
-
-        while (start < end && chars.indexOf(input[start]) >= 0) ++start;
-
-        return input.substring(start);
+        let char: string | undefined;
+        while ((char = chars.find((char) => input.startsWith(char))) != null) {
+            input = input.substring(char.length);
+        }
+        return input;
     };
 }
