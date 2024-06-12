@@ -296,6 +296,12 @@ test('Tests for parsePath, Windows path', () => {
     expect(result.name).toBe('file');
 });
 
+test('Tests for removeEmptyValues', () => {
+    const obj = { a: 1, b: '', c: null, d: undefined, e: 'e' };
+    Utils.removeEmptyValues(obj);
+    expect(obj).toEqual({ a: 1, e: 'e' });
+});
+
 test('Tests for setNestedValue', () => {
     const obj = { jsonData: { photoSize: [200, 100], supportResizing: true } };
 

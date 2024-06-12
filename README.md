@@ -300,6 +300,7 @@ String and other related utilities
 |parseJsonArray|Try to parse JSON input to array|
 |parsePath|Parse path similar with node.js path.parse|
 |parseString|Parse string (JSON) to specific type|
+|removeEmptyValues|Remove empty values (null, undefined, '') from the input object|
 |removeNonLetters|Remove non letters (0-9, a-z, A-Z)|
 |replaceNullOrEmpty|Replace null or empty with default value|
 |setLabels|Set source with new labels|

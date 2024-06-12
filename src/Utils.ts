@@ -658,6 +658,19 @@ export namespace Utils {
     }
 
     /**
+     * Remove empty values (null, undefined, '') from the input object
+     * @param input Input object
+     */
+    export function removeEmptyValues(input: object) {
+        Object.keys(input).forEach((key) => {
+            const value = Reflect.get(input, key);
+            if (value == null || value === '') {
+                Reflect.deleteProperty(input, key);
+            }
+        });
+    }
+
+    /**
      * Remove non letters
      * @param input Input string
      * @returns Result
