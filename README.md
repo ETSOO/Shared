@@ -241,8 +241,10 @@ Extend current class/object functioning
 |---:|---|
 |applyMixins|Apply mixins to current class|
 |delayedExecutor|Create delayed executor|
+|intervalFor|Repeat interval for callback|
 |promiseHandler|Promise handler to catch error|
 |sleep|Delay promise|
+|waitFor|Wait for condition meets and execute callback|
 
 ## NumberUtils
 Numbers related utilities

@@ -1,5 +1,7 @@
 import { DelayedExecutorType } from './types/DelayedExecutorType';
 
+const hasRequestAnimationFrame = typeof requestAnimationFrame === 'function';
+
 /**
  * Extend utilities
  */
@@ -89,44 +91,119 @@ export namespace ExtendUtils {
      * Wait for condition meets and execute callback
      * requestAnimationFrame to replace setTimeout
      * @param callback Callback
-     * @param checkReady Check ready, when it's a number, similar to setTimeout
+     * @param checkReady Check ready, when it's a number as miliseconds, similar to setTimeout
      * @returns cancel callback
      */
     export function waitFor(
         callback: () => void,
         checkReady: ((spanTime: number) => boolean) | number
     ) {
-        let startTime: number | undefined;
-        let requestID: number | undefined;
-        function doWait(time?: number) {
-            // Reset request id
-            requestID = undefined;
+        let requestID: number | undefined | NodeJS.Timeout;
 
-            // First time
-            if (startTime == null) startTime = time;
+        if (hasRequestAnimationFrame) {
+            let lastTime: number | undefined;
+            function loop(timestamp: number) {
+                // Cancelled
+                if (requestID == null) return;
 
-            // Ignore
-            if (startTime === 0) return;
+                if (lastTime === undefined) {
+                    lastTime = timestamp;
+                }
 
-            const spanTime =
-                startTime == null || time == null ? 0 : time - startTime;
-            if (
-                time != null &&
-                (typeof checkReady === 'number'
-                    ? spanTime >= checkReady
-                    : checkReady(spanTime))
-            ) {
-                callback();
-            } else {
-                requestID = requestAnimationFrame(doWait);
+                const elapsed = timestamp - lastTime;
+
+                const isReady =
+                    typeof checkReady === 'number'
+                        ? elapsed >= checkReady
+                        : checkReady(elapsed);
+
+                if (isReady) {
+                    callback();
+                } else if (requestID != null) {
+                    // May also be cancelled in callback or somewhere
+                    requestID = requestAnimationFrame(loop);
+                }
             }
+            requestID = requestAnimationFrame(loop);
+        } else if (typeof checkReady === 'number') {
+            requestID = setTimeout(callback, checkReady);
+        } else {
+            // Bad practice to use setTimeout in this way, only for compatibility
+            const ms = 20;
+            let spanTime = 0;
+            let cr = checkReady;
+            function loop() {
+                // Cancelled
+                if (requestID == null) return;
+
+                spanTime += ms;
+
+                if (cr(spanTime)) {
+                    callback();
+                } else if (requestID != null) {
+                    // May also be cancelled in callback or somewhere
+                    requestID = setTimeout(loop, ms);
+                }
+            }
+            requestID = setTimeout(loop, ms);
         }
 
-        doWait();
+        return () => {
+            if (requestID) {
+                if (hasRequestAnimationFrame && typeof requestID === 'number') {
+                    cancelAnimationFrame(requestID);
+                } else {
+                    clearTimeout(requestID);
+                }
+                requestID = undefined;
+            }
+        };
+    }
+
+    /**
+     * Repeat interval for callback
+     * @param callback Callback
+     * @param miliseconds Miliseconds
+     * @returns cancel callback
+     */
+    export function intervalFor(callback: () => void, miliseconds: number) {
+        let requestID: number | undefined | NodeJS.Timer;
+
+        if (hasRequestAnimationFrame) {
+            let lastTime: number | undefined;
+            function loop(timestamp: number) {
+                // Cancelled
+                if (requestID == null) return;
+
+                if (lastTime === undefined) {
+                    lastTime = timestamp;
+                }
+
+                const elapsed = timestamp - lastTime;
+                if (elapsed >= miliseconds) {
+                    lastTime = timestamp;
+                    callback();
+                }
+
+                if (requestID != null) {
+                    // May also be cancelled in callback or somewhere
+                    requestID = requestAnimationFrame(loop);
+                }
+            }
+            requestID = requestAnimationFrame(loop);
+        } else {
+            requestID = setInterval(callback, miliseconds);
+        }
 
         return () => {
-            if (requestID) cancelAnimationFrame(requestID);
-            startTime = undefined;
+            if (requestID) {
+                if (hasRequestAnimationFrame && typeof requestID === 'number') {
+                    cancelAnimationFrame(requestID);
+                } else {
+                    clearInterval(requestID);
+                }
+                requestID = undefined;
+            }
         };
     }
 }
