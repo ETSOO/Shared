@@ -6,6 +6,34 @@ import { ParsedPath } from './types/ParsedPath';
 declare global {
     interface String {
         /**
+         * Add parameter to URL
+         * @param this URL to add parameter
+         * @param name Parameter name
+         * @param value Parameter value
+         * @param arrayFormat Array format to array style or not to multiple fields
+         * @returns New URL
+         */
+        addUrlParam(
+            this: string,
+            name: string,
+            value: DataTypes.Simple,
+            arrayFormat?: boolean | string
+        ): string;
+
+        /**
+         * Add parameters to URL
+         * @param this URL to add parameters
+         * @param data Parameters
+         * @param arrayFormat Array format to array style or not to multiple fields
+         * @returns New URL
+         */
+        addUrlParams(
+            this: string,
+            data: DataTypes.SimpleObject,
+            arrayFormat?: boolean | string
+        ): string;
+
+        /**
          * Check the input string contains Chinese character or not
          * @param this Input
          * @param test Test string
@@ -73,6 +101,23 @@ declare global {
         removeNonLetters(this: string): string;
     }
 }
+
+String.prototype.addUrlParam = function (
+    this: string,
+    name: string,
+    value: DataTypes.Simple,
+    arrayFormat?: boolean | string
+) {
+    return Utils.addUrlParam(this, name, value, arrayFormat);
+};
+
+String.prototype.addUrlParams = function (
+    this: string,
+    data: DataTypes.SimpleObject,
+    arrayFormat?: boolean | string
+) {
+    return Utils.addUrlParams(this, data, arrayFormat);
+};
 
 String.prototype.containChinese = function (this: string): boolean {
     const regExp =
@@ -178,6 +223,97 @@ export namespace Utils {
         }
 
         return options;
+    }
+
+    /**
+     * Add parameter to URL
+     * @param url URL to add parameter
+     * @param name Parameter name
+     * @param value Parameter value
+     * @param arrayFormat Array format to array style or not to multiple fields
+     * @returns New URL
+     */
+    export function addUrlParam(
+        url: string,
+        name: string,
+        value: DataTypes.Simple,
+        arrayFormat?: boolean | string
+    ) {
+        return addUrlParams(url, { [name]: value }, arrayFormat);
+    }
+
+    /**
+     * Add parameters to URL
+     * @param url URL to add parameters
+     * @param data Parameters
+     * @param arrayFormat Array format to array style or not to multiple fields
+     * @returns New URL
+     */
+    export function addUrlParams(
+        url: string,
+        data: DataTypes.SimpleObject,
+        arrayFormat?: boolean | string
+    ) {
+        if (typeof URL === 'undefined') {
+            if (url.includes('?')) {
+                url += '&';
+            } else {
+                if (!url.endsWith('/')) url = url + '/';
+                url += '?';
+            }
+
+            url += Object.entries(data)
+                .map(([key, value]) => {
+                    let v: string;
+                    if (Array.isArray(value)) {
+                        if (arrayFormat == null || arrayFormat === false) {
+                            return value
+                                .map(
+                                    (item) =>
+                                        `${key}=${encodeURIComponent(
+                                            `${item}`
+                                        )}`
+                                )
+                                .join('&');
+                        } else {
+                            v = value.join(arrayFormat ? ',' : arrayFormat);
+                        }
+                    } else if (value instanceof Date) {
+                        v = value.toJSON();
+                    } else {
+                        v = value == null ? '' : `${value}`;
+                    }
+
+                    return `${key}=${encodeURIComponent(v)}`;
+                })
+                .join('&');
+
+            return url;
+        } else {
+            const urlObj = new URL(url);
+            Object.entries(data).forEach(([key, value]) => {
+                if (Array.isArray(value)) {
+                    if (arrayFormat == null || arrayFormat === false) {
+                        value.forEach((item) => {
+                            urlObj.searchParams.append(key, `${item}`);
+                        });
+                    } else {
+                        urlObj.searchParams.append(
+                            key,
+                            value.join(arrayFormat ? ',' : arrayFormat)
+                        );
+                    }
+                } else if (value instanceof Date) {
+                    urlObj.searchParams.append(key, value.toJSON());
+                } else {
+                    urlObj.searchParams.append(
+                        key,
+                        `${value == null ? '' : value}`
+                    );
+                }
+            });
+            return urlObj.toString();
+        }
     }
 
     /**

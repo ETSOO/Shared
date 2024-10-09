@@ -120,6 +120,8 @@ Data type definitions and type safe functions. ListItemType, ListItemType1 and L
 |DataType|Data type enum|
 |AddAndEditType|Add and edit data type|
 |AddOrEditType|Add or edit conditional type|
+|addUrlParam|Add parameter to URL|
+|addUrlParams|Add parameters to URL|
 |Basic|Basic types, includes number, bigint, Date, boolean, string|
 |BasicArray|Basic type name array|
 |BasicConditional|Conditional type based on BasicNames|

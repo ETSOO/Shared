@@ -13,6 +13,54 @@ test('Tests for addBlankItem', () => {
     expect(options.length).toBe(3);
 });
 
+test('Tests for addUrlParam', () => {
+    const url = 'https://www.etsoo.com';
+    const result = Utils.addUrlParam(url, 'a', 'b');
+    expect(result).toBe('https://www.etsoo.com/?a=b');
+});
+
+describe('Tests for addUrlParams', () => {
+    const url = 'https://www.etsoo.com';
+    const data = {
+        a: 'a',
+        b: false,
+        c: 123,
+        d: new Date(Date.UTC(2022, 0, 28, 10)),
+        e: [1, 2],
+        f: ['a', 'b'],
+        g: null
+    };
+    const result1 = Utils.addUrlParams(url, data);
+
+    test('addUrlParams', () => {
+        expect(result1).toBe(
+            'https://www.etsoo.com/?a=a&b=false&c=123&d=2022-01-28T10%3A00%3A00.000Z&e=1&e=2&f=a&f=b&g='
+        );
+    });
+
+    const result2 = Utils.addUrlParams(url, data, true);
+
+    test('addUrlParams with array format', () => {
+        expect(result2).toBe(
+            'https://www.etsoo.com/?a=a&b=false&c=123&d=2022-01-28T10%3A00%3A00.000Z&e=1%2C2&f=a%2Cb&g='
+        );
+    });
+
+    global.URL = undefined as any;
+
+    const result3 = url.addUrlParams(data);
+
+    test('addUrlParams with traditional way', () => {
+        expect(result3).toBe(result1);
+    });
+
+    const result4 = url.addUrlParams(data, true);
+
+    test('addUrlParams with traditional way and array format', () => {
+        expect(result4).toBe(result2);
+    });
+});
+
 test('Tests for containChinese', () => {
     expect('123 abC'.containChinese()).toBeFalsy();
     expect('亿速思维'.containChinese()).toBeTruthy();
