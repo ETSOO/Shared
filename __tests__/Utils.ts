@@ -15,7 +15,7 @@ test('Tests for addBlankItem', () => {
 
 test('Tests for addUrlParam', () => {
     const url = 'https://www.etsoo.com';
-    const result = Utils.addUrlParam(url, 'a', 'b');
+    const result = url.addUrlParam('a', 'b');
     expect(result).toBe('https://www.etsoo.com/?a=b');
 });
 
@@ -30,7 +30,7 @@ describe('Tests for addUrlParams', () => {
         f: ['a', 'b'],
         g: null
     };
-    const result1 = Utils.addUrlParams(url, data);
+    const result1 = url.addUrlParams(data);
 
     test('addUrlParams', () => {
         expect(result1).toBe(
@@ -38,7 +38,7 @@ describe('Tests for addUrlParams', () => {
         );
     });
 
-    const result2 = Utils.addUrlParams(url, data, true);
+    const result2 = url.addUrlParams(data, true);
 
     test('addUrlParams with array format', () => {
         expect(result2).toBe(
