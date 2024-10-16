@@ -46,6 +46,13 @@ describe('Tests for addUrlParams', () => {
         );
     });
 
+    const result22 = '/'.addUrlParams(data);
+    test('addUrlParams with relative path', () => {
+        expect(result22).toBe(
+            '/?a=a&b=false&c=123&d=2022-01-28T10%3A00%3A00.000Z&e=1&e=2&f=a&f=b&g='
+        );
+    });
+
     global.URL = undefined as any;
 
     const result3 = url.addUrlParams(data);

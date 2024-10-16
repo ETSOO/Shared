@@ -135,7 +135,8 @@ String.prototype.addUrlParams = function (
         return url + data;
     }
 
-    if (typeof URL === 'undefined') {
+    // Simple check
+    if (typeof URL === 'undefined' || !this.includes('://')) {
         const params = Object.entries(data)
             .map(([key, value]) => {
                 let v: string;
