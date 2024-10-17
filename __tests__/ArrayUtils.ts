@@ -65,8 +65,9 @@ test('Tests for maxItem / minItem', () => {
 
 test('Tests for remove simple', () => {
     const items = [1, 2, 3, 4, 5];
-    items.remove(1, 5, (item) => item % 2 === 0);
+    const result = items.remove(1, 5, (item) => item % 2 === 0);
     expect(items).toStrictEqual([3]);
+    expect(result.length).toBe(4);
 });
 
 test('Tests for remove object', () => {
@@ -78,7 +79,7 @@ test('Tests for remove object', () => {
         item
     ];
 
-    items.remove(
+    const result = items.remove(
         item,
         (item) => item.id === 2,
         (item) => item.amount <= 2
@@ -86,6 +87,7 @@ test('Tests for remove object', () => {
 
     expect(items.length).toBe(1);
     expect(items[0].id).toBe(1);
+    expect(result.length).toBe(3);
 });
 
 test('Tests for sortIds 1', () => {

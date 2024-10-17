@@ -59,7 +59,7 @@ declare global {
                 | (T & (DataTypes.Basic | object))
                 | ((item: T) => boolean)
             )[]
-        ): void;
+        ): T[];
 
         /**
          * Sort by property
@@ -157,22 +157,26 @@ Array.prototype.remove = function <T>(
     ...items: ((T & (DataTypes.Basic | object)) | ((item: T) => boolean))[]
 ) {
     const funs: ((item: T) => boolean)[] = [];
+    const results: T[] = [];
     items.forEach((item) => {
         if (typeof item === 'function') {
             funs.push(item);
         } else {
             // For object items, should be removed by reference, not by value
             const index = this.indexOf(item);
-            if (index >= 0) this.splice(index, 1);
+            if (index >= 0) results.push(...this.splice(index, 1));
         }
     });
 
     if (funs.length > 0) {
         // Reduce check loops for performance
         for (let i = this.length - 1; i >= 0; i--) {
-            if (funs.some((fun) => fun(this[i]))) this.splice(i, 1);
+            if (funs.some((fun) => fun(this[i])))
+                results.push(...this.splice(i, 1));
         }
     }
+
+    return results;
 };
 
 Array.prototype.sortByProperty = function <T, P extends keyof T>(
