@@ -63,6 +63,31 @@ test('Tests for maxItem / minItem', () => {
     expect(emptyItems.maxItem('amount')).toBeUndefined();
 });
 
+test('Tests for remove simple', () => {
+    const items = [1, 2, 3, 4, 5];
+    items.remove(1, 5, (item) => item % 2 === 0);
+    expect(items).toStrictEqual([3]);
+});
+
+test('Tests for remove object', () => {
+    const item = { id: 4, label: 'd', amount: 9.66 };
+    const items = [
+        { id: 1, label: 'a', amount: 3.14 },
+        { id: 2, label: 'b', amount: 4.54 },
+        { id: 3, label: 'b', amount: 1.52 },
+        item
+    ];
+
+    items.remove(
+        item,
+        (item) => item.id === 2,
+        (item) => item.amount <= 2
+    );
+
+    expect(items.length).toBe(1);
+    expect(items[0].id).toBe(1);
+});
+
 test('Tests for sortIds 1', () => {
     const source = [
         {

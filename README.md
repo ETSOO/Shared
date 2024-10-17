@@ -109,6 +109,7 @@ Array related utilities
 |maxItem|Get max field value item|
 |min|Get min number item or number item property|
 |minItem|Get min field value item|
+|remove|Remove items by value or condition|
 |sum|Sum number items or number item properties|
 |toUnique|Make all items are unique|
 

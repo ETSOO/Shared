@@ -51,6 +51,17 @@ declare global {
         ): T | undefined;
 
         /**
+         * Remove items by value or condition
+         * @param items Items to remove
+         */
+        remove(
+            ...items: (
+                | (T & (DataTypes.Basic | object))
+                | ((item: T) => boolean)
+            )[]
+        ): void;
+
+        /**
          * Sort by property
          * @param property Property
          * @param values Property values
@@ -139,6 +150,29 @@ Array.prototype.minItem = function <T>(
     return this.reduce((prev, curr) =>
         prev[field] < curr[field] ? prev : curr
     );
+};
+
+Array.prototype.remove = function <T>(
+    this: Array<T>,
+    ...items: ((T & (DataTypes.Basic | object)) | ((item: T) => boolean))[]
+) {
+    const funs: ((item: T) => boolean)[] = [];
+    items.forEach((item) => {
+        if (typeof item === 'function') {
+            funs.push(item);
+        } else {
+            // For object items, should be removed by reference, not by value
+            const index = this.indexOf(item);
+            if (index >= 0) this.splice(index, 1);
+        }
+    });
+
+    if (funs.length > 0) {
+        // Reduce check loops for performance
+        for (let i = this.length - 1; i >= 0; i--) {
+            if (funs.some((fun) => fun(this[i]))) this.splice(i, 1);
+        }
+    }
 };
 
 Array.prototype.sortByProperty = function <T, P extends keyof T>(

@@ -48,8 +48,7 @@ export class NodeStorage {
      * Removes the key/value pair with the given key from the list associated with the object, if a key/value pair with the given key exists.
      */
     removeItem(key: string): void {
-        const index = this.source.findIndex((p) => p[0] === key);
-        if (index != -1) this.source.splice(index, 1);
+        this.source.remove((p) => p[0] === key);
     }
 
     /**
