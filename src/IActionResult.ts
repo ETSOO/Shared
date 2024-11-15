@@ -59,10 +59,25 @@ export interface IActionResult<D extends object = {}> {
 }
 
 /**
- * Action result with id data
+ * Action result with id
  */
 export type IdActionResult<T extends IdType = number> = IActionResult<{
     id: T;
+}>;
+
+/**
+ * Action result with message data
+ */
+export type MsgActionResult = IActionResult<{
+    msg: string;
+}>;
+
+/**
+ * Action result with id, message data
+ */
+export type IdMsgActionResult = IActionResult<{
+    id: number;
+    msg: string;
 }>;
 
 /**

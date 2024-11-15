@@ -15,7 +15,7 @@ Using yarn:
 $ yarn add @etsoo/shared
 ```
 
-## ActionResult / IActionResult, IdActionResult, DynamicActionResult
+## ActionResult / IActionResult, IdActionResult, MsgActionResult, IdMsgActionResult, DynamicActionResult
 |Name|Description|
 |---:|---|
 |static create|Create a result from error|
