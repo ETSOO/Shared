@@ -167,7 +167,7 @@ export namespace ExtendUtils {
    * @returns cancel callback
    */
   export function intervalFor(callback: () => void, miliseconds: number) {
-    let requestID: number | undefined | NodeJS.Timer;
+    let requestID: number | undefined | NodeJS.Timeout;
 
     if (hasRequestAnimationFrame) {
       let lastTime: number | undefined;
@@ -197,12 +197,8 @@ export namespace ExtendUtils {
 
     return () => {
       if (requestID) {
-        if (typeof requestID === "number") {
-          if (hasRequestAnimationFrame) {
-            cancelAnimationFrame(requestID);
-          } else {
-            clearInterval(requestID);
-          }
+        if (hasRequestAnimationFrame && typeof requestID === "number") {
+          cancelAnimationFrame(requestID);
         } else {
           clearInterval(requestID);
         }
