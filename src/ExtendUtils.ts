@@ -197,8 +197,12 @@ export namespace ExtendUtils {
 
     return () => {
       if (requestID) {
-        if (hasRequestAnimationFrame && typeof requestID === "number") {
-          cancelAnimationFrame(requestID);
+        if (typeof requestID === "number") {
+          if (hasRequestAnimationFrame) {
+            cancelAnimationFrame(requestID);
+          } else {
+            clearInterval(requestID);
+          }
         } else {
           clearInterval(requestID);
         }
