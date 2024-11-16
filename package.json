@@ -1,67 +1,65 @@
 {
-    "name": "@etsoo/shared",
-    "version": "1.2.52",
-    "description": "TypeScript shared utilities and functions",
-    "main": "lib/cjs/index.js",
-    "module": "lib/mjs/index.js",
-    "types": "lib/mjs/index.d.ts",
-    "exports": {
-        ".": {
-            "import": "./lib/mjs/index.js",
-            "require": "./lib/cjs/index.js"
-        }
-    },
-    "sideEffects": false,
-    "scripts": {
-        "build": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json",
-        "format": "prettier --write src/**/*.ts",
-        "lint": "eslint --ext .ts src/",
-        "test": "jest",
-        "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand"
-    },
-    "jest": {
-        "automock": false,
-        "testMatch": [
-            "<rootDir>/__tests__/**/*.ts"
-        ],
-        "testEnvironment": "jsdom",
-        "moduleFileExtensions": [
-            "js",
-            "ts",
-            "d.ts"
-        ],
-        "transform": {
-            ".+\\.ts$": "ts-jest"
-        }
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/ETSOO/Shared.git"
-    },
-    "keywords": [
-        "Shared utilities",
-        "TypeScript",
-        "ETSOO",
-        "SmartERP",
-        "司友云平台",
-        "青岛亿速思维",
-        "上海亿商"
-    ],
-    "author": "Garry Xiao",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/ETSOO/Shared/issues"
-    },
-    "homepage": "https://github.com/ETSOO/Shared#readme",
-    "devDependencies": {
-        "@types/jest": "^29.5.14",
-        "@types/lodash.isequal": "^4.5.8",
-        "jest": "^29.7.0",
-        "jest-environment-jsdom": "^29.7.0",
-        "ts-jest": "^29.2.5",
-        "typescript": "^5.6.3"
-    },
-    "dependencies": {
-        "lodash.isequal": "^4.5.0"
+  "name": "@etsoo/shared",
+  "version": "1.2.53",
+  "description": "TypeScript shared utilities and functions",
+  "main": "lib/cjs/index.js",
+  "module": "lib/mjs/index.js",
+  "types": "lib/mjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/mjs/index.js",
+      "require": "./lib/cjs/index.js"
     }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json",
+    "test": "jest",
+    "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand"
+  },
+  "jest": {
+    "automock": false,
+    "testMatch": [
+      "<rootDir>/__tests__/**/*.ts"
+    ],
+    "testEnvironment": "jsdom",
+    "moduleFileExtensions": [
+      "js",
+      "ts",
+      "d.ts"
+    ],
+    "transform": {
+      ".+\\.ts$": "ts-jest"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ETSOO/Shared.git"
+  },
+  "keywords": [
+    "Shared utilities",
+    "TypeScript",
+    "ETSOO",
+    "SmartERP",
+    "司友云平台",
+    "青岛亿速思维",
+    "上海亿商"
+  ],
+  "author": "Garry Xiao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ETSOO/Shared/issues"
+  },
+  "homepage": "https://github.com/ETSOO/Shared#readme",
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/lodash.isequal": "^4.5.8",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "lodash.isequal": "^4.5.0"
+  }
 }
