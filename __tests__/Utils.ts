@@ -114,7 +114,8 @@ test("Tests for getDataChanges", () => {
     value: undefined,
     date: new Date("2023/03/18"),
     ids: [1, 2],
-    data: { d1: 1, d2: false, d3: 1.2, d4: "Hello" }
+    data: { d1: 1, d2: false, d3: 1.2, d4: "Hello" },
+    changedFields: ["gender", "brand", "date"]
   };
   const initData = {
     id: 1,
