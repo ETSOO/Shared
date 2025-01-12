@@ -217,6 +217,26 @@ test("Tests for AddAndEditType", () => {
   expect(data2.name).toBe(data3.name);
 });
 
+test("Tests for AddOrEditType", () => {
+  type Entity = {
+    id: number;
+    name: string;
+    age?: number;
+  };
+  type AddEntity = DataTypes.AddOrEditType<Entity, false>;
+  type EditEntity = DataTypes.AddOrEditType<Entity, true>;
+
+  const data1: AddEntity = { id: 1, name: "hello" };
+  const data2: AddEntity = { id: undefined, name: "hello" };
+  const data3: AddEntity = { name: "hello" };
+
+  const data4: EditEntity = { id: 1, name: "hello", changedFields: ["name"] };
+
+  expect(data1.name).toBe(data2.name);
+  expect(data2.name).toBe(data3.name);
+  expect(data3.name).toBe(data4.name);
+});
+
 test("Tests for BasicTemplate", () => {
   const template: DataTypes.BasicTemplate = {
     id: "number",

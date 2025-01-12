@@ -191,7 +191,8 @@ export namespace DataTypes {
     D extends string = "id"
   > =
     | (Omit<T, D> & { [key in D]?: undefined | never })
-    | (Partial<T> & Readonly<Pick<T, D>> & { changedFields?: string[] });
+    | (Partial<T> &
+        Readonly<Pick<T, D>> & { changedFields?: (keyof T & string)[] });
 
   /**
    * Add or edit conditional type
@@ -203,7 +204,8 @@ export namespace DataTypes {
     D extends string = "id" // Default is 'id' field
   > = E extends false
     ? Optional<T, D>
-    : Partial<T> & Readonly<Pick<T, D>> & { changedFields?: string[] };
+    : Partial<T> &
+        Readonly<Pick<T, D>> & { changedFields?: (keyof T & string)[] };
 
   /**
    * Key collection, like { key1: {}, key2: {} }
