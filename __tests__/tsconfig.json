@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "ESNext",
-    "moduleResolution": "Node10",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -12,6 +12,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "declaration": true
+    "declaration": true,
+    "types": ["vitest/globals"]
   }
 }

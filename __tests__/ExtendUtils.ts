@@ -25,7 +25,7 @@ test("Tests for applyMixins", () => {
 
 test("Tests for delayedExecutor", () => {
   // Arrange
-  const f = jest.fn();
+  const f = vi.fn();
 
   const e = ExtendUtils.delayedExecutor(f, 50);
 

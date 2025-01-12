@@ -29,13 +29,13 @@ test("Tests for history", () => {
 });
 
 test("Tests for events", () => {
-  const navigatorFn = jest.fn();
-  const navigatorStopFn = jest.fn((event: EHistoryNavigateEvent) => {
+  const navigatorFn = vi.fn();
+  const navigatorStopFn = vi.fn((event: EHistoryNavigateEvent) => {
     event.stopImmediatePropagation();
   });
-  const clearFn = jest.fn();
-  const pushFn = jest.fn();
-  const replaceFn = jest.fn();
+  const clearFn = vi.fn();
+  const pushFn = vi.fn();
+  const replaceFn = vi.fn();
 
   const history = new LHistory(3);
 

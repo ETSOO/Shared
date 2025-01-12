@@ -403,13 +403,13 @@ export namespace Utils {
    * @param ignoreFields Ignore fields
    * @returns
    */
-  export function getDataChanges(
-    input: object,
+  export function getDataChanges<T extends object>(
+    input: T,
     initData: object,
     ignoreFields: string[] = ["id"]
-  ): string[] {
+  ): (keyof T & string)[] {
     // Changed fields
-    const changes: string[] = [];
+    const changes: (keyof T & string)[] = [];
 
     Object.entries(input).forEach(([key, value]) => {
       // Ignore fields, no process
@@ -431,7 +431,7 @@ export namespace Utils {
             Reflect.deleteProperty(input, key);
             return;
           }
-          changes.push(key);
+          changes.push(key as any);
           return;
         }
 
@@ -451,7 +451,7 @@ export namespace Utils {
       }
 
       // Hold the key
-      changes.push(key);
+      changes.push(key as any);
     });
 
     return changes;

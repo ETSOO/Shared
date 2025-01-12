@@ -253,7 +253,7 @@ test("Tests for getCulture", () => {
 });
 
 test("Tests for getLocationKey", () => {
-  expect(DomUtils.getLocationKey("test")).toBe("http://localhost/:test");
+  expect(DomUtils.getLocationKey("test")).toBe("http://localhost:3000/:test");
 });
 
 test("Tests for headersToObject", () => {
@@ -292,7 +292,7 @@ test("Tests for mergeURLSearchParams", () => {
 
 test("Tests for setFocus", () => {
   // Arrange
-  const focus = jest.fn();
+  const focus = vi.fn();
 
   const root = document.body;
   const container = document.createElement("div");
@@ -419,7 +419,7 @@ test("Tests for getUserAgentData 8", () => {
 
 test("Tests for setupLogging", async () => {
   // Arrange
-  const action = jest.fn((data: ErrorData) => {
+  const action = vi.fn((data: ErrorData) => {
     expect(data.message).toBe("Test");
   });
   DomUtils.setupLogging(action, true, globalThis.self);
