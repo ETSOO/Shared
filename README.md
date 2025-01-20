@@ -173,6 +173,7 @@ Data type definitions and type safe functions. ListItemType, ListItemType1 and L
 |    StringDictionary | String key, string value Record                                        |
 |        StringRecord | String key, unknown value Record                                       |
 |    TitleDefaultType | Title default type                                                     |
+|        TristateEnum | Tristate enum                                                          |
 |              VAlign | Vertical align                                                         |
 |          VAlignEnum | Vertical align enum                                                    |
 |             Methods |                                                                        |

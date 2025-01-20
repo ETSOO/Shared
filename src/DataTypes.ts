@@ -357,6 +357,30 @@ export namespace DataTypes {
   export type DIS<K extends string, T> = { [P in K]: T };
 
   /**
+   * Tristate enum
+   * 三态枚举
+   */
+  export enum TristateEnum {
+    /**
+     * False
+     * 假
+     */
+    False = 0,
+
+    /**
+     * True
+     * 真
+     */
+    True = 1,
+
+    /**
+     * Unsure
+     * 无法判断
+     */
+    Unsure = 9
+  }
+
+  /**
    * Convert value to target type
    * @param input Input value
    * @param target Target type
