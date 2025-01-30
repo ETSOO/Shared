@@ -504,12 +504,16 @@ export namespace Utils {
 
   /**
    * Get time zone
+   * @param tz Default timezone, default is UTC
    * @returns Timezone
    */
-  export const getTimeZone = () => {
+  export const getTimeZone = (tz?: string) => {
     // If Intl supported
     if (typeof Intl === "object" && typeof Intl.DateTimeFormat === "function")
       return Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    // Default timezone
+    return tz ?? "UTC";
   };
 
   /**
