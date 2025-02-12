@@ -232,23 +232,23 @@ test("Tests for getCulture", () => {
   ];
 
   const [culture1, match1] = DomUtils.getCulture(cultures, "zh-CN");
-  expect(culture1?.name).toBe("zh-Hans");
+  expect(culture1.name).toBe("zh-Hans");
   expect(match1).toBe(DomUtils.CultureMatch.Compatible);
 
   const [culture2] = DomUtils.getCulture(cultures, "zh-Hans-CN");
-  expect(culture2?.name).toBe("zh-Hans");
+  expect(culture2.name).toBe("zh-Hans");
 
   const [culture3] = DomUtils.getCulture(cultures, "zh-Hans-HK");
-  expect(culture3?.name).toBe("zh-Hans");
+  expect(culture3.name).toBe("zh-Hans");
 
   const [culture4] = DomUtils.getCulture(cultures, "zh-SG");
-  expect(culture4?.name).toBe("zh-Hans");
+  expect(culture4.name).toBe("zh-Hans");
 
   const [culture5] = DomUtils.getCulture(cultures, "en-GB");
-  expect(culture5?.name).toBe("en");
+  expect(culture5.name).toBe("en");
 
   const [culture6, match6] = DomUtils.getCulture(cultures, "fr-CA");
-  expect(culture6?.name).toBe("zh-Hans");
+  expect(culture6.name).toBe("zh-Hans");
   expect(match6).toBe(DomUtils.CultureMatch.Default);
 });
 

@@ -469,9 +469,9 @@ export namespace DomUtils {
   export const getCulture = <T extends DataTypes.StringRecord>(
     items: DataTypes.CultureDefinition<T>[],
     culture: string
-  ): [DataTypes.CultureDefinition<T> | undefined, CultureMatch] => {
+  ): [DataTypes.CultureDefinition<T>, CultureMatch] => {
     if (items.length === 0) {
-      return [undefined, CultureMatch.Exact];
+      throw new Error("Culture items cannot be empty");
     }
 
     // Exact match
