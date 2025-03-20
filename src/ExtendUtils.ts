@@ -11,13 +11,25 @@ export namespace ExtendUtils {
    * https://www.typescriptlang.org/docs/handbook/mixins.html#understanding-the-sample
    * @param derivedCtor Mixin target class
    * @param baseCtors Mixin base classes
+   * @param override Override or not
    */
-  export function applyMixins(derivedCtor: any, baseCtors: any[]) {
+  export function applyMixins(
+    derivedCtor: any,
+    baseCtors: any[],
+    override = false
+  ) {
     baseCtors.forEach((baseCtor) => {
       Object.getOwnPropertyNames(baseCtor.prototype).forEach((name) => {
-        if (name !== "constructor") {
-          // eslint-disable-next-line no-param-reassign
-          derivedCtor.prototype[name] = baseCtor.prototype[name];
+        if (
+          name !== "constructor" &&
+          (override || !derivedCtor.prototype[name])
+        ) {
+          Object.defineProperty(
+            derivedCtor.prototype,
+            name,
+            Object.getOwnPropertyDescriptor(baseCtor.prototype, name) ||
+              Object.create(null)
+          );
         }
       });
     });

@@ -304,11 +304,15 @@ test("Tests for getResult", () => {
   type test = ((visible: boolean) => number) | number;
   const input: test = (visible) => (visible ? 1 : 0);
   const inputNumber: test = 5;
+  const inputAny: test = input as any;
 
   // Act & assert
   const result = Utils.getResult(input, true);
   expect(result).toBe(1);
   expect(Utils.getResult(input, false)).toBe(0);
+
+  const result1 = Utils.getResult(inputAny, false);
+  expect(result1).toBe(0);
 
   const valueResult = Utils.getResult(inputNumber);
   expect(valueResult).toBe(5);

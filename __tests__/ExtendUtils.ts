@@ -20,7 +20,37 @@ test("Tests for applyMixins", () => {
   interface a extends b, c {}
   ExtendUtils.applyMixins(a, [b, c]);
   const item = new a();
+  expect(item.m()).toBe(1);
   expect(item.m2()).toBe("hello");
+});
+
+test("Tests for applyMixins with override", () => {
+  class a {
+    m() {
+      return 0;
+    }
+    get id() {
+      return 1;
+    }
+  }
+  class b {
+    m(id: number) {
+      return id;
+    }
+    get id() {
+      return 2;
+    }
+  }
+
+  interface a extends b {
+    m(id: number): number;
+  }
+  ExtendUtils.applyMixins(a, [b], true);
+  const item = new a();
+  expect(item.id).toBe(2);
+  // As the method is overridden, the return value should be undefined
+  expect(item.m()).toBe(undefined);
+  expect(item.m(3)).toBe(3);
 });
 
 test("Tests for delayedExecutor", () => {
