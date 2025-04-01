@@ -183,29 +183,12 @@ export namespace DataTypes {
   export type Placement = keyof typeof PlacementEnum;
 
   /**
-   * Add and edit data type
-   * ChangedFields for editing case
+   * Edit type from adding type
    */
-  export type AddAndEditType<
-    T extends { [key in D]: IdType },
-    D extends string = "id"
-  > =
-    | (Omit<T, D> & { [key in D]?: undefined | never })
-    | (Partial<T> &
-        Readonly<Pick<T, D>> & { changedFields?: (keyof T & string)[] });
-
-  /**
-   * Add or edit conditional type
-   * ChangedFields for editing case
-   */
-  export type AddOrEditType<
-    T extends { [key in D]: IdType }, // Entity modal
-    E extends boolean, // Editing or not
-    D extends string = "id" // Default is 'id' field
-  > = E extends false
-    ? Optional<T, D>
-    : Partial<T> &
-        Readonly<Pick<T, D>> & { changedFields?: (keyof T & string)[] };
+  export type EditType<T, I extends IdType = number> = Partial<T> & {
+    id: I;
+    changedFields?: (keyof T & string)[];
+  };
 
   /**
    * Key collection, like { key1: {}, key2: {} }

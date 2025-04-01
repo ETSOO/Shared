@@ -130,8 +130,6 @@ Data type definitions and type safe functions. ListItemType, ListItemType1 and L
 |                Name | Description                                                            |
 | ------------------: | ---------------------------------------------------------------------- |
 |            DataType | Data type enum                                                         |
-|      AddAndEditType | Add and edit data type                                                 |
-|       AddOrEditType | Add or edit conditional type                                           |
 |         addUrlParam | Add parameter to URL                                                   |
 |        addUrlParams | Add parameters to URL                                                  |
 |               Basic | Basic types, includes number, bigint, Date, boolean, string            |
@@ -144,6 +142,7 @@ Data type definitions and type safe functions. ListItemType, ListItemType1 and L
 |   CultureDefinition | Culture definition                                                     |
 |                  DI | Dynamic interface with multiple properties                             |
 |                 DIS | Dynamic interface with single property                                 |
+|            EditType | Create edit type from adding type                                      |
 |            EnumBase | Enum base type                                                         |
 |           EnumValue | Enum value type                                                        |
 |        ExtendedEnum | Extended type enum                                                     |
