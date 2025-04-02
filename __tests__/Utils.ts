@@ -117,6 +117,7 @@ test("Tests for getDataChanges", () => {
     data: { d1: 1, d2: false, d3: 1.2, d4: "Hello" },
     changedFields: ["gender", "brand", "date"]
   };
+
   const initData = {
     id: 1,
     name: "Name",
@@ -129,10 +130,26 @@ test("Tests for getDataChanges", () => {
     ids: [1, 2],
     data: { d1: 1, d3: 1.2, d4: "Hello", d2: false }
   };
+
   const fields = Utils.getDataChanges(input, initData);
   expect(fields).toStrictEqual(["gender", "brand", "amount"]);
   expect(input.price).toBeUndefined();
   expect(input.amount).toBeUndefined();
+
+  const input1 = {
+    id: 2,
+    name: "Name",
+    gender: "F",
+    brand: "",
+    price: "6.0",
+    amount: "",
+    enabled: true,
+    value: undefined,
+    date: new Date("2023/03/18"),
+    ids: [1, 2]
+  };
+  const fields1 = Utils.getDataChanges(input1, initData, ["brand", "date"]);
+  expect(fields1).toStrictEqual(["gender", "amount"]);
 });
 
 test("Tests for object array getDataChanges", () => {
@@ -145,7 +162,7 @@ test("Tests for object array getDataChanges", () => {
     ]
   };
   const initData = {
-    id: 1,
+    id: 2,
     ids: [1],
     items: [
       { id: 1, label: "a" },

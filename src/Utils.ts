@@ -261,7 +261,7 @@ String.prototype.removeNonLetters = function (this: string) {
  * Utilities
  */
 export namespace Utils {
-  const IgnoredProperty = "changedFields" as const;
+  const IgnoredProperties = ["changedFields", "id"] as const;
 
   /**
    * Add blank item to collection
@@ -405,17 +405,29 @@ export namespace Utils {
    * @param ignoreFields Ignore fields
    * @returns
    */
-  export function getDataChanges<T extends object>(
+  export function getDataChanges<
+    T extends object,
+    const I extends (keyof T & string)[]
+  >(
     input: T,
     initData: object,
-    ignoreFields: string[] = ["id"]
-  ): Exclude<keyof T & string, typeof IgnoredProperty>[] {
+    ignoreFields: I = [] as any
+  ): Exclude<
+    keyof T & string,
+    (typeof ignoreFields)[number] | (typeof IgnoredProperties)[number]
+  >[] {
     // Changed fields
-    const changes: Exclude<keyof T & string, typeof IgnoredProperty>[] = [];
+    const changes: Exclude<
+      keyof T & string,
+      (typeof ignoreFields)[number] | (typeof IgnoredProperties)[number]
+    >[] = [];
+
+    // Ignored fields
+    const allFields: string[] = [...ignoreFields, ...IgnoredProperties];
 
     Object.entries(input).forEach(([key, value]) => {
       // Ignore fields, no process
-      if (key === IgnoredProperty || ignoreFields.includes(key)) return;
+      if (allFields.includes(key)) return;
 
       // Compare with init value
       const initValue = Reflect.get(initData, key);
