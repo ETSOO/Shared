@@ -402,32 +402,36 @@ export namespace Utils {
    * Get data changed fields (ignored changedFields) with input data updated
    * @param input Input data
    * @param initData Initial data
-   * @param ignoreFields Ignore fields
+   * @param ignoreFields Ignore fields, default is ['changedFields', 'id']
    * @returns
    */
   export function getDataChanges<
     T extends object,
-    const I extends (keyof T & string)[]
+    const I extends (keyof T & string)[] | undefined = undefined
   >(
     input: T,
     initData: object,
-    ignoreFields: I = [] as any
+    ignoreFields?: I
   ): Exclude<
     keyof T & string,
-    (typeof ignoreFields)[number] | (typeof IgnoredProperties)[number]
+    I extends undefined
+      ? (typeof IgnoredProperties)[number]
+      : Exclude<I, undefined>[number]
   >[] {
+    // Default ignore fields
+    const fields = ignoreFields ?? IgnoredProperties;
+
     // Changed fields
     const changes: Exclude<
       keyof T & string,
-      (typeof ignoreFields)[number] | (typeof IgnoredProperties)[number]
+      I extends undefined
+        ? (typeof IgnoredProperties)[number]
+        : Exclude<I, undefined>[number]
     >[] = [];
-
-    // Ignored fields
-    const allFields: string[] = [...ignoreFields, ...IgnoredProperties];
 
     Object.entries(input).forEach(([key, value]) => {
       // Ignore fields, no process
-      if (allFields.includes(key)) return;
+      if (fields.includes(key as any)) return;
 
       // Compare with init value
       const initValue = Reflect.get(initData, key);

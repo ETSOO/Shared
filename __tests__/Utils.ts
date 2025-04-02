@@ -104,7 +104,7 @@ test("Tests for correctTypes", () => {
 
 test("Tests for getDataChanges", () => {
   const input = {
-    id: 1,
+    id: 2,
     name: "Name",
     gender: "F",
     brand: "",
@@ -146,10 +146,11 @@ test("Tests for getDataChanges", () => {
     enabled: true,
     value: undefined,
     date: new Date("2023/03/18"),
-    ids: [1, 2]
+    ids: [1, 2],
+    changedFields: ["gender", "brand", "date"]
   };
   const fields1 = Utils.getDataChanges(input1, initData, ["brand", "date"]);
-  expect(fields1).toStrictEqual(["gender", "amount"]);
+  expect(fields1).toStrictEqual(["id", "gender", "amount", "changedFields"]);
 });
 
 test("Tests for object array getDataChanges", () => {
