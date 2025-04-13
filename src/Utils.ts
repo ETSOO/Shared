@@ -540,7 +540,7 @@ export namespace Utils {
    * @returns Result
    */
   export function hasHtmlEntity(input: string) {
-    return /&(lt|gt|nbsp|60|62|160);/.test(input);
+    return /&(lt|gt|nbsp|60|62|160|#x3C|#x3E|#xA0);/i.test(input);
   }
 
   /**

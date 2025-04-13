@@ -204,6 +204,11 @@ test("Tests for hasHtmlEntity", () => {
   expect(Utils.hasHtmlEntity("&lt; &gt;")).toBeTruthy();
   expect(Utils.hasHtmlEntity("&180;")).toBeFalsy();
   expect(Utils.hasHtmlEntity("&160;")).toBeTruthy();
+  expect(
+    Utils.hasHtmlEntity(
+      "&#x3C;p&#x3E;Hello, world! This is &#x3C;b&#x3E;BOLD&#x3C;/b&#x3E;.&#x3C;/p&#x3E;"
+    )
+  ).toBeTruthy();
 });
 
 test("Tests for hasHtmlTag", () => {
