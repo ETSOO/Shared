@@ -535,6 +535,24 @@ export namespace Utils {
   };
 
   /**
+   * Check the input string contains HTML entity or not
+   * @param input Input string
+   * @returns Result
+   */
+  export function hasHtmlEntity(input: string) {
+    return /&(lt|gt|nbsp|60|62|160);/.test(input);
+  }
+
+  /**
+   * Check the input string contains HTML tag or not
+   * @param input Input string
+   * @returns Result
+   */
+  export function hasHtmlTag(input: string) {
+    return /<\/?[a-z]+[^<>]*>/i.test(input);
+  }
+
+  /**
    * Is digits string
    * @param input Input string
    * @param minLength Minimum length

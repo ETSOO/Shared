@@ -198,6 +198,21 @@ test("Tests for formatString", () => {
   expect(template.format("aa", "bb")).toBe(result);
 });
 
+test("Tests for hasHtmlEntity", () => {
+  expect(Utils.hasHtmlEntity("&nbsp")).toBeFalsy();
+  expect(Utils.hasHtmlEntity("&nbsp;")).toBeTruthy();
+  expect(Utils.hasHtmlEntity("&lt; &gt;")).toBeTruthy();
+  expect(Utils.hasHtmlEntity("&180;")).toBeFalsy();
+  expect(Utils.hasHtmlEntity("&160;")).toBeTruthy();
+});
+
+test("Tests for hasHtmlTag", () => {
+  expect(Utils.hasHtmlTag("<>")).toBeFalsy();
+  expect(Utils.hasHtmlTag("<div>")).toBeTruthy();
+  expect(Utils.hasHtmlTag("</h1>")).toBeTruthy();
+  expect(Utils.hasHtmlTag("<br>")).toBeTruthy();
+});
+
 test("Tests for hideData", () => {
   expect("xz@etsoo.com".hideEmail()).toBe("x***@etsoo.com");
   expect("info@etsoo.com".hideEmail()).toBe("in***@etsoo.com");

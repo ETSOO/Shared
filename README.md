@@ -306,6 +306,8 @@ String and other related utilities
 |     getDataChanges | Get data changed fields with input data updated                     |
 |     getNestedValue | Get nested value from object                                        |
 |        getTimeZone | Get time zone                                                       |
+|      hasHtmlEntity | Check the input string contains HTML entity or not                  |
+|         hasHtmlTag | Check the input string contains HTML tag or not                     |
 |           hideData | Hide data                                                           |
 |          hideEmail | Hide email data                                                     |
 |           isDigits | Is digits string                                                    |
