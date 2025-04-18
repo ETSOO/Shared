@@ -75,8 +75,8 @@ export type MsgActionResult = IActionResult<{
 /**
  * Action result with id, message data
  */
-export type IdMsgActionResult = IActionResult<{
-  id: number;
+export type IdMsgActionResult<T extends IdType = number> = IActionResult<{
+  id: T;
   msg: string;
 }>;
 
