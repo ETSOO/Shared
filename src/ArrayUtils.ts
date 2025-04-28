@@ -212,4 +212,26 @@ export namespace ArrayUtils {
     if (round) return [...diff, ...a2.filter((x) => !a1.includes(x))];
     return diff;
   }
+
+  /**
+   * Merge arrays, remove duplicates, and sort by the first array
+   * @param sort Array to sort
+   * @param param All arrays to merge
+   * @returns Result
+   */
+  export function mergeArrays<T>(sort: T[], ...param: T[][]): T[] {
+    const result = [...sort];
+
+    for (let i = 0; i < param.length; i++) {
+      const arr = param[i];
+      for (let j = 0; j < arr.length; j++) {
+        const item = arr[j];
+        if (!result.includes(item)) {
+          result.push(item);
+        }
+      }
+    }
+
+    return result;
+  }
 }

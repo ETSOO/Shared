@@ -63,6 +63,15 @@ test("Tests for maxItem / minItem", () => {
   expect(emptyItems.maxItem("amount")).toBeUndefined();
 });
 
+test("Tests for mergeArrays", () => {
+  const a1 = ["e", "a", "c"];
+  const a2 = ["a", "c", "d"];
+  const a3 = ["b", "c", "f"];
+  const result = ArrayUtils.mergeArrays(a1, a2, a3);
+  expect(result).toEqual(["e", "a", "c", "d", "b", "f"]);
+  expect(result.length).toBe(6);
+});
+
 test("Tests for remove simple", () => {
   const items = [1, 2, 3, 4, 5];
   const result = items.remove(1, 5, (item) => item % 2 === 0);
