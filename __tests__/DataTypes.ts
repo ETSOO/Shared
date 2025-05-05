@@ -202,6 +202,26 @@ test("Tests for jsonReplacer", () => {
   expect(json2).toBe('{"c":{"c2":false}}');
 });
 
+test("Tests for jsonSerialize", () => {
+  const obj = { a: 1, b: null, c: { c1: undefined, c2: false, c3: 128 } };
+  const json = DataTypes.jsonSerialize(obj);
+  expect(json).toBe('{"a":1,"c":{"c2":false,"c3":128}}');
+});
+
+test("Tests for jsonSerialize with removing empty values", () => {
+  const obj = {
+    a: 1,
+    b: null,
+    c: { c1: undefined, c2: false, c3: 128, c4: "" },
+    d: ""
+  };
+  const json = DataTypes.jsonSerialize(obj, {
+    ignoreEmpty: true,
+    ignoreNull: false
+  });
+  expect(json).toBe('{"a":1,"b":null,"c":{"c2":false,"c3":128}}');
+});
+
 test("Tests for EditType", () => {
   type AddEntity = {
     name: string;

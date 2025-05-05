@@ -197,6 +197,7 @@ Data type definitions and type safe functions. ListItemType, ListItemType1 and L
 |      isSimpleObject | Is the target a simple object, all values are simple type (Type guard) |
 |        isSimpleType | Is the input value simple type, include null and undefined             |
 |        jsonReplacer | JSON.stringify replacer with full path                                 |
+|       jsonSerialize | JSON serialize with options                                            |
 
 ## DateUtils
 

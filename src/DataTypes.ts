@@ -800,6 +800,25 @@ export namespace DataTypes {
       return value;
     });
   }
+
+  /**
+   * JSON serialize with options
+   * @param obj Object to serialize
+   * @param options Options to ignore null or empty values
+   * @returns Result
+   */
+  export function jsonSerialize(
+    obj: unknown,
+    options?: { ignoreNull?: boolean; ignoreEmpty?: boolean }
+  ) {
+    const { ignoreNull = true, ignoreEmpty = false } = options ?? {};
+
+    return JSON.stringify(obj, (_key, value) => {
+      if (ignoreNull && value == null) return undefined;
+      if (ignoreEmpty && value === "") return undefined;
+      return value;
+    });
+  }
 }
 
 /**
