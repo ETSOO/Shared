@@ -5,6 +5,12 @@ declare global {
      * @param precision Precision
      */
     toExact(precision?: number): number;
+
+    /**
+     * To the step number, like 0, 10, 20, 30 for step 10
+     * @param step Step
+     */
+    toStep(step: number): number;
   }
 }
 
@@ -15,6 +21,12 @@ Number.prototype.toExact = function (this: number, precision?: number) {
 
   const p = Math.pow(10, precision);
   return Math.round(this * p) / p;
+};
+
+Number.prototype.toStep = function (this: number, step: number) {
+  if (step <= 0) return this;
+
+  return Math.floor(this / step) * step;
 };
 
 export namespace NumberUtils {

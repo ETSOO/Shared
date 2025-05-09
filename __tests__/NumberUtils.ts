@@ -50,3 +50,12 @@ test("Tests for toFileSize", () => {
   expect(NumberUtils.formatFileSize(1125000)).toBe("1.07 MB");
   expect(NumberUtils.formatFileSize(1125000, 1)).toBe("1.1 MB");
 });
+
+test("Tests for toStep", () => {
+  const nums = [9, 13, 20, 33, 99, 101, 3009];
+  const results = nums.map((num) => num.toStep(10));
+  expect(results).toStrictEqual([0, 10, 20, 30, 90, 100, 3000]);
+
+  const results2 = nums.map((num) => num.toStep(8));
+  expect(results2).toStrictEqual([8, 8, 16, 32, 96, 96, 3008]);
+});

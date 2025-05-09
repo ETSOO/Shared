@@ -276,6 +276,7 @@ Numbers related utilities
 | getCurrencySymbol | Get currency symbol or name from ISO code             |
 |             parse | Parse to number, with or without default value        |
 |           toExact | To the exact precision number avoiding precision lost |
+|            toStep | To the step number, like 0, 10, 20, 30 for step 10    |
 
 ## StorageUtils
 
