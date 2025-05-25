@@ -157,3 +157,39 @@ test("Tests for sortIds 2", () => {
     "SGD"
   ]);
 });
+
+test("Tests for toggleItem", () => {
+  const items = [1, 2, 3];
+  items.toggleItem(2, false);
+  expect(items).toStrictEqual([1, 3]);
+
+  items.toggleItem(4, true);
+  expect(items).toStrictEqual([1, 3, 4]);
+
+  items.toggleItem(1, false);
+  expect(items).toStrictEqual([3, 4]);
+
+  items.toggleItem(3, true);
+  expect(items).toStrictEqual([3, 4]);
+});
+
+test("Tests for toggleItem with object", () => {
+  const items = [
+    { id: 1, label: "a" },
+    { id: 2, label: "b" }
+  ];
+  items.toggleItem({ id: 2, label: "b" }, false);
+  expect(items).toStrictEqual([{ id: 1, label: "a" }]);
+
+  items.toggleItem({ id: 3, label: "c" }, true, "id");
+  expect(items).toStrictEqual([
+    { id: 1, label: "a" },
+    { id: 3, label: "c" }
+  ]);
+
+  items.toggleItem(1, false, "id");
+  expect(items).toStrictEqual([{ id: 3, label: "c" }]);
+
+  items.toggleItem({ id: 3, label: "c" }, true, "id");
+  expect(items).toStrictEqual([{ id: 3, label: "c" }]);
+});

@@ -122,6 +122,7 @@ Array related utilities
 |     minItem | Get min field value item                                     |
 |      remove | Remove items by value or condition                           |
 |         sum | Sum number items or number item properties                   |
+|  toggleItem | Toggle item in array                                         |
 |    toUnique | Make all items are unique                                    |
 
 ## DataTypes

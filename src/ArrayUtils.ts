@@ -1,5 +1,5 @@
 import isEqual from "lodash.isequal";
-import { DataTypes } from "./DataTypes";
+import { DataTypes, IdType } from "./DataTypes";
 
 declare global {
   interface Array<T> {
@@ -78,6 +78,18 @@ declare global {
     ): number;
 
     /**
+     * Toggle item in array
+     * @param item Item to toggle
+     * @param add If true, add the item, otherwise remove it
+     * @param idField If item is an object, use this field to check for existence
+     */
+    toggleItem(
+      item: T extends object ? T | IdType : T,
+      add: boolean,
+      idField?: T extends object ? keyof T : never
+    ): Array<T>;
+
+    /**
      * Make all items are unique
      * @param this Input array
      */
@@ -91,6 +103,36 @@ Array.prototype.different = function <T>(
   round?: boolean
 ) {
   return ArrayUtils.differences(this, target, round);
+};
+
+Array.prototype.toggleItem = function <T>(
+  this: Array<T>,
+  item: T extends object ? T | IdType : T,
+  add: boolean,
+  idField?: T extends object ? keyof T : never
+) {
+  const isObject = typeof item === "object" && item !== null;
+  const index = this.findIndex((i) => {
+    if (idField) {
+      if (isObject) {
+        return i[idField] === (item as any)[idField];
+      } else {
+        return i[idField] === item;
+      }
+    }
+    return isEqual(i, item);
+  });
+
+  if (add) {
+    if (index < 0) {
+      // Ignore type checking
+      this.push(item as T);
+    }
+  } else {
+    if (index >= 0) this.splice(index, 1);
+  }
+
+  return this;
 };
 
 Array.prototype.toUnique = function <T>(this: Array<T>) {
