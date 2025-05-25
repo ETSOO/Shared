@@ -83,10 +83,13 @@ declare global {
      * @param add If true, add the item, otherwise remove it
      * @param idField If item is an object, use this field to check for existence
      */
-    toggleItem(
-      item: T extends object ? T | IdType : T,
-      add: boolean,
-      idField?: T extends object ? keyof T : never
+    toggleItem<
+      const A extends true | false,
+      const F = T extends object ? keyof T : never
+    >(
+      item: T | (F extends keyof T ? (A extends true ? T : T | T[F]) : T),
+      add: A,
+      idField?: F
     ): Array<T>;
 
     /**
@@ -105,19 +108,23 @@ Array.prototype.different = function <T>(
   return ArrayUtils.differences(this, target, round);
 };
 
-Array.prototype.toggleItem = function <T>(
+Array.prototype.toggleItem = function <
+  T,
+  const A extends true | false,
+  const F = T extends object ? keyof T : never
+>(
   this: Array<T>,
-  item: T extends object ? T | IdType : T,
-  add: boolean,
-  idField?: T extends object ? keyof T : never
+  item: T | (F extends keyof T ? (A extends true ? T : T | T[F]) : T),
+  add: A,
+  idField?: F
 ) {
   const isObject = typeof item === "object" && item !== null;
   const index = this.findIndex((i) => {
     if (idField) {
       if (isObject) {
-        return i[idField] === (item as any)[idField];
+        return i[idField as keyof T] === (item as T)[idField as keyof T];
       } else {
-        return i[idField] === item;
+        return i[idField as keyof T] === item;
       }
     }
     return isEqual(i, item);
@@ -125,7 +132,8 @@ Array.prototype.toggleItem = function <T>(
 
   if (add) {
     if (index < 0) {
-      // Ignore type checking
+      // Ignore type checking as the type assertion is ready
+      // when add is true, item should be T, not a field value
       this.push(item as T);
     }
   } else {
