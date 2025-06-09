@@ -1,5 +1,10 @@
 import { DataTypes, IdDefaultType, LabelDefaultType } from "../src/DataTypes";
 
+enum GenderEnum {
+  Male = "M",
+  Female = "F"
+}
+
 test("Tests for DI", () => {
   const item: DataTypes.DIS<"id", number> & DataTypes.DIS<"label", string> = {
     id: 1,
@@ -98,10 +103,24 @@ test("Tests for getEnumByValue", () => {
   expect(DataTypes.getEnumByValue(DataTypes.HAlignEnum, 4)).toBeUndefined();
 });
 
+test("Tests for getEnumByValue of string value enum", () => {
+  expect(DataTypes.getEnumByValue(GenderEnum, "M")).toStrictEqual(
+    GenderEnum.Male
+  );
+  expect(DataTypes.getEnumByValue(GenderEnum, "F")).toStrictEqual(
+    GenderEnum.Female
+  );
+});
+
 test("Tests for getEnumKey", () => {
   expect(
     DataTypes.getEnumKey(DataTypes.HAlignEnum, DataTypes.HAlignEnum.Center)
   ).toBe("Center");
+});
+
+test("Tests for getEnumKey of string value enum", () => {
+  expect(DataTypes.getEnumKey(GenderEnum, GenderEnum.Female)).toBe("Female");
+  expect(DataTypes.getEnumKey(GenderEnum, "None")).toBeUndefined();
 });
 
 test("Tests for getEnumKeys", () => {

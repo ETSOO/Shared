@@ -561,8 +561,16 @@ export namespace DataTypes {
     return typeName;
   }
 
+  /* 
+    enum Gender {
+      Male = "M",
+      Female = "F"
+    }
+  */
+
   /**
    * Get enum item from key
+   * getEnumByKey(Gender, "Male") === Gender.Male
    * @param enumItem Enum
    * @param key Key
    * @returns Enum item
@@ -577,6 +585,7 @@ export namespace DataTypes {
 
   /**
    * Get enum item from value
+   * getEnumByKey(Gender, "M") === Gender.Male
    * @param enumItem Enum
    * @param value Key
    * @returns Enum item or undefined
@@ -585,18 +594,40 @@ export namespace DataTypes {
     enumItem: T,
     value: EnumValue
   ): T[K] | undefined {
-    if (value in enumItem) return <T[K]>value;
+    if (typeof value === "number") {
+      if (value in enumItem) return <T[K]>value;
+    } else {
+      const keys = Object.keys(enumItem) as (keyof T)[];
+      for (const key of keys) {
+        const kv = enumItem[key];
+        if (kv === value) return <T[K]>kv;
+      }
+    }
+
     return undefined;
   }
 
   /**
    * Get enum string literal type value
+   * getEnumKey(Gender, "F") === "Female"
    * @param enumItem Enum item
    * @param value Value
    * @returns Result
    */
-  export function getEnumKey(enumItem: EnumBase, value: EnumValue) {
-    return enumItem[value].toString();
+  export function getEnumKey<T extends EnumBase>(
+    enumItem: T,
+    value: EnumValue
+  ) {
+    if (typeof value === "number") {
+      if (value in enumItem) return enumItem[value].toString();
+    } else {
+      const keys = Object.keys(enumItem);
+      for (const key of keys) {
+        if (enumItem[key] === value) return key;
+      }
+    }
+
+    return undefined;
   }
 
   /**
