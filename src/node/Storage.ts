@@ -2,7 +2,7 @@
  * Node storage
  * Please take care of the persistence with source property
  */
-export class NodeStorage {
+export class NodeStorage implements Storage {
   /**
    * Storage source
    */
