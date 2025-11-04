@@ -1,5 +1,4 @@
 import { DataTypes, IdType } from "./DataTypes";
-import isEqual from "lodash.isequal";
 import { DateUtils } from "./DateUtils";
 import { ParsedPath } from "./types/ParsedPath";
 
@@ -327,29 +326,6 @@ export namespace Utils {
   }
 
   /**
-   * Two values equal
-   * @param v1 Value 1
-   * @param v2 Value 2
-   * @param strict Strict level, 0 with ==, 1 === but null equal undefined, 2 ===
-   */
-  export function equals(v1: unknown, v2: unknown, strict = 1) {
-    // Null and undefined case
-    if (v1 == null || v2 == null) {
-      if (strict <= 1 && v1 == v2) return true;
-      return v1 === v2;
-    }
-
-    // For date, array and object
-    if (typeof v1 === "object") return isEqual(v1, v2);
-
-    // 1 and '1' case
-    if (strict === 0) return v1 == v2;
-
-    // Strict equal
-    return v1 === v2;
-  }
-
-  /**
    * Exclude specific items
    * @param items Items
    * @param field Filter field
@@ -454,7 +430,7 @@ export namespace Utils {
         }
 
         const newValue = DataTypes.convert(value, initValue);
-        if (Utils.equals(newValue, initValue)) {
+        if (DataTypes.isDeepEqual(newValue, initValue)) {
           Reflect.deleteProperty(input, key);
           return;
         }
@@ -636,14 +612,14 @@ export namespace Utils {
    * @param obj1 Object 1
    * @param obj2 Object 2
    * @param ignoreFields Ignored fields
-   * @param strict Strict level, 0 with ==, 1 === but null equal undefined, 2 ===
+   * @param isStrict Strict or not, false: loose equal, undefined === but null equal undefined, NaN equal NaN, true: strict equal
    * @returns Result
    */
   export function objectEqual(
     obj1: object,
     obj2: object,
     ignoreFields: string[] = [],
-    strict = 1
+    isStrict?: boolean
   ) {
     // Unique keys
     const keys = Utils.objectKeys(obj1, obj2, ignoreFields);
@@ -653,7 +629,7 @@ export namespace Utils {
       const v1 = Reflect.get(obj1, key);
       const v2 = Reflect.get(obj2, key);
 
-      if (!Utils.equals(v1, v2, strict)) return false;
+      if (!DataTypes.isDeepEqual(v1, v2, isStrict)) return false;
     }
 
     return true;
@@ -685,14 +661,14 @@ export namespace Utils {
    * @param objNew New object
    * @param objPre Previous object
    * @param ignoreFields Ignored fields
-   * @param strict Strict level, 0 with ==, 1 === but null equal undefined, 2 ===
+   * @param isStrict Strict or not, false: loose equal, undefined === but null equal undefined, NaN equal NaN, true: strict equal
    * @returns Updated fields
    */
   export function objectUpdated(
     objNew: object,
     objPrev: object,
     ignoreFields: string[] = [],
-    strict = 1
+    isStrict?: boolean
   ) {
     // Fields
     const fields: string[] = [];
@@ -705,7 +681,7 @@ export namespace Utils {
       const vNew = Reflect.get(objNew, key);
       const vPrev = Reflect.get(objPrev, key);
 
-      if (!Utils.equals(vNew, vPrev, strict)) {
+      if (!DataTypes.isDeepEqual(vNew, vPrev, isStrict)) {
         fields.push(key);
       }
     }

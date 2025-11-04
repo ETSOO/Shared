@@ -1,5 +1,4 @@
-import isEqual from "lodash.isequal";
-import { DataTypes, IdType } from "./DataTypes";
+import { DataTypes } from "./DataTypes";
 
 declare global {
   interface Array<T> {
@@ -127,7 +126,7 @@ Array.prototype.toggleItem = function <
         return i[idField as keyof T] === item;
       }
     }
-    return isEqual(i, item);
+    return DataTypes.isDeepEqual(i, item);
   });
 
   if (add) {
@@ -149,7 +148,8 @@ Array.prototype.toUnique = function <T>(this: Array<T>) {
 
   const newArray: T[] = [];
   this.forEach((item) => {
-    if (newArray.some((newItem) => isEqual(item, newItem))) return;
+    if (newArray.some((newItem) => DataTypes.isDeepEqual(item, newItem)))
+      return;
     newArray.push(item);
   });
   return newArray;

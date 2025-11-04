@@ -1,43 +1,8 @@
 import { DomUtils } from "../src/DomUtils";
 import { DataTypes } from "../src/DataTypes";
 import { DateUtils } from "../src/DateUtils";
+import { MockDOMRect } from "../src/test/MockDOMRect";
 import { ErrorData } from "../src/types/ErrorData";
-
-// Implement for tests
-class Rect implements DOMRect {
-  readonly bottom: number;
-  readonly height: number;
-  readonly left: number;
-  readonly right: number;
-  readonly top: number;
-  readonly width: number;
-  readonly x: number;
-  readonly y: number;
-  toJSON(): any {
-    return JSON.stringify({
-      bottom: this.bottom,
-      height: this.height,
-      left: this.left,
-      right: this.right,
-      top: this.top,
-      width: this.width,
-      x: this.x,
-      y: this.y
-    });
-  }
-
-  constructor(width: number, height: number, x: number = 0, y: number = 0) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-
-    this.left = x;
-    this.top = y;
-    this.bottom = this.top + this.height;
-    this.right = this.left = this.width;
-  }
-}
 
 describe("Tests for clearFormData", () => {
   // Applies only to tests in this describe block
@@ -110,8 +75,8 @@ test("Tests for mergeFormData", () => {
 });
 
 test("Tests for dimensionEqual", () => {
-  const rect1: DOMRect = new Rect(200, 300);
-  const rect2: DOMRect = new Rect(100, 200);
+  const rect1: DOMRect = new MockDOMRect(200, 300);
+  const rect2: DOMRect = new MockDOMRect(100, 200);
   expect(DomUtils.dimensionEqual(undefined, undefined)).toBeTruthy();
   expect(DomUtils.dimensionEqual(rect1, undefined)).toBeFalsy();
   expect(DomUtils.dimensionEqual(rect1, rect2)).toBeFalsy();

@@ -53,7 +53,7 @@ describe("Tests for addUrlParams", () => {
     );
   });
 
-  global.URL = undefined as any;
+  globalThis.URL = undefined as any;
 
   const result3 = url.addUrlParams(data);
 
@@ -275,9 +275,9 @@ test("Tests for objectEqual", () => {
   const obj1 = { a: 1, b: "abc", c: true, d: null, f: [1, 2] };
   const obj2 = { a: "1", b: "abc", c: true, f: [1, 2] };
   expect(Utils.objectEqual(obj1, obj2)).toBeFalsy();
-  expect(Utils.objectEqual(obj1, obj2, [], 0)).toBeTruthy();
+  expect(Utils.objectEqual(obj1, obj2, [], false)).toBeTruthy();
   expect(Utils.objectEqual(obj1, obj2, ["a"])).toBeTruthy();
-  expect(Utils.objectEqual(obj1, obj2, ["a"], 2)).toBeFalsy();
+  expect(Utils.objectEqual(obj1, obj2, ["a"], true)).toBeFalsy();
 });
 
 test("Tests for parseJsonArray", () => {

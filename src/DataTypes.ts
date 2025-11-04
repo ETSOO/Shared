@@ -742,6 +742,70 @@ export namespace DataTypes {
   }
 
   /**
+   * Check deep equality
+   * @param a Input a
+   * @param b Input b
+   * @param isStrict Strict or not, false: loose equal, undefined === but null equal undefined, NaN equal NaN, true: strict equal
+   * @returns Result
+   */
+  export function isDeepEqual(
+    a: unknown,
+    b: unknown,
+    isStrict?: boolean
+  ): boolean {
+    // Same object or value
+    if (a === b) return true;
+
+    // Null and undefined case
+    if (a == null || b == null) {
+      if (!isStrict && a == b) return true;
+      return a === b;
+    } else if (isStrict === false) {
+      // Loose equal case
+      if (a == b) return true;
+    }
+
+    // Different type
+    if (typeof a !== typeof b) return false;
+
+    // NaN case
+    if (Number.isNaN(a) && Number.isNaN(b) && !isStrict) return true;
+
+    if (typeof a === "object") {
+      // Date
+      if (a instanceof Date && b instanceof Date) {
+        return a.getTime() === b.getTime();
+      }
+
+      // Array
+      if (Array.isArray(a) && Array.isArray(b)) {
+        if (a.length !== b.length) return false;
+
+        for (let i = 0; i < a.length; i++) {
+          if (!isDeepEqual(a[i], b[i], isStrict)) return false;
+        }
+
+        return true;
+      }
+
+      // Loop object keys
+      const aKeys = Object.keys(a);
+      const bKeys = Object.keys(b);
+      if (aKeys.length !== bKeys.length && isStrict) return false;
+
+      const allKeys = new Set<string>([...aKeys, ...bKeys]);
+      for (const key of allKeys) {
+        if (!isDeepEqual(Reflect.get(a, key), Reflect.get(b, key), isStrict))
+          return false;
+      }
+
+      return true;
+    }
+
+    return isStrict ? a === b : a == b;
+  }
+
+  /**
    * Is the target a simple object (Type guard)
    * @param input Test data
    * @param includeArray Include array as simple type

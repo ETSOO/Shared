@@ -10,6 +10,9 @@ export * from "./types/FormData";
 export * from "./storage/IStorage";
 export * from "./storage/WindowStorage";
 
+export * from "./test/MockDOMRect";
+export * from "./test/MockResizeObserver";
+
 export * from "./ActionResult";
 export * from "./ArrayUtils";
 export * from "./DataTypes";

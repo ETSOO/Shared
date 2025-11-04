@@ -272,3 +272,193 @@ test("Tests for BasicTemplate", () => {
 
   expect(data.id).toBe(1);
 });
+
+test("Tests for isDeepEqual - Primitive values", () => {
+  // Same values
+  expect(DataTypes.isDeepEqual(1, 1)).toBeTruthy();
+  expect(DataTypes.isDeepEqual("hello", "hello")).toBeTruthy();
+  expect(DataTypes.isDeepEqual(true, true)).toBeTruthy();
+  expect(DataTypes.isDeepEqual(false, false)).toBeTruthy();
+
+  // Different values
+  expect(DataTypes.isDeepEqual(1, 2)).toBeFalsy();
+  expect(DataTypes.isDeepEqual("hello", "world")).toBeFalsy();
+  expect(DataTypes.isDeepEqual(true, false)).toBeFalsy();
+
+  // Different types
+  expect(DataTypes.isDeepEqual(1, "1")).toBeFalsy();
+  expect(DataTypes.isDeepEqual(true, 1)).toBeFalsy();
+  expect(DataTypes.isDeepEqual(null, undefined)).toBeTruthy(); // Default strict=1
+});
+
+test("Tests for isDeepEqual - Null and undefined", () => {
+  // strict = undefined (default): null == undefined
+  expect(DataTypes.isDeepEqual(null, null)).toBeTruthy();
+  expect(DataTypes.isDeepEqual(undefined, undefined)).toBeTruthy();
+  expect(DataTypes.isDeepEqual(null, undefined)).toBeTruthy();
+  expect(DataTypes.isDeepEqual(undefined, null)).toBeTruthy();
+
+  // strict = 2: null !== undefined
+  expect(DataTypes.isDeepEqual(null, null, true)).toBeTruthy();
+  expect(DataTypes.isDeepEqual(undefined, undefined, true)).toBeTruthy();
+  expect(DataTypes.isDeepEqual(null, undefined, true)).toBeFalsy();
+  expect(DataTypes.isDeepEqual(undefined, null, true)).toBeFalsy();
+
+  // With non-null values
+  expect(DataTypes.isDeepEqual(null, 0)).toBeFalsy();
+  expect(DataTypes.isDeepEqual(undefined, "")).toBeFalsy();
+});
+
+test("Tests for isDeepEqual - Loose equality (strict=0)", () => {
+  // Loose equal cases
+  expect(DataTypes.isDeepEqual(1, "1", false)).toBeTruthy();
+  expect(DataTypes.isDeepEqual(0, false, false)).toBeTruthy();
+  expect(DataTypes.isDeepEqual(1, true, false)).toBeTruthy();
+  expect(DataTypes.isDeepEqual("", false, false)).toBeTruthy();
+  expect(DataTypes.isDeepEqual(null, undefined, false)).toBeTruthy();
+
+  // Still not equal
+  expect(DataTypes.isDeepEqual(1, 2, false)).toBeFalsy();
+  expect(DataTypes.isDeepEqual("hello", "world", false)).toBeFalsy();
+});
+
+test("Tests for isDeepEqual - BigInt values", () => {
+  expect(DataTypes.isDeepEqual(123n, 123n)).toBeTruthy();
+  expect(DataTypes.isDeepEqual(123n, 456n)).toBeFalsy();
+  expect(DataTypes.isDeepEqual(123n, 123)).toBeFalsy();
+});
+
+test("Tests for isDeepEqual - Date objects", () => {
+  const date1 = new Date("2023-01-01");
+  const date2 = new Date("2023-01-01");
+  const date3 = new Date("2023-01-02");
+
+  expect(DataTypes.isDeepEqual(date1, date1)).toBeTruthy();
+  expect(DataTypes.isDeepEqual(date1, date2)).toBeTruthy();
+  expect(DataTypes.isDeepEqual(date1, date3)).toBeFalsy();
+});
+
+test("Tests for isDeepEqual - Arrays", () => {
+  const arr1 = [1, 2, 3];
+  expect(DataTypes.isDeepEqual(arr1, arr1)).toBeTruthy();
+
+  // Different references, same content
+  expect(DataTypes.isDeepEqual([1, 2, 3], [1, 2, 3])).toBeTruthy();
+  expect(DataTypes.isDeepEqual([], [])).toBeTruthy();
+
+  // Different content
+  expect(DataTypes.isDeepEqual([1, 2, 3], [1, 2, 4])).toBeFalsy();
+  expect(DataTypes.isDeepEqual([1, 2], [1, 2, 3])).toBeFalsy();
+
+  // Nested arrays
+  expect(
+    DataTypes.isDeepEqual(
+      [
+        [1, 2],
+        [3, 4]
+      ],
+      [
+        [1, 2],
+        [3, 4]
+      ]
+    )
+  ).toBeTruthy();
+  expect(
+    DataTypes.isDeepEqual(
+      [
+        [1, 2],
+        [3, 4]
+      ],
+      [
+        [1, 2],
+        [3, 5]
+      ]
+    )
+  ).toBeFalsy();
+});
+
+test("Tests for isDeepEqual - Objects", () => {
+  // Same reference
+  const obj1 = { a: 1, b: 2 };
+  expect(DataTypes.isDeepEqual(obj1, obj1)).toBeTruthy();
+
+  // Different references, same content
+  expect(DataTypes.isDeepEqual({ a: 1, b: 2 }, { a: 1, b: 2 })).toBeTruthy();
+  expect(DataTypes.isDeepEqual({}, {})).toBeTruthy();
+
+  // Different content
+  expect(DataTypes.isDeepEqual({ a: 1, b: 2 }, { a: 1, b: 3 })).toBeFalsy();
+  expect(DataTypes.isDeepEqual({ a: 1 }, { a: 1, b: 2 })).toBeFalsy();
+
+  expect(
+    DataTypes.isDeepEqual({ a: 1, b: "2" }, { a: 1, b: 2 }, false)
+  ).toBeTruthy();
+  expect(DataTypes.isDeepEqual({ a: 1 }, { a: 1, b: null })).toBeTruthy();
+  expect(
+    DataTypes.isDeepEqual({ a: 1, c: true }, { a: 1, b: null })
+  ).toBeFalsy();
+  expect(DataTypes.isDeepEqual({ a: 1 }, { a: 1, b: null }, true)).toBeFalsy();
+
+  // Nested objects
+  expect(
+    DataTypes.isDeepEqual(
+      { a: { x: 1, y: 2 }, b: 3 },
+      { a: { x: 1, y: 2 }, b: 3 }
+    )
+  ).toBeTruthy();
+
+  expect(
+    DataTypes.isDeepEqual(
+      { a: { x: 1, y: 2 }, b: 3 },
+      { a: { x: 1, y: 3 }, b: 3 }
+    )
+  ).toBeFalsy();
+});
+
+test("Tests for isDeepEqual - Mixed complex types", () => {
+  // Arrays with objects
+  expect(
+    DataTypes.isDeepEqual(
+      [
+        { id: 1, name: "Alice" },
+        { id: 2, name: "Bob" }
+      ],
+      [
+        { id: 1, name: "Alice" },
+        { id: 2, name: "Bob" }
+      ]
+    )
+  ).toBeTruthy();
+
+  // Objects with arrays
+  expect(
+    DataTypes.isDeepEqual(
+      { users: [1, 2, 3], active: true },
+      { users: [1, 2, 3], active: true }
+    )
+  ).toBeTruthy();
+
+  // Objects with different property order
+  expect(DataTypes.isDeepEqual({ a: 1, b: 2 }, { b: 2, a: 1 })).toBeTruthy();
+});
+
+test("Tests for isDeepEqual - Edge cases", () => {
+  // Functions - should not be equal unless same reference
+  const func1 = () => {};
+  const func2 = () => {};
+  expect(DataTypes.isDeepEqual(func1, func1)).toBeTruthy();
+  expect(DataTypes.isDeepEqual(func1, func2)).toBeFalsy();
+
+  // NaN values
+  // NaN === NaN is false, but they should be considered equal
+  expect(DataTypes.isDeepEqual(NaN, NaN)).toBeTruthy();
+
+  // Infinity
+  expect(DataTypes.isDeepEqual(Infinity, Infinity)).toBeTruthy();
+  expect(DataTypes.isDeepEqual(-Infinity, -Infinity)).toBeTruthy();
+  expect(DataTypes.isDeepEqual(Infinity, -Infinity)).toBeFalsy();
+
+  // Zero variants
+  expect(DataTypes.isDeepEqual(0, -0)).toBeTruthy();
+  expect(DataTypes.isDeepEqual(+0, -0)).toBeTruthy();
+});
