@@ -302,7 +302,6 @@ String and other related utilities
 |      charsToNumber | Base64 chars to number                                              |
 |     containChinese | Check the input string contains Chinese character or not            |
 |       correctTypes | Correct object's property value type                                |
-|             equals | Two values equal                                                    |
 |            exclude | Exclude specific items                                              |
 |       excludeAsync | Async exclude specific items                                        |
 |      formatInitial | Format inital character to lower case or upper case                 |
