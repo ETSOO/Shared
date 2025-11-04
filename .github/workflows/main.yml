@@ -23,13 +23,13 @@ jobs:
     steps:
       # https://github.com/actions/checkout, This action checks-out your repository under $GITHUB_WORKSPACE
       # so your workflow can access it.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       # Set up your GitHub Actions workflow with a specific version of node.js
       # Setup .npmrc file to publish to npm
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: "latest"
+          node-version: "24.11" # latest
           registry-url: "https://registry.npmjs.org"
 
       # Named after Continuous Integration, installs dependencies directly from package-lock.json

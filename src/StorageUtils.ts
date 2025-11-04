@@ -21,13 +21,6 @@ export namespace StorageUtils {
       return;
     }
 
-    console.log(
-      "Setting local data",
-      key,
-      typeof localStorage,
-      "setItem" in localStorage
-    );
-
     localStorage.setItem(
       key,
       typeof data === "string" ? data : JSON.stringify(data)
