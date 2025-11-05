@@ -1,4 +1,4 @@
-import { NodeStorage } from "./node/Storage";
+import { NodeStorage } from "./node/NodeStorage";
 import { Utils } from "./Utils";
 
 // Mock node

@@ -1,6 +1,6 @@
 {
   "name": "@etsoo/shared",
-  "version": "1.2.78",
+  "version": "1.2.79",
   "description": "TypeScript shared utilities and functions",
   "main": "lib/cjs/index.js",
   "module": "lib/mjs/index.js",
@@ -40,6 +40,6 @@
     "@vitejs/plugin-react": "^5.1.0",
     "jsdom": "^27.1.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.6"
+    "vitest": "^4.0.7"
   }
 }

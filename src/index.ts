@@ -7,6 +7,8 @@ export * from "./types/ErrorData";
 export * from "./types/EventClass";
 export * from "./types/FormData";
 
+export * from "./node/NodeStorage";
+
 export * from "./storage/IStorage";
 export * from "./storage/WindowStorage";
 
