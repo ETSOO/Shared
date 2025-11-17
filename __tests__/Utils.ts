@@ -356,6 +356,20 @@ test("Tests for getResult", () => {
   expect(valueResult).toBe(5);
 });
 
+test("Tests for parseName", () => {
+  const nd = Utils.parseName("王小明");
+  expect(nd.familyName).toBe("王");
+  expect(nd.givenName).toBe("小明");
+
+  const nd2 = Utils.parseName("John  Smith");
+  expect(nd2.familyName).toBe("Smith");
+  expect(nd2.givenName).toBe("John");
+
+  const nd3 = Utils.parseName("单  名");
+  expect(nd3.familyName).toBe("单");
+  expect(nd3.givenName).toBe("名");
+});
+
 test("Tests for parsePath, file only", () => {
   const result = Utils.parsePath("a.jpg");
   expect(result.root).toBe("");

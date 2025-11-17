@@ -900,6 +900,44 @@ export namespace Utils {
   }
 
   /**
+   * Parse name
+   * @param name Name
+   * @returns Result
+   */
+  export function parseName(name: string) {
+    // Trim
+    name = name.trim();
+
+    let familyName: string | undefined;
+    let givenName: string | undefined;
+
+    if (
+      name.containChinese() ||
+      name.containJapanese() ||
+      name.containKorean()
+    ) {
+      // CJK characters
+      if (name.length >= 2) {
+        familyName = name[0];
+        givenName = name.substring(1).trim();
+      } else {
+        familyName = name;
+      }
+    } else {
+      const parts = name.split(/\s+/);
+      const len = parts.length;
+      if (len >= 2) {
+        familyName = parts[len - 1];
+        givenName = parts[0];
+      } else {
+        givenName = name;
+      }
+    }
+
+    return { familyName, givenName };
+  }
+
+  /**
    * Parse path similar with node.js path.parse
    * @param path Input path
    */

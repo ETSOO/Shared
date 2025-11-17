@@ -324,6 +324,7 @@ String and other related utilities
 |         objectKeys | Get two object's unqiue properties                                  |
 |      objectUpdated | Get the new object's updated fields contrast to the previous object |
 |     parseJsonArray | Try to parse JSON input to array                                    |
+|          parseName | Parse name data                                                     |
 |          parsePath | Parse path similar with node.js path.parse                          |
 |        parseString | Parse string (JSON) to specific type                                |
 |  removeEmptyValues | Remove empty values (null, undefined, '') from the input object     |
