@@ -328,6 +328,16 @@ test("Tests for mergeClasses", () => {
   expect(Utils.mergeClasses("a", "", "b ", undefined, "c")).toBe("a b c");
 });
 
+test("Tests for formatName", () => {
+  expect(Utils.formatName("青岛亿速思维网络科技有限公司", 6)).toBe(
+    "青岛亿速思维"
+  );
+  expect(Utils.formatName("亿速思维（中国）网络科技有限公司", 6)).toBe(
+    "亿速思维（中国）"
+  );
+  expect(Utils.formatName("John Smith", 6)).toBe("John Smith");
+});
+
 test("Tests for getNestedValue", () => {
   const obj = { jsonData: { photoSize: [200, 100], supportResizing: true } };
   expect(Utils.getNestedValue(obj, "jsonData.supportResizing")).toBeTruthy();

@@ -141,7 +141,7 @@ export class WindowStorage implements IStorage {
    * @param key Key name
    * @param data  Data, null for removal
    */
-  setPersistedData(key: string, data: unknown) {
+  setPersistedData<T>(key: string, data: T) {
     StorageUtils.setLocalData(key, data);
   }
 }

@@ -356,6 +356,70 @@ export namespace Utils {
   }
 
   /**
+   * Format name
+   * @param name Input name
+   * @param maxChars Max chars
+   * @param maxParts Max parts (optional)
+   * @returns Formatted name
+   */
+  export function formatName(
+    name: string,
+    maxChars: number,
+    maxParts?: number
+  ): string {
+    name = name.trim();
+
+    const parts = name.split(/\s+/);
+
+    const max = maxParts ?? Math.floor(maxChars / 3);
+    const effectiveMax = max < 2 ? 2 : max;
+
+    if (parts.length >= effectiveMax) {
+      return parts.slice(0, effectiveMax).join(" ");
+    } else if (name.length > maxChars) {
+      let endIndex = maxChars;
+      const brackets: Record<string, string> = {
+        "(": ")",
+        "（": "）",
+        "[": "]"
+      };
+
+      // Count unmatched brackets for each type
+      for (const [start, end] of Object.entries(brackets)) {
+        let count = 0;
+
+        // Count opening and closing brackets in the substring
+        for (let i = 0; i < maxChars; i++) {
+          if (name[i] === start) count++;
+          else if (name[i] === end) count--;
+        }
+
+        if (count > 0) {
+          // Find matching end brackets
+          for (let i = maxChars; i < name.length && count > 0; i++) {
+            if (name[i] === start) {
+              count++;
+            } else if (name[i] === end) {
+              count--;
+              if (count === 0) {
+                endIndex = i + 1;
+              }
+            }
+          }
+
+          if (count === 0) {
+            return name.substring(0, endIndex);
+          }
+        }
+      }
+
+      return name.substring(0, endIndex);
+    } else {
+      return name;
+    }
+  }
+
+  /**
    * Format inital character to lower case or upper case
    * @param input Input string
    * @param upperCase To upper case or lower case
@@ -823,7 +887,7 @@ export namespace Utils {
   ) => {
     Object.keys(source).forEach((key) => {
       // Reference key
-      const labelKey = reference == null ? key : reference[key] ?? key;
+      const labelKey = reference == null ? key : (reference[key] ?? key);
 
       // Label
       const label = labels[labelKey];
@@ -963,8 +1027,8 @@ export namespace Utils {
         index1 === -1
           ? index2
           : index2 === -1
-          ? index1
-          : Math.min(index1, index2);
+            ? index1
+            : Math.min(index1, index2);
       root = path.substring(0, index + 1);
       dir = path.substring(0, lastIndex);
       if (dir === "") dir = root;

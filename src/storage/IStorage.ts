@@ -73,5 +73,5 @@ export interface IStorage {
    * @param key Key name
    * @param data  Data, null for removal
    */
-  setPersistedData(key: string, data: unknown): void;
+  setPersistedData<T>(key: string, data: T): void;
 }
