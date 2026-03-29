@@ -11,6 +11,10 @@ on:
   # release:
   #  types: [created]
 
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
 jobs:
   # Publish to NPM
   publish-npm:
@@ -44,6 +48,4 @@ jobs:
 
       # Publish to npm
       # For scoped package, make it public for free service
-      - run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.ETSOONpmToken }}
+      - run: npm publish
