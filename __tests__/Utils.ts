@@ -76,6 +76,18 @@ test("Tests for containChinese", () => {
   expect("ぁ-ん".containJapanese()).toBeTruthy();
 });
 
+test("Tests for commonPrefixFrom, from start", () => {
+  expect(Utils.commonPrefixFrom("abcdef", "abcxyz")).toBe("abc");
+});
+
+test("Tests for commonPrefixFrom, from middle index", () => {
+  expect(Utils.commonPrefixFrom("zz12345", "aa12399", 2)).toBe("123");
+});
+
+test("Tests for commonPrefixFrom, start at string end", () => {
+  expect(Utils.commonPrefixFrom("abc", "abc", 3)).toBe("");
+});
+
 test("Tests for correctTypes", () => {
   const input = {
     id: "1",
@@ -336,6 +348,30 @@ test("Tests for formatName", () => {
     "亿速思维（中国）"
   );
   expect(Utils.formatName("John Smith", 6)).toBe("John Smith");
+});
+
+test("Tests for getLCS, normal case", () => {
+  expect(Utils.getLCS("abcdef", "zabcf")).toBe("abc");
+});
+
+test("Tests for getLCS, no common substring", () => {
+  expect(Utils.getLCS("abc", "xyz")).toBe("");
+});
+
+test("Tests for getLCS, repeated chars", () => {
+  expect(Utils.getLCS("aaaaab", "baaaac")).toBe("aaaa");
+});
+
+test("Tests for getSameParts, default minChars", () => {
+  expect(Utils.getSameParts("abcdef", "zabcf")).toStrictEqual(["abc", "f"]);
+});
+
+test("Tests for getSameParts, with minChars filter", () => {
+  expect(Utils.getSameParts("abcdef", "zabcf", 2)).toStrictEqual(["abc"]);
+});
+
+test("Tests for getSameParts, no common parts", () => {
+  expect(Utils.getSameParts("abc", "xyz")).toStrictEqual([]);
 });
 
 test("Tests for getNestedValue", () => {

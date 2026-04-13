@@ -306,6 +306,30 @@ export namespace Utils {
   }
 
   /**
+   * Get common prefix from two strings with start index
+   * 获取两个字符串从指定起始位置的公共前缀
+   * @param a Input string a
+   * @param b Input string b
+   * @param start Start index to check
+   * @returns Result
+   */
+  export function commonPrefixFrom(
+    a: string,
+    b: string,
+    start: number = 0
+  ): string {
+    const minLength = Math.min(a.length, b.length);
+
+    let i = start;
+
+    while (i < minLength && a[i] === b[i]) {
+      i++;
+    }
+
+    return a.slice(start, i);
+  }
+
+  /**
    * Correct object's property value type
    * @param input Input object
    * @param fields Fields to correct
@@ -516,6 +540,42 @@ export namespace Utils {
   }
 
   /**
+   * Get longest common substring (dynamic programming instead of recursion)
+   * 获取最长公共子串 (动态编程而不是递归)
+   * @param s1 First string
+   * @param s2 Second string
+   * @returns Result - the longest common substring
+   */
+  export function getLCS(s1: string, s2: string): string {
+    const table: number[][] = Array(s1.length + 1)
+      .fill(null)
+      .map(() => Array(s2.length + 1).fill(0));
+
+    let maxLength = 0;
+    let endIndexS1 = 0;
+
+    for (let i = 1; i <= s1.length; i++) {
+      for (let j = 1; j <= s2.length; j++) {
+        if (s1[i - 1] === s2[j - 1]) {
+          const newLength = table[i - 1][j - 1] + 1;
+          table[i][j] = newLength;
+
+          if (newLength > maxLength) {
+            maxLength = newLength;
+            endIndexS1 = i;
+          }
+        } else {
+          table[i][j] = 0;
+        }
+      }
+    }
+
+    return maxLength > 0
+      ? s1.substring(endIndexS1 - maxLength, endIndexS1)
+      : "";
+  }
+
+  /**
    * Get nested value from object
    * @param data Data
    * @param name Field name, support property chain like 'jsonData.logSize'
@@ -559,6 +619,50 @@ export namespace Utils {
       ? input(...args)
       : (input as unknown as R);
   };
+
+  /**
+   * Get same parts (dynamic programming instead of recursion)
+   * 获取相同部分 (动态编程而不是递归)
+   * @param s1 First string
+   * @param s2 Second string
+   * @param minChars Minimum characters to consider a part (default: 1)
+   * @returns Array of common substrings
+   */
+  export function getSameParts(
+    s1: string,
+    s2: string,
+    minChars: number = 1
+  ): string[] {
+    const result = new Map<number, number>();
+
+    const table: number[][] = Array(s1.length + 1)
+      .fill(0)
+      .map(() => Array(s2.length + 1).fill(0));
+
+    for (let i = 1; i <= s1.length; i++) {
+      for (let j = 1; j <= s2.length; j++) {
+        if (s1[i - 1] === s2[j - 1]) {
+          const newLength = table[i - 1][j - 1] + 1;
+          table[i][j] = newLength;
+
+          result.set(i - newLength, newLength);
+        } else {
+          table[i][j] = 0;
+        }
+      }
+    }
+
+    return Array.from(result.entries())
+      .filter(
+        ([key, value]) =>
+          value >= minChars &&
+          !Array.from(result.entries()).some(
+            ([rKey, rValue]) => key > rKey && key + value <= rKey + rValue
+          )
+      )
+      .sort((a, b) => b[1] - a[1])
+      .map(([key, value]) => s1.substring(key, key + value));
+  }
 
   /**
    * Get time zone
