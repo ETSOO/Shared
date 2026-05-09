@@ -718,6 +718,25 @@ export namespace Utils {
   };
 
   /**
+   * Check if the input object is empty or not, ignore null, undefined or specified fields
+   * @param input Input object
+   * @param ignoreFields Ignored fields for the check
+   * @returns Result
+   */
+  export const isEmptyObject = (
+    input: Record<string, unknown> | null | undefined,
+    ignoreFields: string[] = []
+  ) => {
+    if (input == null) return true;
+
+    return Object.keys(input).every((key) => {
+      if (ignoreFields.includes(key)) return true;
+      const value = input[key];
+      return value == null;
+    });
+  };
+
+  /**
    * Join items as a string
    * @param items Items
    * @param joinPart Join string

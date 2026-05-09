@@ -296,45 +296,46 @@ Storage related utilities
 
 String and other related utilities
 
-|               Name | Description                                                         |
-| -----------------: | ------------------------------------------------------------------- |
-|       addBlankItem | Add blank item to collection                                        |
-|      charsToNumber | Base64 chars to number                                              |
-|     containChinese | Check the input string contains Chinese character or not            |
-|       correctTypes | Correct object's property value type                                |
-|            exclude | Exclude specific items                                              |
-|       excludeAsync | Async exclude specific items                                        |
-|      formatInitial | Format inital character to lower case or upper case                 |
-|       formatString | Format string with parameters                                       |
-|     getDataChanges | Get data changed fields with input data updated                     |
-|     getNestedValue | Get nested value from object                                        |
-|        getTimeZone | Get time zone                                                       |
-|      hasHtmlEntity | Check the input string contains HTML entity or not                  |
-|         hasHtmlTag | Check the input string contains HTML tag or not                     |
-|           hideData | Hide data                                                           |
-|          hideEmail | Hide email data                                                     |
-|           isDigits | Is digits string                                                    |
-|            isEmail | Is email string                                                     |
-|          joinItems | Join items as a string                                              |
-|      mergeFormData | Merge form data to primary one                                      |
-|       mergeClasses | Merge class names                                                   |
-|            newGUID | Create a GUID                                                       |
-|      numberToChars | Number to base64 chars                                              |
-|        objectEqual | Test two objects are equal or not                                   |
-|         objectKeys | Get two object's unqiue properties                                  |
-|      objectUpdated | Get the new object's updated fields contrast to the previous object |
-|     parseJsonArray | Try to parse JSON input to array                                    |
-|          parseName | Parse name data                                                     |
-|          parsePath | Parse path similar with node.js path.parse                          |
-|        parseString | Parse string (JSON) to specific type                                |
-|  removeEmptyValues | Remove empty values (null, undefined, '') from the input object     |
-|   removeNonLetters | Remove non letters (0-9, a-z, A-Z)                                  |
-| replaceNullOrEmpty | Replace null or empty with default value                            |
-|          setLabels | Set source with new labels                                          |
-|     setNestedValue | Set nested value to object                                          |
-|    snakeNameToWord | Snake name to works, 'snake_name' to 'Snake Name'                   |
-|        sortByFavor | Sort array by favored values                                        |
-|   sortByFieldFavor | Sort array by favored field values                                  |
-|               trim | Trim chars                                                          |
-|            trimEnd | Trim end chars                                                      |
-|          trimStart | Trim start chars                                                    |
+|               Name | Description                                                                  |
+| -----------------: | ---------------------------------------------------------------------------- |
+|       addBlankItem | Add blank item to collection                                                 |
+|      charsToNumber | Base64 chars to number                                                       |
+|     containChinese | Check the input string contains Chinese character or not                     |
+|       correctTypes | Correct object's property value type                                         |
+|            exclude | Exclude specific items                                                       |
+|       excludeAsync | Async exclude specific items                                                 |
+|      formatInitial | Format inital character to lower case or upper case                          |
+|       formatString | Format string with parameters                                                |
+|     getDataChanges | Get data changed fields with input data updated                              |
+|     getNestedValue | Get nested value from object                                                 |
+|        getTimeZone | Get time zone                                                                |
+|      hasHtmlEntity | Check the input string contains HTML entity or not                           |
+|         hasHtmlTag | Check the input string contains HTML tag or not                              |
+|           hideData | Hide data                                                                    |
+|          hideEmail | Hide email data                                                              |
+|           isDigits | Is digits string                                                             |
+|            isEmail | Is email string                                                              |
+|      isEmptyObject | Is the input object empty or not, ignore null, undefined or specified fields |
+|          joinItems | Join items as a string                                                       |
+|      mergeFormData | Merge form data to primary one                                               |
+|       mergeClasses | Merge class names                                                            |
+|            newGUID | Create a GUID                                                                |
+|      numberToChars | Number to base64 chars                                                       |
+|        objectEqual | Test two objects are equal or not                                            |
+|         objectKeys | Get two object's unqiue properties                                           |
+|      objectUpdated | Get the new object's updated fields contrast to the previous object          |
+|     parseJsonArray | Try to parse JSON input to array                                             |
+|          parseName | Parse name data                                                              |
+|          parsePath | Parse path similar with node.js path.parse                                   |
+|        parseString | Parse string (JSON) to specific type                                         |
+|  removeEmptyValues | Remove empty values (null, undefined, '') from the input object              |
+|   removeNonLetters | Remove non letters (0-9, a-z, A-Z)                                           |
+| replaceNullOrEmpty | Replace null or empty with default value                                     |
+|          setLabels | Set source with new labels                                                   |
+|     setNestedValue | Set nested value to object                                                   |
+|    snakeNameToWord | Snake name to works, 'snake_name' to 'Snake Name'                            |
+|        sortByFavor | Sort array by favored values                                                 |
+|   sortByFieldFavor | Sort array by favored field values                                           |
+|               trim | Trim chars                                                                   |
+|            trimEnd | Trim end chars                                                               |
+|          trimStart | Trim start chars                                                             |

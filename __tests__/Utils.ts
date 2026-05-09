@@ -249,6 +249,20 @@ test("Tests for isEmail", () => {
   expect(Utils.isEmail("xz@etsoo.com")).toBeTruthy();
 });
 
+test("Tests for isEmptyObject with empty object", () => {
+  expect(Utils.isEmptyObject({})).toBeTruthy();
+});
+
+test("Tests for isEmptyObject with ignored non-empty field", () => {
+  expect(Utils.isEmptyObject({ id: 1, note: undefined }, ["id"])).toBeTruthy();
+});
+
+test("Tests for isEmptyObject with non-null primitive values", () => {
+  expect(Utils.isEmptyObject({ active: false })).toBeFalsy();
+  expect(Utils.isEmptyObject({ count: 0 })).toBeFalsy();
+  expect(Utils.isEmptyObject({ name: "" })).toBeFalsy();
+});
+
 test("Tests for joinItems", () => {
   expect(Utils.joinItems(["a", undefined, " b", "", "c "], ",")).toBe("a,b,c");
 });
