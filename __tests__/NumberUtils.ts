@@ -64,6 +64,13 @@ test("Tests for getMonthPeriod", () => {
   expect(NumberUtils.getMonthPeriod(2025, 0)).toBe(202501);
   expect(NumberUtils.getMonthPeriod(2025, 11)).toBe(202512);
   expect(NumberUtils.getMonthPeriod(2026, 5)).toBe(202606);
+
+  const date = new Date(Date.parse("January 13, 1980"));
+  const result = 198001;
+  expect(NumberUtils.getMonthPeriod(date.getFullYear(), date.getMonth())).toBe(
+    result
+  );
+  expect(NumberUtils.getMonthPeriod(date)).toBe(result);
 });
 
 test("Tests for getMonthPeriodRange", () => {

@@ -124,7 +124,20 @@ export namespace NumberUtils {
    * @param month Month, start from 0
    * @returns Month period number
    */
-  export function getMonthPeriod(year: number, month: number): number {
+  export function getMonthPeriod(date: Date): number;
+  export function getMonthPeriod(year: number, month: number): number;
+  export function getMonthPeriod(
+    yearInput: number | Date,
+    month?: number
+  ): number {
+    let year: number;
+    if (typeof yearInput === "number") {
+      year = yearInput;
+      month ??= 0;
+    } else {
+      year = yearInput.getFullYear();
+      month = yearInput.getMonth();
+    }
     return year * 100 + (month + 1);
   }
 
