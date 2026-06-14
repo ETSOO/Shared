@@ -59,3 +59,26 @@ test("Tests for toStep", () => {
   const results2 = nums.map((num) => num.toStep(8));
   expect(results2).toStrictEqual([8, 8, 16, 32, 96, 96, 3008]);
 });
+
+test("Tests for getMonthPeriod", () => {
+  expect(NumberUtils.getMonthPeriod(2025, 0)).toBe(202501);
+  expect(NumberUtils.getMonthPeriod(2025, 11)).toBe(202512);
+  expect(NumberUtils.getMonthPeriod(2026, 5)).toBe(202606);
+});
+
+test("Tests for getMonthPeriodRange", () => {
+  expect(NumberUtils.getMonthPeriodRange(2025)).toStrictEqual([202501, 202512]);
+  expect(NumberUtils.getMonthPeriodRange(2026)).toStrictEqual([202601, 202612]);
+});
+
+test("Tests for getQuarterPeriod", () => {
+  expect(NumberUtils.getQuarterPeriod(2025, 0)).toBe(20251);
+  expect(NumberUtils.getQuarterPeriod(2025, 3)).toBe(20252);
+  expect(NumberUtils.getQuarterPeriod(2025, 6)).toBe(20253);
+  expect(NumberUtils.getQuarterPeriod(2025, 9)).toBe(20254);
+});
+
+test("Tests for getQuarterPeriodRange", () => {
+  expect(NumberUtils.getQuarterPeriodRange(2025)).toStrictEqual([20251, 20254]);
+  expect(NumberUtils.getQuarterPeriodRange(2026)).toStrictEqual([20261, 20264]);
+});

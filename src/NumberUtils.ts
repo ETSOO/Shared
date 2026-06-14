@@ -118,6 +118,48 @@ export namespace NumberUtils {
   }
 
   /**
+   * Get month period number by year and month
+   * 从年和月获取月周期数字
+   * @param year Year
+   * @param month Month, start from 0
+   * @returns Month period number
+   */
+  export function getMonthPeriod(year: number, month: number): number {
+    return year * 100 + (month + 1);
+  }
+
+  /**
+   * Get month period range by year
+   * 从年获取月周期范围
+   * @param year Year
+   * @returns Result with monthStart and monthEnd
+   */
+  export function getMonthPeriodRange(year: number): [number, number] {
+    return [getMonthPeriod(year, 0), getMonthPeriod(year, 11)];
+  }
+
+  /**
+   * Get quarter period number by year and month
+   * 从年和月获取季度周期数字
+   * @param year Year
+   * @param month Month, start from 0
+   * @returns Quarter period number
+   */
+  export function getQuarterPeriod(year: number, month: number): number {
+    return year * 10 + Math.floor(month / 3) + 1;
+  }
+
+  /**
+   * Get quarter period range by year
+   * 从年获取季度周期范围
+   * @param year Year
+   * @returns Result with quarterStart and quarterEnd
+   */
+  export function getQuarterPeriodRange(year: number): [number, number] {
+    return [getQuarterPeriod(year, 0), getQuarterPeriod(year, 11)];
+  }
+
+  /**
    * Parse number
    * @param rawData Raw data
    */

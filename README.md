@@ -269,15 +269,19 @@ Extend current class/object functioning
 
 Numbers related utilities
 
-|              Name | Description                                           |
-| ----------------: | ----------------------------------------------------- |
-|            format | Format number                                         |
-|    formatFileSize | Format file size                                      |
-|       formatMoney | Format money number                                   |
-| getCurrencySymbol | Get currency symbol or name from ISO code             |
-|             parse | Parse to number, with or without default value        |
-|           toExact | To the exact precision number avoiding precision lost |
-|            toStep | To the step number, like 0, 10, 20, 30 for step 10    |
+|                  Name | Description                                           |
+| --------------------: | ----------------------------------------------------- |
+|                format | Format number                                         |
+|        formatFileSize | Format file size                                      |
+|           formatMoney | Format money number                                   |
+|     getCurrencySymbol | Get currency symbol or name from ISO code             |
+|        getMonthPeriod | Get month period number by year and month             |
+|   getMonthPeriodRange | Get month period range by year                        |
+|      getQuarterPeriod | Get quarter period number by year and month           |
+| getQuarterPeriodRange | Get quarter period range by year                      |
+|                 parse | Parse to number, with or without default value        |
+|               toExact | To the exact precision number avoiding precision lost |
+|                toStep | To the step number, like 0, 10, 20, 30 for step 10    |
 
 ## StorageUtils
 
