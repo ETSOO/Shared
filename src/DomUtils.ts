@@ -61,6 +61,11 @@ export namespace DomUtils {
   export const CountryField = "country";
 
   /**
+   * HTML tag name
+   */
+  export type HtmlTagName = keyof HTMLElementTagNameMap;
+
+  /**
    * Clear form data
    * @param data Form data
    * @param source Source data to match
@@ -853,6 +858,47 @@ export namespace DomUtils {
     window.console.warn = localConsole("consoleWarn", window.console.warn);
 
     window.console.error = localConsole("consoleError", window.console.error);
+  }
+
+  /**
+   * Trim the outer tag pairs from HTML string
+   * @param html Input HTML string or ParentNode
+   * @param tagNames Tags to be removed
+   * @returns Result
+   */
+  export function trimTagPairs(
+    html: string | ParentNode,
+    tagNames: HtmlTagName[]
+  ) {
+    let container: ParentNode;
+    if (typeof html === "string") {
+      const div = document.createElement("div");
+      div.innerHTML = html.trim();
+      container = div;
+    } else {
+      container = html;
+    }
+
+    let first = container.firstElementChild;
+
+    while (first != null) {
+      const tagName = first.tagName.toLowerCase();
+      if (
+        tagNames.includes(tagName as HtmlTagName) &&
+        first.childNodes.length === 1
+      ) {
+        const child = first.firstElementChild;
+        if (child == null) {
+          break;
+        } else {
+          first = child;
+        }
+      } else {
+        break;
+      }
+    }
+
+    return first ? first.innerHTML : html;
   }
 
   /**

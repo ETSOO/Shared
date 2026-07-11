@@ -248,6 +248,7 @@ DOM/window related utilities
 |       parseUserAgent | parseUserAgent                                                          |
 |             setFocus | Set HTML element focus by name                                          |
 |         setupLogging | Setup frontend logging                                                  |
+|         trimTagPairs | Trim the outer tag pairs from HTML string                               |
 |     verifyPermission | Verify file system permission                                           |
 |               zhHans | Get simplified Chinese resources definition                             |
 |               zhHant | Get traditional Chinese resources definition                            |

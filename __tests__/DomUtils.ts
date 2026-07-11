@@ -382,6 +382,24 @@ test("Tests for getUserAgentData 8", () => {
   expect(data?.mobile).toBeTruthy();
 });
 
+test("Tests for trimTagPairs for pure text", () => {
+  const html = "Hello, world!";
+  const result = DomUtils.trimTagPairs(html, ["div", "p"]);
+  expect(result).toBe("Hello, world!");
+});
+
+test("Tests for trimTagPairs for tags", () => {
+  const html = "<div><p>Hello, world</p></div>";
+  const result = DomUtils.trimTagPairs(html, ["div", "p"]);
+  expect(result).toBe("Hello, world");
+});
+
+test("Tests for trimTagPairs for nested tags", () => {
+  const html = "<div><div><p>Hello, <b>world</b></p></div></div>";
+  const result = DomUtils.trimTagPairs(html, ["div", "p", "b"]);
+  expect(result).toBe("Hello, <b>world</b>");
+});
+
 test("Tests for setupLogging", async () => {
   // Arrange
   const action = vi.fn((data: ErrorData) => {
