@@ -389,13 +389,13 @@ test("Tests for trimTagPairs for pure text", () => {
 });
 
 test("Tests for trimTagPairs for tags", () => {
-  const html = "<div><p>Hello, world</p></div>";
+  const html: string = "<div><p>Hello, world</p></div>";
   const result = DomUtils.trimTagPairs(html, ["div", "p"]);
   expect(result).toBe("Hello, world");
 });
 
 test("Tests for trimTagPairs for nested tags", () => {
-  const html = "<div><div><p>Hello, <b>world</b></p></div></div>";
+  const html: string = "<div><div><p>Hello, <b>world</b></p></div></div>";
   const result = DomUtils.trimTagPairs(html, ["div", "p", "b"]);
   expect(result).toBe("Hello, <b>world</b>");
 });

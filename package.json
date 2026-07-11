@@ -1,6 +1,6 @@
 {
   "name": "@etsoo/shared",
-  "version": "1.2.88",
+  "version": "1.2.89",
   "description": "TypeScript shared utilities and functions",
   "main": "lib/cjs/index.js",
   "module": "lib/mjs/index.js",
@@ -36,10 +36,10 @@
   },
   "homepage": "https://github.com/ETSOO/Shared#readme",
   "devDependencies": {
-    "@types/node": "^26.0.1",
+    "@types/node": "^26.1.1",
     "@vitejs/plugin-react": "^6.0.3",
     "jsdom": "^29.1.1",
-    "typescript": "^6.0.3",
-    "vitest": "^4.1.9"
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
   }
 }

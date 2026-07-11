@@ -866,10 +866,10 @@ export namespace DomUtils {
    * @param tagNames Tags to be removed
    * @returns Result
    */
-  export function trimTagPairs(
-    html: string | ParentNode,
+  export function trimTagPairs<T extends string | ParentNode>(
+    html: T,
     tagNames: HtmlTagName[]
-  ) {
+  ): T {
     let container: ParentNode;
     if (typeof html === "string") {
       const div = document.createElement("div");
@@ -898,7 +898,9 @@ export namespace DomUtils {
       }
     }
 
-    return first ? first.innerHTML : html;
+    if (first == null) return html;
+
+    return (typeof html === "string" ? first.innerHTML : first) as T;
   }
 
   /**
