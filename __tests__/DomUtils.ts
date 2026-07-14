@@ -400,6 +400,12 @@ test("Tests for trimTagPairs for nested tags", () => {
   expect(result).toBe("Hello, <b>world</b>");
 });
 
+test("Tests for trimTagPairs for non-single first level", () => {
+  const html: string = "<p>Hello, world</p><img src='' />";
+  const result = DomUtils.trimTagPairs(html, "p");
+  expect(result).toBe(html);
+});
+
 test("Tests for setupLogging", async () => {
   // Arrange
   const action = vi.fn((data: ErrorData) => {

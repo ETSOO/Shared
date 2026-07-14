@@ -868,7 +868,7 @@ export namespace DomUtils {
    */
   export function trimTagPairs<T extends string | ParentNode>(
     html: T,
-    tagNames: HtmlTagName[]
+    tagNames: HtmlTagName[] | HtmlTagName
   ): T {
     let container: ParentNode;
     if (typeof html === "string") {
@@ -879,12 +879,16 @@ export namespace DomUtils {
       container = html;
     }
 
+    if (container.childNodes.length !== 1) return html;
+
+    const tags = Array.isArray(tagNames) ? tagNames : [tagNames];
+
     let first = container.firstElementChild;
 
     while (first != null) {
       const tagName = first.tagName.toLowerCase();
       if (
-        tagNames.includes(tagName as HtmlTagName) &&
+        tags.includes(tagName as HtmlTagName) &&
         first.childNodes.length === 1
       ) {
         const child = first.firstElementChild;
